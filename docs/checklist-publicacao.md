@@ -1,0 +1,28 @@
+﻿# Checklist de publicação
+
+- [ ] Dados revisados.
+- [ ] Fontes conferidas.
+- [ ] Estimativas identificadas.
+- [ ] Demonstrações identificadas.
+- [ ] `npm run lint` executado sem erros.
+- [ ] `npm run build` executado sem erros.
+- [ ] Rotas internas verificadas.
+- [ ] Página 404 personalizada verificada.
+- [ ] Celular verificado.
+- [ ] Tablet verificado.
+- [ ] Desktop verificado.
+- [ ] Acessibilidade revisada.
+- [ ] Favicon conferido.
+- [ ] Metadados conferidos.
+- [ ] Sitemap verificado.
+- [ ] Robots verificado.
+- [ ] Avisos institucionais visíveis.
+- [ ] Política de privacidade publicada.
+- [ ] Termos publicados.
+- [ ] Links internos testados.
+- [ ] Links externos testados.
+- [ ] Domínio configurado.
+- [ ] Versão conferida.
+- [ ] Console sem erros.
+- [ ] Ausência de segredos confirmada.
+- [ ] Conferência final em produção realizada.
