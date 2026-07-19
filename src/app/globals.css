@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 :root {
   --background: #030303;
@@ -91,12 +91,12 @@ select {
   inset: 0;
   z-index: -3;
   background-image:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.82) 68%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.64)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.76) 70%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.56)),
     url("/images/hero-pcpr.webp");
   background-size: cover;
   background-position: left center;
-  opacity: 0.96;
+  opacity: 1;
 }
 
 .hero-shell::before {
@@ -123,16 +123,20 @@ select {
 }
 
 .hero-content h1 {
-  max-width: 760px;
-  font-size: clamp(2.35rem, 5vw, 5.6rem);
+  max-width: 700px;
+  font-size: clamp(2.25rem, 4.35vw, 4.75rem);
   font-weight: 700;
-  line-height: 0.95;
+  line-height: 1.02;
   letter-spacing: 0;
   color: #ffffff;
 }
 
-.hero-content h1 span {
+.hero-content h1 > .hero-line {
   display: block;
+}
+
+.hero-content .no-break {
+  white-space: nowrap;
 }
 
 .hero-content p {
@@ -153,7 +157,7 @@ select {
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0;
-  color: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.055);
   white-space: nowrap;
 }
 
@@ -397,7 +401,7 @@ select {
 
   .hero-shell,
   .hero-content {
-    min-height: 318px;
+    min-height: 292px;
   }
 
   .hero-content {
@@ -414,7 +418,7 @@ select {
 
   .hero-shell,
   .hero-content {
-    min-height: 330px;
+    min-height: 304px;
   }
 
   .summary-card,

@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 ## Versão 0.1.0 - 18/07/2026
 
@@ -11,4 +11,5 @@
 - Termos e responsabilidade.
 - Central de atualizações.
 - Sitemap, robots, favicon genérico e metadados preparados para domínio futuro.
+- Imagem de capa e Open Graph da identidade visual definitiva do projeto.
 - Preparação documental para deploy.

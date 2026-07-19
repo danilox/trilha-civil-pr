@@ -1,4 +1,4 @@
-﻿# Trilha Civil PR - Projeto acadêmico
+# Trilha Civil PR - Projeto acadêmico
 
 ## Título
 Trilha Civil PR: portal independente de organização de informações sobre concurso público.
@@ -40,5 +40,8 @@ Portal navegável, responsivo, com páginas internas, transparência de dados, d
 ## Limitações
 Não há banco de dados, autenticação, coleta de dados pessoais, painel administrativo ou integração com fontes oficiais automatizadas no MVP.
 
+
+## Apresentação visual da versão 0.1.0
+A identidade visual definitiva do projeto está registrada em `public/images/trilha-civil-capa.png`. Essa imagem é usada como capa de apresentação, documentação e compartilhamento social, enquanto a homepage preserva título, descrição e aviso institucional como elementos HTML acessíveis.
 ## Trabalhos futuros
 Cadastrar URLs oficiais, automatizar revisão de fontes, ampliar dados regionais, adicionar testes automatizados e preparar publicação em domínio próprio.

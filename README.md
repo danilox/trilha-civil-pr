@@ -1,4 +1,4 @@
-﻿# Trilha Civil PR
+# Trilha Civil PR
 
 Status: versão 0.1.0 em preparação para publicação.
 
@@ -12,9 +12,15 @@ O Trilha Civil PR reúne etapas, regiões, projeções demonstrativas, exames, T
 
 Oferecer uma interface clara e responsiva para acompanhar informações do concurso, separando dados oficiais pendentes, estimativas e demonstrações de interface.
 
-## Captura de tela de referência
+## Captura principal
 
-A referência visual está em `public/references/homepage-referencia.png`. Ela orienta proporções, contraste e linguagem visual; a página é construída com componentes reais em React, HTML e CSS.
+![Capa visual do Trilha Civil PR](public/images/trilha-civil-capa.png)
+
+A imagem em `public/images/trilha-civil-capa.png` representa a identidade visual de apresentação da versão 0.1.0. A homepage mantém título, descrição e aviso como elementos HTML reais; a arte completa não é usada como fundo da página.
+
+## Referência visual
+
+A referência inicial está em `public/references/homepage-referencia.png`. Ela orientou proporções, contraste e linguagem visual; a página é construída com componentes reais em React, HTML e CSS.
 
 ## Funcionalidades atuais
 
