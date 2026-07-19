@@ -1,436 +1,78 @@
-﻿import {
-  Activity,
-  Brain,
-  ClipboardCheck,
-  FileText,
-  HeartPulse,
-  MapPinned,
-  ShieldCheck,
-  Stethoscope,
-} from "lucide-react";
-import type {
-  Dica,
-  EtapaConcurso,
-  Exame,
-  FonteRegistro,
-  LocalExame,
-  PainelItem,
-  Projecao,
-  Regiao,
-  TafItem,
-  TituloItem,
-  AtualizacaoPortal,
-} from "@/types/content";
+import { Activity, Brain, ClipboardCheck, FileText, HeartPulse, MapPinned, ShieldCheck, Stethoscope } from "lucide-react";
+import {
+  ARQUIVO_LOCAL_EDITAL,
+  atualizacoesEdital,
+  DATA_CONFERENCIA_EDITAL,
+  disciplinasAgente,
+  etapasOficiais,
+  examesOficiais,
+  FONTE_EDITAL,
+  FONTE_OFICIAL_PENDENTE,
+  limiteTotalTitulos,
+  notaMinimaObjetivaAgente,
+  regioesOficiais,
+  titulosOficiais,
+  URL_FONTE_FGV,
+} from "@/data/edital";
+import type { AtualizacaoPortal, Dica, EtapaConcurso, Exame, FonteRegistro, LocalExame, PainelItem, Projecao, Regiao, TafItem, TituloItem } from "@/types/content";
 
-export const avisoNaoOficial =
-  "Projeto independente e não oficial. Consulte sempre o edital e os canais oficiais.";
+export const avisoNaoOficial = "Projeto independente e não oficial. Consulte sempre o edital e os canais oficiais.";
+export const ultimaAtualizacao = DATA_CONFERENCIA_EDITAL;
+export const fontePendente = FONTE_OFICIAL_PENDENTE;
+export const fonteOficialEdital = FONTE_EDITAL;
+export const caminhoEditalOficial = ARQUIVO_LOCAL_EDITAL;
+export const observacaoProvisoria = "Registro provisório usado para estruturação acadêmica e validação da interface.";
 
-export const ultimaAtualizacao = "2026-07-18";
-
-export const fontePendente = "Fonte oficial ainda não cadastrada.";
-export const observacaoProvisoria =
-  "Registro provisório usado para estruturação acadêmica e validação da interface.";
-
-const baseOficial = {
-  tipo: "oficial" as const,
-  fonte: fontePendente,
-  urlFonte: "",
-  dataAtualizacao: ultimaAtualizacao,
-  observacao:
-    "Campo preparado para receber edital, banca ou publicação oficial. Conferir sempre a publicação vigente.",
-  ativo: true,
-};
-
-const baseEstimativa = {
-  tipo: "estimativa" as const,
-  fonte: fontePendente,
-  urlFonte: "",
-  dataAtualizacao: ultimaAtualizacao,
-  observacao:
-    "Estimativa demonstrativa baseada em dados provisórios. Não representa classificação ou resultado oficial.",
-  ativo: true,
-};
-
-const baseDemonstracao = {
-  tipo: "demonstracao" as const,
-  fonte: "Dado fictício para demonstração de interface",
-  urlFonte: "",
-  dataAtualizacao: ultimaAtualizacao,
-  observacao: observacaoProvisoria,
-  ativo: true,
-};
+const baseEstimativa = { tipo: "estimativa" as const, fonte: "Metodologia provisória interna", urlFonte: "", dataAtualizacao: ultimaAtualizacao, observacao: "Estimativa local demonstrativa. Não representa classificação, nota de corte, resultado ou convocação oficial.", ativo: true };
+const baseDemonstracao = { tipo: "demonstracao" as const, fonte: "Dado fictício para demonstração de interface", urlFonte: "", dataAtualizacao: ultimaAtualizacao, observacao: observacaoProvisoria, ativo: true };
 
 export const resumoConcurso = [
-  {
-    id: "situacao-concurso",
-    titulo: "Situação do concurso",
-    destaque: "Em andamento",
-    detalhe: "Aguardando próximas atualizações",
-    ...baseDemonstracao,
-  },
-  {
-    id: "proxima-etapa",
-    titulo: "Próxima etapa",
-    destaque: "Exames Médicos",
-    detalhe: "Data prevista: a definir",
-    ...baseEstimativa,
-  },
-  {
-    id: "contagem-regressiva",
-    titulo: "Contagem regressiva",
-    destaque: "Prazo demonstrativo",
-    detalhe: "Dias, horas, minutos e segundos",
-    ...baseDemonstracao,
-  },
+  { id: "situacao-concurso", titulo: "Situação oficial", destaque: "Status dinâmico", detalhe: "Calculado com datas oficiais do edital", tipo: "oficial" as const, fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "Status baseado nos marcos de inscrição, boleto, locais e prova objetiva.", ativo: true },
+  { id: "proxima-etapa", titulo: "Próxima etapa", destaque: "Inscrição ou prova", detalhe: "Exames só aparecem após a prova objetiva", tipo: "oficial" as const, fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "O edital e as convocações oficiais prevalecem.", ativo: true },
+  { id: "estrutura-prova", titulo: "Prova objetiva", destaque: `${disciplinasAgente.reduce((total, disciplina) => total + disciplina.questoes, 0)} questões`, detalhe: "100 pontos, cinco alternativas e uma resposta correta", tipo: "oficial" as const, fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "Distribuição oficial de disciplinas validada com soma igual a 100.", ativo: true },
 ];
 
-export const etapas: EtapaConcurso[] = [
-  {
-    id: "inscricao",
-    ordem: 1,
-    titulo: "Inscrição",
-    periodo: "fase administrativa",
-    status: "concluida",
-    descricao:
-      "Conferência de dados cadastrais, comprovante de inscrição e eventuais condições declaradas.",
-    checklist: ["Comprovante salvo", "Dados conferidos", "Publicações acompanhadas"],
-    ...baseOficial,
-  },
-  {
-    id: "prova-objetiva",
-    ordem: 2,
-    titulo: "Prova objetiva",
-    periodo: "fase objetiva",
-    status: "concluida",
-    descricao:
-      "Organização do resultado, conferência de classificação e leitura dos critérios de avanço.",
-    checklist: ["Gabarito conferido", "Resultado arquivado", "Recursos revisados"],
-    ...baseOficial,
-  },
-  {
-    id: "taf",
-    ordem: 3,
-    titulo: "TAF",
-    periodo: "após convocação",
-    status: "prevista",
-    descricao:
-      "Controle de treinos, índices mínimos e itens permitidos no dia da avaliação física.",
-    checklist: ["Treino por protocolo", "Aquecimento planejado", "Roupas conferidas"],
-    ...baseOficial,
-  },
-  {
-    id: "exames-medicos",
-    ordem: 4,
-    titulo: "Exames médicos",
-    periodo: "data a definir",
-    status: "atencao",
-    descricao:
-      "Separação de laudos, exames laboratoriais e avaliações clínicas exigidas em edital.",
-    checklist: ["Laudos assinados", "Validade checada", "Documento original"],
-    ...baseOficial,
-  },
-  {
-    id: "avaliacao-psicologica",
-    ordem: 5,
-    titulo: "Avaliação psicológica",
-    periodo: "fase técnica",
-    status: "prevista",
-    descricao:
-      "Etapa técnica conduzida conforme critérios oficiais, sem promessa de preparação ou resultado.",
-    checklist: ["Convocação lida", "Documento separado", "Horário confirmado"],
-    ...baseOficial,
-  },
-  {
-    id: "investigacao-social",
-    ordem: 6,
-    titulo: "Investigação social",
-    periodo: "fase documental",
-    status: "prevista",
-    descricao:
-      "Organização de certidões, declarações e histórico documental solicitado pela administração.",
-    checklist: ["Certidões emitidas", "Endereços revisados", "Protocolos guardados"],
-    ...baseOficial,
-  },
-  {
-    id: "titulos",
-    ordem: 7,
-    titulo: "Títulos",
-    periodo: "quando convocada",
-    status: "prevista",
-    descricao:
-      "Conferência de documentos acadêmicos e profissionais aceitos para pontuação complementar.",
-    checklist: ["Certificados separados", "Carga horária validada", "Arquivos digitalizados"],
-    ...baseOficial,
-  },
-  {
-    id: "curso-formacao",
-    ordem: 8,
-    titulo: "Curso de formação",
-    periodo: "se previsto em edital",
-    status: "prevista",
-    descricao:
-      "Estrutura reservada para registrar regras de matrícula, frequência, avaliação e convocação.",
-    checklist: ["Regras oficiais", "Documentos de matrícula", "Calendário publicado"],
-    ...baseOficial,
-  },
-  {
-    id: "nomeacao",
-    ordem: 9,
-    titulo: "Nomeação",
-    periodo: "fase final",
-    status: "prevista",
-    descricao:
-      "Acompanhamento das publicações de resultado final, homologação, chamadas e prazos de posse.",
-    checklist: ["Diário oficial acompanhado", "Contatos atualizados", "Documentos finais prontos"],
-    ...baseOficial,
-  },
-];
-
-export const regioes: Regiao[] = [
-  { id: "curitiba", nome: "Curitiba", vagas: 52, inscritosEstimados: 5300, concorrencia: 101.9, ...baseEstimativa },
-  { id: "londrina", nome: "Londrina", vagas: 24, inscritosEstimados: 1840, concorrencia: 76.7, ...baseEstimativa },
-  { id: "maringa", nome: "Maringá", vagas: 20, inscritosEstimados: 1510, concorrencia: 75.5, ...baseEstimativa },
-  { id: "cascavel", nome: "Cascavel", vagas: 18, inscritosEstimados: 1260, concorrencia: 70, ...baseEstimativa },
-  { id: "ponta-grossa", nome: "Ponta Grossa", vagas: 16, inscritosEstimados: 1120, concorrencia: 70, ...baseEstimativa },
-  { id: "guarapuava", nome: "Guarapuava", vagas: 12, inscritosEstimados: 720, concorrencia: 60, ...baseEstimativa },
-];
-
+export const etapas: EtapaConcurso[] = etapasOficiais.map((etapa) => ({ id: etapa.id, ordem: etapa.ordem, titulo: etapa.titulo, periodo: etapa.periodo, status: etapa.status, descricao: etapa.descricao, checklist: etapa.checklist, tipo: etapa.tipo, fonte: etapa.fonte, urlFonte: etapa.urlFonte, dataAtualizacao: etapa.dataConferencia, observacao: `Item ${etapa.itemEdital}, página ${etapa.paginaPdf}. ${etapa.observacao}`, ativo: etapa.ativo }));
+export const regioes: Regiao[] = regioesOficiais.map((regiao) => ({ id: regiao.id, nome: regiao.titulo, vagas: 0, inscritosEstimados: 0, concorrencia: regiao.percentualDistribuicao, tipo: "oficial", fonte: regiao.fonte, urlFonte: regiao.urlFonte, dataAtualizacao: regiao.dataConferencia, observacao: `${regiao.percentualDistribuicao}% da distribuição regional em cadastro de reserva. Item ${regiao.itemEdital}, página ${regiao.paginaPdf}.`, ativo: true }));
 export const projecoes: Projecao[] = [
-  { id: "agente", cargo: "Agente", notaMinima: 66, notaProvavel: 72, notaCompetitiva: 78, ...baseEstimativa },
-  { id: "delegado", cargo: "Delegado", notaMinima: 70, notaProvavel: 76, notaCompetitiva: 82, ...baseEstimativa },
-  { id: "papiloscopista", cargo: "Papiloscopista", notaMinima: 64, notaProvavel: 70, notaCompetitiva: 76, ...baseEstimativa },
+  { id: "minimo-oficial", cargo: "Mínimo objetivo", notaMinima: 50, notaProvavel: 50, notaCompetitiva: 50, tipo: "oficial", fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: `Item ${notaMinimaObjetivaAgente.itemEdital}, página ${notaMinimaObjetivaAgente.paginaPdf}.`, ativo: true },
+  { id: "painel-local", cargo: "Painel local", notaMinima: 50, notaProvavel: 72, notaCompetitiva: 86, ...baseEstimativa },
 ];
-
-export const exames: Exame[] = [
-  {
-    id: "avaliacao-clinica",
-    titulo: "Avaliação clínica",
-    resumo: "Laudo médico com identificação completa e assinatura profissional.",
-    finalidade: "Verificar condições gerais de saúde exigidas para a etapa.",
-    preparo: ["Documento original", "Histórico de saúde", "Validade do laudo"],
-    validade: "A definir conforme edital ou convocação.",
-    errosDocumentais: ["Ausência de CRM", "Data fora da validade", "Nome incompleto"],
-    icon: Stethoscope,
-    ...baseOficial,
-  },
-  {
-    id: "oftalmologica",
-    titulo: "Oftalmológica",
-    resumo: "Avaliação visual conforme exigências e parâmetros descritos no edital.",
-    finalidade: "Registrar acuidade e condições visuais quando exigidas.",
-    preparo: ["Consulta agendada", "Receitas anteriores", "Assinatura e CRM"],
-    validade: "A definir conforme edital ou convocação.",
-    errosDocumentais: ["Laudo sem identificação", "Parâmetro incompleto", "Assinatura ilegível"],
-    icon: HeartPulse,
-    ...baseOficial,
-  },
-  {
-    id: "cardiologica",
-    titulo: "Cardiológica",
-    resumo: "Checagem cardiológica e exames complementares quando solicitados.",
-    finalidade: "Avaliar aptidão cardiológica para etapas posteriores, quando aplicável.",
-    preparo: ["Eletrocardiograma", "Laudo descritivo", "Prazo de entrega"],
-    validade: "A definir conforme edital ou convocação.",
-    errosDocumentais: ["Exame sem laudo", "Médico não identificado", "Resultado incompleto"],
-    icon: Activity,
-    ...baseOficial,
-  },
-  {
-    id: "laboratoriais",
-    titulo: "Laboratoriais",
-    resumo: "Exames laboratoriais com resultados legíveis e dentro da validade.",
-    finalidade: "Comprovar parâmetros laboratoriais exigidos em convocação.",
-    preparo: ["Hemograma", "Coleta programada", "Resultado impresso"],
-    validade: "A definir conforme edital ou convocação.",
-    errosDocumentais: ["Coleta fora do prazo", "Resultado sem identificação", "Arquivo ilegível"],
-    icon: ClipboardCheck,
-    ...baseOficial,
-  },
-  {
-    id: "ortopedica",
-    titulo: "Ortopédica",
-    resumo: "Avaliação de condições motoras e registros de exames de imagem.",
-    finalidade: "Registrar condições ortopédicas exigidas para a etapa médica.",
-    preparo: ["Imagem quando exigida", "Laudo assinado", "Dados do candidato"],
-    validade: "A definir conforme edital ou convocação.",
-    errosDocumentais: ["Laudo sem data", "Imagem sem conclusão", "Especialidade divergente"],
-    icon: ShieldCheck,
-    ...baseOficial,
-  },
-  {
-    id: "taf-exame",
-    titulo: "TAF",
-    resumo: "Teste de aptidão física com índices, sequência e regras de execução.",
-    finalidade: "Avaliar desempenho físico conforme critérios oficiais.",
-    preparo: ["Corrida", "Força", "Aquecimento controlado"],
-    validade: "Executado na data e local convocados pela banca.",
-    errosDocumentais: ["Documento ausente", "Atestado divergente", "Chegada fora do horário"],
-    icon: Brain,
-    ...baseOficial,
-  },
-];
-
-export const taf: TafItem[] = [
-  {
-    id: "estrutura-taf",
-    titulo: "Estrutura preparada para índices",
-    descricao: "A página está pronta para receber índices oficiais por sexo, idade, cargo e modalidade.",
-    regras: ["Cumprir ordem definida em edital", "Respeitar chamada e identificação", "Seguir orientação da banca"],
-    documentos: ["Documento oficial", "Atestado quando exigido", "Convocação impressa ou digital"],
-    motivosEliminacao: ["Não atingir índice", "Ausência", "Descumprimento de regra de execução"],
-    ...baseOficial,
-  },
-];
-
-export const titulos: TituloItem[] = [
-  {
-    id: "pos-graduacao-demo",
-    titulo: "Pós-graduação",
-    tipoTitulo: "Formação acadêmica",
-    pontuacao: "Demonstração: até 2 pontos",
-    limite: "Demonstração: limite a definir",
-    comprovacao: "Certificado ou diploma conforme edital.",
-    descricao: "Exemplo de estrutura para receber regra oficial de pontuação.",
-    ...baseDemonstracao,
-  },
-  {
-    id: "experiencia-demo",
-    titulo: "Experiência profissional",
-    tipoTitulo: "Atividade profissional",
-    pontuacao: "Demonstração: até 3 pontos",
-    limite: "Demonstração: limite a definir",
-    comprovacao: "Documento comprobatório aceito em edital.",
-    descricao: "Exemplo demonstrativo sem validade oficial.",
-    ...baseDemonstracao,
-  },
-];
-
+export const exames: Exame[] = examesOficiais.map((exame) => ({ id: exame.id, titulo: exame.titulo, resumo: exame.descricao, finalidade: exame.finalidade, preparo: exame.preparo, validade: exame.validade, errosDocumentais: exame.errosDocumentais, icon: exame.categoria === "laboratorial" ? ClipboardCheck : exame.categoria === "toxicológico" ? ShieldCheck : exame.id.includes("cardiovascular") ? HeartPulse : Stethoscope, tipo: exame.tipo, fonte: exame.fonte, urlFonte: exame.urlFonte, dataAtualizacao: exame.dataConferencia, observacao: `Item ${exame.itemEdital}, página ${exame.paginaPdf}. ${exame.observacao}`, ativo: exame.ativo }));
+export const taf: TafItem[] = [{ id: "taf-oficial", titulo: "Índices oficiais do Anexo IV", descricao: "TAF eliminatório com índices por sexo biológico e faixa etária. É necessário atingir o índice mínimo em todos os exercícios.", regras: ["Aprovação em todos os exercícios", "Até duas tentativas onde indicado", "Intervalo mínimo de 10 minutos nos exercícios com duas tentativas"], documentos: ["Documento oficial", "Atestado médico conforme edital", "Convocação conferida na FGV"], motivosEliminacao: ["Não atingir qualquer índice", "Ausência", "Descumprimento de regra de execução"], tipo: "oficial", fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "Anexo IV, página 78 e item 13 do edital.", ativo: true }];
+export const titulos: TituloItem[] = titulosOficiais.map((titulo) => ({ id: titulo.id, titulo: titulo.titulo, tipoTitulo: titulo.tipoTitulo, pontuacao: `${titulo.pontosPorUnidade.toLocaleString("pt-BR")} ponto(s) por ${titulo.unidade}`, limite: `${titulo.limite.toLocaleString("pt-BR")} ponto(s)`, comprovacao: titulo.comprovacao, descricao: `Pontuação oficial da prova de títulos para Agente. O total não pode ultrapassar ${limiteTotalTitulos.toLocaleString("pt-BR")} pontos.`, tipo: "oficial", fonte: titulo.fonte, urlFonte: titulo.urlFonte, dataAtualizacao: titulo.dataConferencia, observacao: `Item ${titulo.itemEdital}, página ${titulo.paginaPdf}.`, ativo: true }));
 export const dicas: Dica[] = [
-  { id: "onde-fazer-exames", titulo: "Onde fazer exames", descricao: "Compare agenda, prazo de entrega e emissão correta dos laudos.", categoria: "saude", ...baseEstimativa },
+  { id: "onde-fazer-exames", titulo: "Onde fazer exames", descricao: "Compare agenda, prazo de entrega e emissão correta dos laudos. O portal ainda não cadastra empresas reais.", categoria: "saude", ...baseEstimativa },
   { id: "documentos-duvidas", titulo: "Documentos com dúvidas", descricao: "Certidões, títulos e comprovantes devem ser nomeados e arquivados por etapa.", categoria: "documentos", ...baseEstimativa },
-  { id: "prazos-validade", titulo: "Prazos e validade", descricao: "Confira datas absolutas na convocação oficial antes de agendar.", categoria: "prazo", ...baseEstimativa },
+  { id: "prazos-validade", titulo: "Prazos e validade", descricao: "Use datas absolutas da convocação oficial antes de agendar exames ou deslocamentos.", categoria: "prazo", ...baseEstimativa },
   { id: "planejamento-logistico", titulo: "Planejamento logístico", descricao: "Considere transporte, hospedagem, horário de abertura e margem de deslocamento.", categoria: "deslocamento", ...baseEstimativa },
   { id: "preparacao-convocacao", titulo: "Preparação para convocação", descricao: "Mantenha documentos, exames e agenda de treinos separados por etapa.", categoria: "convocacao", ...baseEstimativa },
 ];
-
 export const locaisExame: LocalExame[] = [
-  {
-    id: "clinica-exemplo-curitiba",
-    nome: "Clínica Exemplo Curitiba",
-    cidade: "Curitiba",
-    regiao: "Curitiba e Região Metropolitana",
-    categoria: "clínicas de avaliação",
-    endereco: "Endereço demonstrativo, sem empresa real cadastrada",
-    telefone: "Telefone demonstrativo",
-    site: "Site demonstrativo",
-    servicosOferecidos: ["avaliação clínica", "cardiologia"],
-    verificadoEm: ultimaAtualizacao,
-    patrocinado: false,
-    ...baseDemonstracao,
-  },
-  {
-    id: "laboratorio-exemplo-londrina",
-    nome: "Laboratório Exemplo Londrina",
-    cidade: "Londrina",
-    regiao: "Norte",
-    categoria: "laboratórios",
-    endereco: "Endereço demonstrativo, sem empresa real cadastrada",
-    telefone: "Telefone demonstrativo",
-    site: "Site demonstrativo",
-    servicosOferecidos: ["hemograma", "exames laboratoriais"],
-    verificadoEm: ultimaAtualizacao,
-    patrocinado: false,
-    ...baseDemonstracao,
-  },
-  {
-    id: "imagem-exemplo-maringa",
-    nome: "Centro de Imagem Exemplo Maringá",
-    cidade: "Maringá",
-    regiao: "Noroeste",
-    categoria: "centros de imagem",
-    endereco: "Endereço demonstrativo, sem empresa real cadastrada",
-    telefone: "Telefone demonstrativo",
-    site: "Site demonstrativo",
-    servicosOferecidos: ["imagem", "ortopedia"],
-    verificadoEm: ultimaAtualizacao,
-    patrocinado: false,
-    ...baseDemonstracao,
-  },
+  { id: "clinica-exemplo-curitiba", nome: "Exemplo fictício - clínica de avaliação", cidade: "Curitiba", regiao: "Curitiba e Região Metropolitana", categoria: "clínicas de avaliação", endereco: "Endereço demonstrativo, sem empresa real cadastrada", telefone: "Telefone demonstrativo", site: "Site demonstrativo", servicosOferecidos: ["avaliação clínica", "cardiologia"], verificadoEm: ultimaAtualizacao, patrocinado: false, ...baseDemonstracao },
+  { id: "laboratorio-exemplo-londrina", nome: "Exemplo fictício - laboratório", cidade: "Londrina", regiao: "Interior do Estado", categoria: "laboratórios", endereco: "Endereço demonstrativo, sem empresa real cadastrada", telefone: "Telefone demonstrativo", site: "Site demonstrativo", servicosOferecidos: ["hemograma", "exames laboratoriais"], verificadoEm: ultimaAtualizacao, patrocinado: false, ...baseDemonstracao },
+  { id: "imagem-exemplo-cascavel", nome: "Exemplo fictício - centro de imagem", cidade: "Cascavel", regiao: "Interior do Estado", categoria: "centros de imagem", endereco: "Endereço demonstrativo, sem empresa real cadastrada", telefone: "Telefone demonstrativo", site: "Site demonstrativo", servicosOferecidos: ["imagem", "avaliações especializadas"], verificadoEm: ultimaAtualizacao, patrocinado: false, ...baseDemonstracao },
 ];
-
 export const painelItens: PainelItem[] = [
   { id: "documento", titulo: "Documento oficial", detalhe: "RG, CNH ou documento aceito no edital." },
   { id: "convocacao", titulo: "Convocação salva", detalhe: "PDF ou print da publicação da banca." },
   { id: "exames", titulo: "Exames agendados", detalhe: "Datas e validade conferidas." },
   { id: "certidoes", titulo: "Certidões emitidas", detalhe: "Arquivos separados por órgão." },
 ];
-
 export const atualizacoes: AtualizacaoPortal[] = [
-  {
-    id: "atualizacao-demo-2026-07-18",
-    data: "2026-07-18",
-    titulo: "Preparação da versão 0.1.0",
-    descricao: "Registro demonstrativo da auditoria de produção, páginas legais, sitemap, robots e documentação de publicação.",
-    responsavelConferencia: "Equipe do projeto acadêmico",
-    versaoPortal: "0.1.0",
-    ...baseDemonstracao,
-  },
-  {
-    id: "conteudo-demo-2026-07-18",
-    data: "2026-07-18",
-    titulo: "Estruturação de conteúdo e transparência",
-    descricao: "Registro demonstrativo para classificar dados oficiais pendentes, estimativas e demonstrações sem fonte oficial cadastrada.",
-    responsavelConferencia: "Equipe do projeto acadêmico",
-    versaoPortal: "0.1.0",
-    ...baseDemonstracao,
-  },
+  ...atualizacoesEdital.map((item) => ({ id: item.id, data: item.data, titulo: item.titulo, descricao: item.descricao, responsavelConferencia: item.responsavelConferencia, versaoPortal: item.versaoPortal, tipo: item.tipo, fonte: item.fonte, urlFonte: item.urlFonte, dataAtualizacao: item.dataConferencia, observacao: `Item ${item.itemEdital}, página ${item.paginaPdf}. ${item.observacao}`, ativo: item.ativo })),
+  { id: "atualizacao-demo-2026-07-18", data: "2026-07-18", titulo: "Preparação da versão 0.1.0", descricao: "Registro demonstrativo da auditoria de produção, páginas legais, sitemap, robots e documentação de publicação.", responsavelConferencia: "Equipe do projeto acadêmico", versaoPortal: "0.1.0", ...baseDemonstracao },
 ];
-
 export const fontesRegistros: FonteRegistro[] = [
-  {
-    id: "fontes-edital",
-    informacao: "Etapas, documentos, exames, TAF e títulos",
-    classificacao: "oficial",
-    fonte: fontePendente,
-    urlFonte: "",
-    dataPublicacao: "pendente de cadastro",
-    dataConferencia: ultimaAtualizacao,
-    observacao: "Cadastrar edital, banca e publicações oficiais quando definidos.",
-    tipo: "oficial",
-    ativo: true,
-  },
-  {
-    id: "fontes-projecoes",
-    informacao: "Projeções de concorrência e nota de corte",
-    classificacao: "estimativa",
-    fonte: "Metodologia provisória interna",
-    urlFonte: "",
-    dataPublicacao: "não aplicável",
-    dataConferencia: ultimaAtualizacao,
-    observacao: "Não representa classificação oficial.",
-    tipo: "estimativa",
-    ativo: true,
-  },
-  {
-    id: "fontes-locais",
-    informacao: "Locais para exames",
-    classificacao: "demonstracao",
-    fonte: "Exemplos fictícios para estrutura de dados",
-    urlFonte: "",
-    dataPublicacao: "não aplicável",
-    dataConferencia: ultimaAtualizacao,
-    observacao: "Não há empresas reais cadastradas nesta etapa.",
-    tipo: "demonstracao",
-    ativo: true,
-  },
+  { id: "fontes-edital", informacao: "Edital nº 01/2026 - dados gerais, prova, regiões, barreiras, exames, TAF e títulos", classificacao: "oficial", fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataPublicacao: "06/07/2026", dataConferencia: ultimaAtualizacao, observacao: `Arquivo local conferido em ${ARQUIVO_LOCAL_EDITAL}. Não disponibilizar o PDF local publicamente; verificar retificações e a página oficial da FGV.`, tipo: "oficial", ativo: true },
+  { id: "fontes-projecoes", informacao: "Painel local e posição estimada", classificacao: "estimativa", fonte: "Metodologia provisória interna", urlFonte: "", dataPublicacao: "não aplicável", dataConferencia: ultimaAtualizacao, observacao: "Não representa classificação oficial, aprovação, convocação ou nota de corte oficial.", tipo: "estimativa", ativo: true },
+  { id: "fontes-locais", informacao: "Locais para exames", classificacao: "demonstracao", fonte: "Exemplos fictícios para estrutura de dados", urlFonte: "", dataPublicacao: "não aplicável", dataConferencia: ultimaAtualizacao, observacao: "Não há empresas reais cadastradas nesta etapa.", tipo: "demonstracao", ativo: true },
 ];
-
 export const atalhosBusca = [
   { termo: "exames médicos", icon: HeartPulse },
   { termo: "documentos", icon: FileText },
   { termo: "linha do tempo", icon: ClipboardCheck },
   { termo: "locais", icon: MapPinned },
+  { termo: "edital", icon: Brain },
+  { termo: "taf", icon: Activity },
 ];
-
-
-

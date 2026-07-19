@@ -11,6 +11,10 @@ export function Hero() {
           Informações organizadas sobre todas as etapas do concurso, concorrência por região
           e orientações práticas para o candidato.
         </p>
+        <div className="hero-seal" aria-label="Projeto independente">
+          <span className="hero-seal-icon" aria-hidden="true" />
+          Projeto independente
+        </div>
       </div>
       <div className="pcpr-mark" aria-hidden="true">PCPR</div>
     </section>

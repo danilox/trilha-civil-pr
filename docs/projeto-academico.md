@@ -7,7 +7,7 @@ Trilha Civil PR: portal independente de organização de informações sobre con
 Transparência, organização informacional e apoio prático ao candidato em concurso público de segurança pública.
 
 ## Problema
-Candidatos costumam consultar informações dispersas sobre etapas, documentos, exames, TAF, títulos e convocações. A falta de organização pode gerar perda de prazos, interpretação equivocada de estimativas e confusão entre dados oficiais e dados provisórios.
+Candidatos consultam informações dispersas sobre etapas, documentos, exames, TAF, títulos e convocações. A falta de organização pode gerar perda de prazos, interpretação equivocada de estimativas e confusão entre dados oficiais e dados provisórios.
 
 ## Justificativa
 Um portal independente, com dados classificados e metodologia explícita, ajuda o candidato a localizar informações práticas sem substituir edital, banca ou canais oficiais.
@@ -16,9 +16,10 @@ Um portal independente, com dados classificados e metodologia explícita, ajuda 
 Construir um portal responsivo e não oficial para organizar etapas, regiões, exames, TAF, títulos, dicas e fontes do concurso da Polícia Civil do Paraná.
 
 ## Objetivos específicos
-- Separar dados e interface.
-- Classificar informações como oficial, estimativa ou demonstração.
+- Separar dados oficiais, estimativas e demonstrações.
+- Registrar fonte, item do edital, página do PDF e data de conferência.
 - Criar páginas internas temáticas.
+- Implementar painel local sem coleta de dados pessoais.
 - Documentar fontes, limitações e metodologia.
 - Manter acessibilidade e responsividade.
 
@@ -26,7 +27,7 @@ Construir um portal responsivo e não oficial para organizar etapas, regiões, e
 Candidatos, pesquisadores e avaliadores acadêmicos interessados em organização de informações públicas de concursos.
 
 ## Metodologia
-Desenvolvimento incremental com Next.js, TypeScript e Tailwind CSS. O conteúdo demonstrativo é estruturado em `src/data` e revisado por lint, build e testes de viewport.
+Desenvolvimento incremental com Next.js, TypeScript e Tailwind CSS. A versão 0.2.0 migra dados oficiais do Edital nº 01/2026 para `src/data/edital.ts`, mantendo estimativas e demonstrações em estruturas separadas.
 
 ## Tecnologias
 Next.js App Router, TypeScript, Tailwind CSS, Lucide React, Recharts, ESLint, npm e Git.
@@ -35,13 +36,13 @@ Next.js App Router, TypeScript, Tailwind CSS, Lucide React, Recharts, ESLint, np
 Os requisitos funcionais e não funcionais estão detalhados em `docs/requisitos.md`.
 
 ## Resultados esperados
-Portal navegável, responsivo, com páginas internas, transparência de dados, documentação acadêmica e preparação para publicação futura.
+Portal navegável, responsivo, com páginas internas, transparência de dados, documentação acadêmica e preparação para publicação.
 
 ## Limitações
-Não há banco de dados, autenticação, coleta de dados pessoais, painel administrativo ou integração com fontes oficiais automatizadas no MVP.
-
+Não há banco de dados, autenticação, coleta de dados pessoais, painel administrativo ou integração automatizada com fontes oficiais. O PDF oficial local foi usado para conferência, mas retificações futuras precisam ser verificadas manualmente.
 
 ## Apresentação visual da versão 0.1.0
 A identidade visual definitiva do projeto está registrada em `public/images/trilha-civil-capa.png`. Essa imagem é usada como capa de apresentação, documentação e compartilhamento social, enquanto a homepage preserva título, descrição e aviso institucional como elementos HTML acessíveis.
+
 ## Trabalhos futuros
-Cadastrar URLs oficiais, automatizar revisão de fontes, ampliar dados regionais, adicionar testes automatizados e preparar publicação em domínio próprio.
+Monitorar retificações, ampliar testes automatizados, revisar metodologia de estimativas, configurar domínio real e evoluir recursos sem adicionar coleta de dados pessoais sem nova política.

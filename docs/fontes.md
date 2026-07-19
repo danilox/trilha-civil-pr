@@ -1,10 +1,10 @@
-﻿# Fontes
+# Fontes
 
 | Informação | Classificação | Fonte | Data de publicação | Data de conferência | Observações |
 |---|---|---|---|---|---|
-| Etapas, documentos, exames, TAF e títulos | oficial | Fonte oficial ainda não cadastrada. | pendente de cadastro | 18/07/2026 | Cadastrar edital, banca e publicações oficiais quando definidos. |
-| Projeções de concorrência e nota de corte | estimativa | Metodologia provisória interna | não aplicável | 18/07/2026 | Não representa classificação oficial. |
-| Locais para exames | demonstração | Exemplos fictícios para estrutura de dados | não aplicável | 18/07/2026 | Não há empresas reais cadastradas nesta etapa. |
+| Dados gerais, inscrições, prova objetiva, distribuição regional, reservas, cláusula de barreira, exames, TAF e títulos | oficial | Edital nº 01/2026 - Concurso Público da Polícia Civil do Paraná (`docs/fontes-oficiais/edital-pcpr-01-2026.pdf`) | 06/07/2026 | 19/07/2026 | Arquivo local conferido e normalizado. O PDF local não é disponibilizado publicamente pelo portal. Conferir retificações, anexos, convocações e página oficial da FGV. |
+| Página oficial da banca | oficial | https://conhecimento.fgv.br/concursos/pcpr26 | Conferir na própria página oficial | 19/07/2026 | URL oficial cadastrada para consulta externa; o conteúdo da página pode mudar. |
+| Painel local e posição estimada | estimativa | Metodologia provisória interna | não aplicável | 19/07/2026 | Não representa classificação oficial, aprovação, convocação ou nota de corte oficial. |
+| Locais para exames | demonstração | Exemplos fictícios para estrutura de dados | não aplicável | 19/07/2026 | Não há empresas reais cadastradas nesta etapa. |
 
 O portal é independente e não oficial. O candidato deve consultar sempre edital, banca e canais oficiais.
-

@@ -78,7 +78,7 @@ select {
 
 .hero-shell {
   position: relative;
-  min-height: 300px;
+  min-height: 328px;
   isolation: isolate;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -91,11 +91,11 @@ select {
   inset: 0;
   z-index: -3;
   background-image:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.76) 70%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.56)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.58) 43%, rgba(0, 0, 0, 0.18) 72%, rgba(0, 0, 0, 0.5) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.7)),
     url("/images/hero-pcpr.webp");
   background-size: cover;
-  background-position: left center;
+  background-position: 64% center;
   opacity: 1;
 }
 
@@ -105,17 +105,29 @@ select {
   inset: 0;
   z-index: -2;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.052) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.052) 1px, transparent 1px);
-  background-size: 76px 76px;
-  mask-image: linear-gradient(90deg, black, transparent 78%);
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 66px 66px;
+  mask-image: linear-gradient(90deg, black 0%, black 55%, transparent 92%);
+}
+
+.hero-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 76% 44%, rgba(37, 99, 235, 0.2), transparent 18rem),
+    radial-gradient(circle at 70% 48%, rgba(220, 38, 38, 0.18), transparent 15rem);
+  opacity: 0.82;
+  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
   display: grid;
-  min-height: 300px;
+  min-height: 328px;
   align-content: center;
   justify-items: center;
   padding: 2rem 1.25rem;
@@ -129,6 +141,7 @@ select {
   line-height: 1.02;
   letter-spacing: 0;
   color: #ffffff;
+  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.72);
 }
 
 .hero-content h1 > .hero-line {
@@ -140,27 +153,61 @@ select {
 }
 
 .hero-content p {
-  margin-top: 1rem;
+  margin-top: 1.1rem;
   max-width: 610px;
   font-size: clamp(0.95rem, 1.4vw, 1.18rem);
   line-height: 1.65;
   color: #d4d4d8;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.75);
+}
+
+.hero-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: fit-content;
+  margin-top: 1.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(5, 5, 5, 0.42);
+  padding: 0.72rem 1.2rem;
+  color: #d4d4d8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 18px 50px rgba(0, 0, 0, 0.32);
+}
+
+.hero-seal-icon {
+  position: relative;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  rotate: 45deg;
+}
+
+.hero-seal-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0.28rem;
+  border: 1px solid rgba(255, 255, 255, 0.52);
 }
 
 .pcpr-mark {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 31%;
+  top: 42%;
   z-index: -1;
   translate: -50% -50%;
-  font-size: clamp(6rem, 19vw, 18rem);
+  font-size: clamp(7rem, 23vw, 21rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0;
-  color: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.07);
   white-space: nowrap;
 }
-
 .search-panel,
 .summary-card,
 .candidate-panel,
@@ -401,11 +448,22 @@ select {
 
   .hero-shell,
   .hero-content {
-    min-height: 292px;
+    min-height: 340px;
+  }
+
+  .hero-bg {
+    background-position: 70% center;
   }
 
   .hero-content {
-    padding: 2rem;
+    justify-items: start;
+    max-width: 760px;
+    padding: 2.25rem 2.35rem;
+    text-align: left;
+  }
+
+  .hero-content h1 {
+    max-width: 690px;
   }
 }
 
@@ -418,7 +476,15 @@ select {
 
   .hero-shell,
   .hero-content {
-    min-height: 304px;
+    min-height: 350px;
+  }
+
+  .hero-content {
+    padding-left: 3.25rem;
+  }
+
+  .hero-content h1 {
+    max-width: 730px;
   }
 
   .summary-card,
@@ -687,5 +753,116 @@ select {
 @media (min-width: 1180px) {
   .internal-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.table-wrap {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.internal-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  color: #d4d4d8;
+  font-size: 0.82rem;
+}
+
+.internal-table caption {
+  padding-bottom: 0.7rem;
+  color: #a1a1aa;
+  text-align: left;
+}
+
+.internal-table th,
+.internal-table td {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.72rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.internal-table th {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.selector-grid,
+.calculator-grid {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.selector-grid label,
+.calculator-grid label {
+  display: grid;
+  gap: 0.45rem;
+  color: #d4d4d8;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.selector-grid select,
+.calculator-grid input {
+  min-height: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #000000;
+  padding: 0.6rem 0.7rem;
+  color: #ffffff;
+  outline: none;
+}
+
+.selector-grid select:focus,
+.calculator-grid input:focus {
+  border-color: rgba(255, 255, 255, 0.48);
+}
+
+.calculator-grid span,
+.calculator-grid b {
+  color: #a1a1aa;
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.calculator-grid b {
+  color: #ffffff;
+}
+
+.calculator-total {
+  display: block;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.85rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.internal-alert a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 720px) {
+  .selector-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calculator-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .timeline-tabs {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+  }
+
+  .timeline-tab {
+    min-height: 5.8rem;
+    font-size: 0.7rem;
   }
 }

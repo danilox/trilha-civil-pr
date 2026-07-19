@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Trilha Civil PR",
-  version: "0.1.0",
+  version: "0.2.0",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   title: "Trilha Civil PR — Guia independente do concurso",
   description:
@@ -9,6 +9,7 @@ export const siteConfig = {
   ogImage: "/images/og-trilha-civil-pr.png",
   routes: [
     "/",
+    "/edital",
     "/etapas",
     "/regioes",
     "/nota-de-corte",
