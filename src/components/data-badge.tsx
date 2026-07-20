@@ -1,4 +1,5 @@
-﻿import type { TipoInformacao } from "@/types/content";
+﻿import { Badge } from "@/components/ui";
+import type { TipoInformacao } from "@/types/content";
 
 const labels: Record<TipoInformacao, string> = {
   oficial: "Dado oficial",
@@ -6,6 +7,12 @@ const labels: Record<TipoInformacao, string> = {
   demonstracao: "Demonstração",
 };
 
+const variants: Record<TipoInformacao, "accent" | "blue" | "purple"> = {
+  oficial: "accent",
+  estimativa: "blue",
+  demonstracao: "purple",
+};
+
 export function DataBadge({ tipo }: { tipo: TipoInformacao }) {
-  return <span className={`data-badge data-badge-${tipo}`}>{labels[tipo]}</span>;
+  return <Badge className={`data-badge data-badge-${tipo}`} variant={variants[tipo]}>{labels[tipo]}</Badge>;
 }

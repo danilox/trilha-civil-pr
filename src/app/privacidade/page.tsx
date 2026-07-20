@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from "next";
-import { InternalPage } from "@/components/internal-page";
+import { InfoCard, InternalPage } from "@/components/internal-page";
 
 export const metadata: Metadata = {
   title: "Privacidade | Trilha Civil PR",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function PrivacidadePage() {
   return (
     <InternalPage title="Política de privacidade" description="Como o MVP trata dados no navegador e quais limites existem nesta versão.">
-      <section className="internal-card internal-card-wide">
+      <InfoCard>
         <h2>Sem cadastro e sem envio de documentos</h2>
         <p>O MVP não possui cadastro de usuário, login, upload de arquivos ou recebimento de documentos.</p>
         <h3>Projeção local</h3>
@@ -21,7 +21,7 @@ export default function PrivacidadePage() {
         <p>Esta versão não declara uso de cookies, analytics ou ferramentas externas de rastreamento.</p>
         <h3>Versões futuras</h3>
         <p>Se versões futuras adicionarem coleta, autenticação, banco de dados ou integrações, esta política deverá ser atualizada antes da publicação dessas mudanças.</p>
-      </section>
+      </InfoCard>
     </InternalPage>
   );
 }

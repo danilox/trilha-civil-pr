@@ -1,6 +1,7 @@
 ﻿import { exames } from "@/data/portal";
 import { DataBadge } from "@/components/data-badge";
 import { SectionHeading } from "@/components/section-heading";
+import { Badge, Card, Disclaimer } from "@/components/ui";
 
 export function ExamsSection() {
   return (
@@ -15,7 +16,7 @@ export function ExamsSection() {
         {exames.map((exame) => {
           const Icon = exame.icon;
           return (
-            <article key={exame.id} className="info-card">
+            <Card key={exame.id} as="article" className="info-card" interactive>
               <div className="flex items-start justify-between gap-3">
                 <div className="flex h-12 w-12 items-center justify-center border border-white/10 bg-white text-black">
                   {Icon ? <Icon aria-hidden="true" className="h-5 w-5" /> : null}
@@ -27,15 +28,14 @@ export function ExamsSection() {
               <p className="mt-3 text-xs leading-5 text-zinc-500">{exame.validade}</p>
               <ul className="mt-6 space-y-2">
                 {exame.preparo.map((item) => (
-                  <li key={item} className="border-t border-white/10 pt-2 text-sm text-zinc-300">
-                    {item}
-                  </li>
+                  <li key={item}><Badge variant="neutral">{item}</Badge></li>
                 ))}
               </ul>
-            </article>
+            </Card>
           );
         })}
       </div>
+      <Disclaimer className="mt-8">As informações sobre exames são organizadas para conferência. O edital e a convocação oficial prevalecem.</Disclaimer>
     </section>
   );
 }

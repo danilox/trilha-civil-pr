@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 
 import { Calculator, Save } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { Card, Button, Disclaimer, Input, MetricCard, Select, StatusBadge } from "@/components/ui";
 import { limiteTotalTitulos, modalidades, obterBarreira, regioesOficiais } from "@/data/edital";
 import { formatarDecimal, formatarNumero } from "@/lib/format";
 import type { ModalidadeCota } from "@/types/edital";
@@ -49,17 +50,44 @@ export function CandidatePanel() {
     setErro(""); setPainel((atual) => ({ ...atual, acertos: String(valores.acertos), titulos: String(valores.titulos).replace(".", ","), projetado: true }));
   }
   return (
-    <aside className="candidate-panel" aria-labelledby="painel-candidato">
-      <div className="flex items-start justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">Simulação local</p><h2 id="painel-candidato" className="mt-1 text-xl font-semibold text-white">Painel do candidato</h2></div><div className="flex h-9 w-9 items-center justify-center border border-white/10 bg-white text-black"><Calculator aria-hidden="true" className="h-4 w-4" /></div></div>
+    <Card as="aside" className="candidate-panel" aria-labelledby="painel-candidato" padding="md">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">Simulação local</p>
+          <h2 id="painel-candidato" className="mt-1 text-xl font-semibold text-white">Painel do candidato</h2>
+        </div>
+        <div className="flex h-9 w-9 items-center justify-center border border-white/10 bg-white text-black"><Calculator aria-hidden="true" className="h-4 w-4" /></div>
+      </div>
       <form className="mt-4 grid gap-3" onSubmit={(event) => { event.preventDefault(); projetar(); }} noValidate>
-        <label className="grid gap-1 text-xs font-semibold text-zinc-400">Região<select value={painel.regiao} onChange={(event) => setPainel((atual) => ({ ...atual, regiao: event.target.value }))} className="h-9 border border-white/10 bg-black px-3 text-sm text-white outline-none focus:border-white/40" required>{regioesOficiais.map((regiao) => <option key={regiao.id} value={regiao.id}>{regiao.titulo}</option>)}</select></label>
-        <label className="grid gap-1 text-xs font-semibold text-zinc-400">Modalidade<select value={painel.modalidade} onChange={(event) => setPainel((atual) => ({ ...atual, modalidade: event.target.value as ModalidadeCota }))} className="h-9 border border-white/10 bg-black px-3 text-sm text-white outline-none focus:border-white/40" required>{modalidades.map((modalidade) => <option key={modalidade.id} value={modalidade.id}>{modalidade.label}</option>)}</select></label>
-        <div className="grid grid-cols-2 gap-3"><label className="grid gap-1 text-xs font-semibold text-zinc-400">Acertos<input aria-describedby="erro-painel ajuda-acertos" inputMode="numeric" type="number" min={limites.acertosMin} max={limites.acertosMax} step="1" value={painel.acertos} onChange={(event) => setPainel((atual) => ({ ...atual, acertos: event.target.value }))} className="h-9 border border-white/10 bg-black px-3 text-sm text-white outline-none focus:border-white/40" required /></label><label className="grid gap-1 text-xs font-semibold text-zinc-400">Títulos<input aria-describedby="erro-painel ajuda-titulos" inputMode="decimal" type="number" min={limites.titulosMin} max={limites.titulosMax} step="0.1" value={painel.titulos.replace(",", ".")} onChange={(event) => setPainel((atual) => ({ ...atual, titulos: event.target.value }))} className="h-9 border border-white/10 bg-black px-3 text-sm text-white outline-none focus:border-white/40" required /></label></div>
-        <p id="ajuda-acertos" className="sr-only">Acertos devem ser número inteiro entre zero e cem.</p><p id="ajuda-titulos" className="sr-only">Pontos de títulos devem ficar entre zero e quinze vírgula cinco.</p><p id="erro-painel" className="min-h-5 text-[11px] leading-5 text-zinc-300" aria-live="polite">{erro}</p>
-        <button type="submit" className="h-10 border border-white/20 bg-white text-xs font-bold uppercase tracking-[0.16em] text-black transition hover:bg-zinc-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Ver projeção</button>
+        <Select label="Região" value={painel.regiao} onChange={(event) => setPainel((atual) => ({ ...atual, regiao: event.target.value }))} required options={regioesOficiais.map((regiao) => ({ label: regiao.titulo, value: regiao.id }))} />
+        <Select label="Modalidade" value={painel.modalidade} onChange={(event) => setPainel((atual) => ({ ...atual, modalidade: event.target.value as ModalidadeCota }))} required options={modalidades.map((modalidade) => ({ label: modalidade.label, value: modalidade.id }))} />
+        <div className="grid grid-cols-2 gap-3">
+          <Input label="Acertos" hint="Inteiro entre 0 e 100." error={erro || undefined} inputMode="numeric" type="number" min={limites.acertosMin} max={limites.acertosMax} step="1" value={painel.acertos} onChange={(event) => setPainel((atual) => ({ ...atual, acertos: event.target.value }))} required />
+          <Input label="Títulos" hint={`Até ${formatarDecimal(limites.titulosMax)} pontos.`} inputMode="decimal" type="number" min={limites.titulosMin} max={limites.titulosMax} step="0.1" value={painel.titulos.replace(",", ".")} onChange={(event) => setPainel((atual) => ({ ...atual, titulos: event.target.value }))} required />
+        </div>
+        <p id="erro-painel" className="min-h-5 text-[11px] leading-5 text-zinc-300" aria-live="polite">{erro}</p>
+        <Button type="submit" className="w-full">Ver projeção</Button>
       </form>
-      <div className="mt-4 border border-white/10 bg-black/35 p-3" aria-live="polite"><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-500">Leitura do painel</p><strong className="mt-2 block text-xl font-semibold text-white">{resultado.faixa}</strong><div className="mt-3 grid grid-cols-2 gap-2 text-xs text-zinc-400"><span className="border border-white/10 p-2">Objetiva: {formatarDecimal(resultado.acertos)}</span><span className="border border-white/10 p-2">Títulos: {formatarDecimal(resultado.titulos)}</span><span className="border border-white/10 p-2">Final: {formatarDecimal(resultado.notaFinal)}</span><span className="border border-white/10 p-2">Mínimo: {formatarDecimal(50)}</span><span className="border border-white/10 p-2">Barreira: {formatarNumero(resultado.barreira)}ª</span><span className="border border-white/10 p-2">Estimativa: {formatarNumero(resultado.posicaoEstimada)}ª</span></div><p className="mt-3 text-[11px] leading-5 text-zinc-500">{resultado.atingiuMinimo ? "Atingiu o mínimo oficial de 50 pontos, mas depende da cláusula de barreira, empates e aprovação em todas as demais fases." : "Abaixo de 50 pontos, não atinge o mínimo objetivo previsto para Agente."}</p><p className="mt-2 text-[11px] leading-5 text-zinc-500">A posição é estimada e não oficial. Este painel nunca declara aprovação.</p></div>
+      <div className="mt-4" aria-live="polite">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-500">Leitura do painel</p>
+            <strong className="mt-2 block text-xl font-semibold text-white">{resultado.faixa}</strong>
+          </div>
+          <StatusBadge status={resultado.atingiuMinimo ? "success" : "danger"}>{resultado.atingiuMinimo ? "mínimo" : "atenção"}</StatusBadge>
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <MetricCard label="Objetiva" value={formatarDecimal(resultado.acertos)} description="pontos" />
+          <MetricCard label="Títulos" value={formatarDecimal(resultado.titulos)} description="pontos" />
+          <MetricCard label="Final" value={formatarDecimal(resultado.notaFinal)} description="nota estimada" />
+          <MetricCard label="Mínimo" value={formatarDecimal(50)} description="objetiva" />
+          <MetricCard label="Barreira" value={`${formatarNumero(resultado.barreira)}ª`} description="limite oficial" />
+          <MetricCard label="Estimativa" value={`${formatarNumero(resultado.posicaoEstimada)}ª`} description="não oficial" />
+        </div>
+        <p className="mt-3 text-[11px] leading-5 text-zinc-500">{resultado.atingiuMinimo ? "Atingiu o mínimo oficial de 50 pontos, mas depende da cláusula de barreira, empates e aprovação em todas as demais fases." : "Abaixo de 50 pontos, não atinge o mínimo objetivo previsto para Agente."}</p>
+        <Disclaimer className="mt-3" title="Projeção demonstrativa">A posição é estimada e não oficial. Este painel nunca declara aprovação.</Disclaimer>
+      </div>
       <p className="mt-3 flex items-center gap-2 text-[11px] leading-5 text-zinc-500"><Save aria-hidden="true" className="h-3.5 w-3.5" />Dados salvos somente neste navegador.</p>
-    </aside>
+    </Card>
   );
 }

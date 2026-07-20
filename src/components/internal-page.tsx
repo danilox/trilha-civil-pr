@@ -2,6 +2,7 @@
 import { NoticeBar } from "@/components/notice-bar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { Card, Disclaimer } from "@/components/ui";
 import { avisoNaoOficial } from "@/data/portal";
 
 export type InternalPageProps = {
@@ -21,14 +22,14 @@ export function InternalPage({ title, description, children }: InternalPageProps
           <span aria-hidden="true">/</span>
           <span>{title}</span>
         </nav>
-        <header className="internal-hero">
+        <Card as="header" className="internal-hero" padding="lg">
           <p>Trilha Civil PR</p>
           <h1>{title}</h1>
           <div className="internal-hero-grid">
             <p>{description}</p>
-            <aside aria-label="Aviso institucional">{avisoNaoOficial}</aside>
+            <Disclaimer title="Aviso institucional">{avisoNaoOficial}</Disclaimer>
           </div>
-        </header>
+        </Card>
         {children}
       </main>
       <SiteFooter />
@@ -41,5 +42,5 @@ export function InfoGrid({ children }: { children: React.ReactNode }) {
 }
 
 export function InfoCard({ children, id }: { children: React.ReactNode; id?: string }) {
-  return <article id={id} className="internal-card">{children}</article>;
+  return <Card as="article" id={id} className="internal-card" interactive>{children}</Card>;
 }

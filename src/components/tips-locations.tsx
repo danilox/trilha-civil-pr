@@ -1,6 +1,7 @@
 ﻿import { MapPin } from "lucide-react";
 import { dicas, locaisExame } from "@/data/portal";
 import { SectionHeading } from "@/components/section-heading";
+import { Badge, Card, Disclaimer, EmptyState, StatusBadge } from "@/components/ui";
 
 export function TipsLocations() {
   return (
@@ -15,46 +16,46 @@ export function TipsLocations() {
         <div className="mt-12 grid gap-5 lg:grid-cols-[0.92fr_1.08fr]">
           <div className="grid gap-3 sm:grid-cols-2">
             {dicas.map((dica) => (
-              <article key={dica.titulo} className="tip-card">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">
-                  {dica.categoria}
-                </p>
+              <Card key={dica.titulo} as="article" className="tip-card" interactive>
+                <StatusBadge status="info">{dica.categoria}</StatusBadge>
                 <h3 className="mt-3 text-lg font-semibold text-white">{dica.titulo}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{dica.descricao}</p>
-              </article>
+              </Card>
             ))}
           </div>
 
-          <div className="location-panel">
+          <Card as="div" className="location-panel">
             <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
               <h3 className="text-2xl font-semibold text-white">Locais para exames</h3>
               <MapPin aria-hidden="true" className="h-5 w-5 text-zinc-500" />
             </div>
-            <div className="divide-y divide-white/10">
-              {locaisExame.map((local) => (
-                <article key={`${local.nome}-${local.cidade}`} className="py-5">
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                      <h4 className="text-lg font-semibold text-white">{local.nome}</h4>
-                      <p className="mt-1 text-sm text-zinc-500">{local.cidade}</p>
+            {locaisExame.length ? (
+              <div className="divide-y divide-white/10">
+                {locaisExame.map((local) => (
+                  <article key={`${local.nome}-${local.cidade}`} className="py-5">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div>
+                        <h4 className="text-lg font-semibold text-white">{local.nome}</h4>
+                        <p className="mt-1 text-sm text-zinc-500">{local.cidade}</p>
+                      </div>
+                      <Badge variant="purple">demonstração</Badge>
                     </div>
-                    <span className="badge">estimativa</span>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {local.servicosOferecidos.map((item) => (
-                      <span key={item} className="border border-white/10 px-2 py-1 text-xs text-zinc-300">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="mt-4 text-sm leading-6 text-zinc-400">{local.observacao}</p>
-                </article>
-              ))}
-            </div>
-          </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {local.servicosOferecidos.map((item) => (
+                        <Badge key={item} variant="neutral">{item}</Badge>
+                      ))}
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-zinc-400">{local.observacao}</p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <EmptyState title="Nenhum local cadastrado" description="Os locais serão exibidos quando houver registros conferidos ou exemplos demonstrativos." />
+            )}
+            <Disclaimer>O portal não garante preço, atendimento, disponibilidade ou aceitação do exame. Confirme diretamente com o estabelecimento e com o edital.</Disclaimer>
+          </Card>
         </div>
       </div>
     </section>
   );
 }
-

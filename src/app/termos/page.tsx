@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from "next";
-import { InternalPage } from "@/components/internal-page";
+import { InfoCard, InternalPage } from "@/components/internal-page";
 
 export const metadata: Metadata = {
   title: "Termos e responsabilidade | Trilha Civil PR",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function TermosPage() {
   return (
     <InternalPage title="Termos e responsabilidade" description="Limites do uso das informações e prevalência do edital e canais oficiais.">
-      <section className="internal-card internal-card-wide">
+      <InfoCard>
         <h2>Caráter independente</h2>
         <p>O Trilha Civil PR é independente e não oficial. Não possui vínculo com a Polícia Civil do Paraná, banca organizadora ou órgão público.</p>
         <h3>Prevalência do edital</h3>
@@ -25,7 +25,7 @@ export default function TermosPage() {
         <p>O conteúdo não constitui orientação médica, jurídica ou institucional oficial.</p>
         <h3>Atualizações</h3>
         <p>Informações podem ser alteradas sem aviso prévio quando houver atualização oficial, correção de conteúdo ou revisão metodológica.</p>
-      </section>
+      </InfoCard>
     </InternalPage>
   );
 }

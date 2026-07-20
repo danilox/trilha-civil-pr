@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { Badge, Card, EmptyState, Input } from "@/components/ui";
 import { dicas, etapas, exames, locaisExame, regioes } from "@/data/portal";
 
 const documentos = [
@@ -19,30 +20,32 @@ export function SearchHub() {
   );
 
   return (
-    <section id="busca" className="search-panel">
-      <label htmlFor="busca-portal" className="sr-only">Buscar etapa, exame, região ou documento</label>
-      <div className="flex items-center gap-3">
-        <Search aria-hidden="true" className="h-5 w-5 shrink-0 text-zinc-500" />
-        <input
-          id="busca-portal"
+    <Card as="section" id="busca" className="search-panel" aria-label="Busca do portal">
+      <div className="flex items-end gap-3">
+        <Search aria-hidden="true" className="mb-3 h-5 w-5 shrink-0 text-zinc-500" />
+        <Input
+          label="Buscar no portal"
           value={termo}
           onChange={(event) => setTermo(event.target.value)}
-          className="w-full bg-transparent text-base font-medium text-white outline-none placeholder:text-zinc-600 sm:text-lg"
           placeholder="Buscar etapa, exame, região ou documento..."
         />
       </div>
 
       {termo ? (
-        <div className="mt-4 grid gap-2 md:grid-cols-2">
-          {resultado.slice(0, 4).map((item) => (
-            <article key={`${item.grupo}-${item.titulo}`} className="border border-white/10 bg-black/35 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-600">{item.grupo}</p>
-              <h3 className="mt-1 text-sm font-semibold text-white">{item.titulo}</h3>
-              <p className="mt-1 text-xs leading-5 text-zinc-400">{item.detalhe}</p>
-            </article>
-          ))}
-        </div>
+        resultado.length ? (
+          <div className="mt-4 grid gap-2 md:grid-cols-2">
+            {resultado.slice(0, 4).map((item) => (
+              <Card as="article" key={`${item.grupo}-${item.titulo}`} padding="sm" interactive>
+                <Badge variant="neutral">{item.grupo}</Badge>
+                <h3 className="mt-2 text-sm font-semibold text-white">{item.titulo}</h3>
+                <p className="mt-1 text-xs leading-5 text-zinc-400">{item.detalhe}</p>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <EmptyState className="mt-4" title="Nenhum resultado encontrado" description="Tente buscar por etapa, exame, região, documento ou local." />
+        )
       ) : null}
-    </section>
+    </Card>
   );
 }

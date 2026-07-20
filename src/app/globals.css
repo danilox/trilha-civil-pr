@@ -2078,3 +2078,177 @@ body {
     opacity: 0.16;
   }
 }
+/* v0.4.0 design-system application layer. */
+.desktop-nav .ds-navigation-item:first-child {
+  color: var(--ds-text-secondary);
+}
+
+.desktop-nav .ds-navigation-item:first-child::after {
+  display: none;
+}
+
+.desktop-nav .ds-navigation-item-active,
+.desktop-nav .ds-navigation-item:hover {
+  color: var(--ds-accent-hover) !important;
+}
+
+.desktop-nav .ds-navigation-item-active::after {
+  display: block;
+}
+
+.mobile-nav .ds-navigation-item {
+  justify-content: flex-start;
+  border-color: rgba(255, 255, 255, 0.10);
+  padding: 0.72rem 0.8rem;
+}
+
+.mobile-nav .ds-navigation-item-active {
+  border-color: var(--ds-accent);
+  background: rgba(255, 196, 0, 0.08);
+}
+
+.panel-access.ds-button {
+  min-height: 2.65rem;
+  padding-inline: 1.05rem;
+}
+
+.search-panel .ds-field,
+.candidate-panel .ds-field {
+  gap: 0.35rem;
+}
+
+.search-panel .ds-field-label {
+  color: var(--ds-text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.search-panel .ds-field-control {
+  border-color: transparent;
+  background: transparent;
+  padding-inline: 0;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  font-weight: 650;
+}
+
+.search-panel .ds-field-control:focus-visible {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.candidate-panel .ds-metric-card,
+.side-card .ds-metric-card {
+  min-height: auto;
+  gap: 0.35rem;
+  padding: 0.65rem;
+  box-shadow: none;
+}
+
+.candidate-panel .ds-metric-topline,
+.side-card .ds-metric-topline {
+  font-size: 0.58rem;
+}
+
+.candidate-panel .ds-metric-value,
+.side-card .ds-metric-value {
+  font-family: var(--ds-font-ui);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.05;
+}
+
+.candidate-panel .ds-metric-description,
+.side-card .ds-metric-description {
+  font-size: 0.68rem;
+}
+
+.timeline-tab.ds-button {
+  justify-content: flex-start;
+  min-height: 3rem;
+  padding: 0.7rem 0.8rem;
+  text-transform: none;
+}
+
+.timeline-tab[aria-selected="true"] {
+  border-color: var(--ds-accent);
+  background: rgba(255, 196, 0, 0.10);
+  color: var(--ds-accent-hover);
+}
+
+.timeline-detail.ds-card,
+.methodology-list .ds-card,
+.methodology-grid .ds-card {
+  box-shadow: none;
+}
+
+.internal-hero.ds-card,
+.internal-card.ds-card,
+.internal-alert,
+.chart-card.ds-card,
+.info-card.ds-card,
+.tip-card.ds-card,
+.location-panel.ds-card {
+  border-color: var(--ds-border-subtle);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
+    var(--ds-surface);
+  box-shadow: var(--ds-shadow-panel);
+}
+
+.internal-alert {
+  border-color: rgba(255, 196, 0, 0.30);
+  background: rgba(255, 196, 0, 0.075);
+  color: var(--ds-text-secondary);
+}
+
+.internal-hero .ds-disclaimer {
+  align-self: start;
+}
+
+.lower-card .ds-badge,
+.info-card .ds-badge,
+.tip-card .ds-badge,
+.location-panel .ds-badge,
+.timeline-detail .ds-badge {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.calculator-grid .ds-field-control,
+.selector-grid .ds-field-control {
+  min-height: 2.75rem;
+}
+
+.calculator-grid .ds-field-hint {
+  max-width: 42rem;
+}
+
+.ds-empty-state p + p {
+  margin-top: 0.35rem;
+}
+
+@media (min-width: 1024px) {
+  .timeline-tab.ds-button {
+    min-height: 5.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .candidate-panel .grid-cols-2,
+  .candidate-panel .sm\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-button {
+    width: 100%;
+  }
+
+  .mobile-menu-button.ds-button {
+    width: 2.65rem;
+  }
+}
