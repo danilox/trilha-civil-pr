@@ -1,65 +1,72 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 
 export function AnimatedHeroBackground() {
-  const shellRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const element = shellRef.current;
-    if (!element) return;
+    const background = backgroundRef.current;
+    const hero = background?.closest<HTMLElement>(".hero-shell");
+    if (!background || !hero) return;
 
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!finePointer.matches || reducedMotion.matches) return;
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    if (!finePointer.matches || !desktop.matches || reducedMotion.matches) return;
 
     let frame = 0;
     let targetX = 0;
     let targetY = 0;
 
-    const apply = () => {
+    const applyPointer = () => {
       frame = 0;
-      element.style.setProperty("--hero-x", `${targetX.toFixed(2)}px`);
-      element.style.setProperty("--hero-y", `${targetY.toFixed(2)}px`);
+      background.style.setProperty("--hero-pointer-x", `${targetX.toFixed(2)}px`);
+      background.style.setProperty("--hero-pointer-y", `${targetY.toFixed(2)}px`);
+    };
+
+    const queuePointerUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(applyPointer);
     };
 
     const onMove = (event: PointerEvent) => {
-      const rect = element.getBoundingClientRect();
+      const rect = hero.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
-      targetX = Math.max(-8, Math.min(8, x * 16));
-      targetY = Math.max(-6, Math.min(6, y * 12));
-      if (!frame) frame = window.requestAnimationFrame(apply);
+      targetX = Math.max(-6, Math.min(6, x * 12));
+      targetY = Math.max(-4.5, Math.min(4.5, y * 9));
+      queuePointerUpdate();
     };
 
     const onLeave = () => {
       targetX = 0;
       targetY = 0;
-      if (!frame) frame = window.requestAnimationFrame(apply);
+      queuePointerUpdate();
     };
 
-    element.addEventListener("pointermove", onMove);
-    element.addEventListener("pointerleave", onLeave);
+    hero.addEventListener("pointermove", onMove);
+    hero.addEventListener("pointerleave", onLeave);
 
     return () => {
-      element.removeEventListener("pointermove", onMove);
-      element.removeEventListener("pointerleave", onLeave);
+      hero.removeEventListener("pointermove", onMove);
+      hero.removeEventListener("pointerleave", onLeave);
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
 
   return (
-    <div ref={shellRef} className="hero-motion" aria-hidden="true">
-      <div className="hero-layer hero-main-image" />
-      <div className="hero-layer hero-urban-depth" />
-      <div className="hero-layer hero-pcpr-layer">PCPR</div>
-      <div className="hero-layer hero-fog hero-fog-a" />
-      <div className="hero-layer hero-fog hero-fog-b" />
-      <div className="hero-layer hero-lightbar hero-lightbar-cool" />
-      <div className="hero-layer hero-lightbar hero-lightbar-clear" />
-      <div className="hero-layer hero-light-beam" />
-      <div className="hero-layer hero-contrast-field" />
-      <div className="hero-layer hero-vignette" />
+    <div ref={backgroundRef} className="hero-background" aria-hidden="true">
+      <div className="hero-background-layer hero-background-base" />
+      <div className="hero-background-layer hero-background-city" />
+      <div className="hero-background-layer hero-background-pcpr">PCPR</div>
+      <div className="hero-background-layer hero-background-officer" />
+      <div className="hero-background-layer hero-background-vehicle" />
+      <div className="hero-background-layer hero-background-fog hero-background-fog-a" />
+      <div className="hero-background-layer hero-background-fog hero-background-fog-b" />
+      <div className="hero-background-layer hero-background-light-beam" />
+      <div className="hero-background-layer hero-background-beacon hero-background-beacon-cool" />
+      <div className="hero-background-layer hero-background-beacon hero-background-beacon-clear" />
+      <div className="hero-background-layer hero-background-vignette" />
     </div>
   );
 }

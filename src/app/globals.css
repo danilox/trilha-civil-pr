@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/design-system.css";
 
 :root {
   --background: #030303;
@@ -1757,5 +1758,323 @@ body {
   .hero-content .hero-title {
     max-width: 760px;
     font-size: 6.75rem;
+  }
+}
+/* Cinematic animated hero background layers. */
+.hero-background,
+.hero-background-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-background {
+  z-index: 0;
+  overflow: hidden;
+  --hero-pointer-x: 0px;
+  --hero-pointer-y: 0px;
+  background: #020406;
+  contain: paint;
+}
+
+.hero-background-layer {
+  transform: translate3d(0, 0, 0);
+}
+
+.hero-background-base {
+  inset: -2.25%;
+  z-index: 0;
+  background-image: url("/images/hero-pcpr-motion.webp");
+  background-position: center center;
+  background-size: cover;
+  opacity: 0.98;
+  transform: translate3d(calc(var(--hero-pointer-x) * -0.24), calc(var(--hero-pointer-y) * -0.16), 0) scale(1);
+  animation: heroBackgroundZoom 24s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.hero-background-city {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.91) 0%, rgba(0, 0, 0, 0.72) 34%, rgba(0, 0, 0, 0.22) 66%, rgba(0, 0, 0, 0.58) 100%),
+    linear-gradient(180deg, rgba(2, 4, 6, 0.16), rgba(2, 4, 6, 0.82)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 78px),
+    radial-gradient(circle at 77% 42%, rgba(195, 208, 220, 0.09), transparent 18rem);
+  opacity: 0.96;
+  transform: translate3d(calc(var(--hero-pointer-x) * -0.06), calc(var(--hero-pointer-y) * -0.04), 0);
+  animation: heroBackgroundCityDrift 35s ease-in-out infinite alternate;
+}
+
+.hero-background-pcpr {
+  z-index: 2;
+  top: 9%;
+  left: 3%;
+  width: max-content;
+  height: max-content;
+  color: rgba(245, 247, 250, 0.052);
+  font-size: clamp(8rem, 25vw, 23rem);
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 0.82;
+  text-shadow: 0 0 28px rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  transform: translate3d(calc(var(--hero-pointer-x) * 0.12), calc(var(--hero-pointer-y) * 0.08), 0);
+  animation: heroBackgroundPcprDrift 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.hero-background-officer {
+  z-index: 3;
+  right: 54%;
+  left: -4%;
+  background:
+    radial-gradient(ellipse at 36% 45%, rgba(255, 255, 255, 0.10), transparent 11rem),
+    radial-gradient(ellipse at 35% 58%, rgba(0, 0, 0, 0.42), transparent 17rem),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.28), transparent 64%);
+  mix-blend-mode: screen;
+  opacity: 0.48;
+  transform: translate3d(calc(var(--hero-pointer-x) * 0.08), calc(var(--hero-pointer-y) * 0.06), 0);
+  animation: heroBackgroundOfficerDrift 24s ease-in-out infinite alternate;
+}
+
+.hero-background-vehicle {
+  z-index: 4;
+  left: 55%;
+  background:
+    radial-gradient(ellipse at 65% 47%, rgba(255, 255, 255, 0.08), transparent 16rem),
+    radial-gradient(ellipse at 76% 55%, rgba(255, 196, 0, 0.055), transparent 18rem),
+    linear-gradient(270deg, rgba(255, 255, 255, 0.035), transparent 58%);
+  opacity: 0.62;
+  transform: translate3d(calc(var(--hero-pointer-x) * -0.10), calc(var(--hero-pointer-y) * -0.07), 0);
+  animation: heroBackgroundVehicleDrift 26s ease-in-out infinite alternate;
+}
+
+.hero-background-fog {
+  z-index: 5;
+  filter: blur(46px);
+  mix-blend-mode: screen;
+  opacity: 0.20;
+  will-change: transform, opacity;
+}
+
+.hero-background-fog-a {
+  inset: 8% -20% 16% -14%;
+  background:
+    radial-gradient(ellipse at 28% 70%, rgba(245, 247, 250, 0.15), transparent 34%),
+    radial-gradient(ellipse at 68% 62%, rgba(150, 165, 178, 0.12), transparent 31%);
+  transform: translate3d(calc(var(--hero-pointer-x) * 0.05), calc(var(--hero-pointer-y) * 0.03), 0) scale(1.02);
+  animation: heroBackgroundFogA 38s ease-in-out infinite alternate;
+}
+
+.hero-background-fog-b {
+  inset: 26% -32% 4% -24%;
+  background:
+    radial-gradient(ellipse at 46% 72%, rgba(245, 247, 250, 0.11), transparent 35%),
+    radial-gradient(ellipse at 80% 68%, rgba(120, 132, 145, 0.12), transparent 32%);
+  opacity: 0.14;
+  transform: translate3d(calc(var(--hero-pointer-x) * -0.07), calc(var(--hero-pointer-y) * -0.04), 0) scale(1.08);
+  animation: heroBackgroundFogB 43s ease-in-out infinite alternate;
+}
+
+.hero-background-light-beam {
+  z-index: 6;
+  top: -38%;
+  left: 48%;
+  width: 22%;
+  height: 172%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.085), transparent);
+  filter: blur(42px);
+  opacity: 0;
+  transform: translate3d(calc(var(--hero-pointer-x) * 0.07), calc(var(--hero-pointer-y) * 0.05), 0) rotate(27deg);
+  animation: heroBackgroundLightBeam 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.hero-background-beacon {
+  z-index: 7;
+  top: 24%;
+  left: 63%;
+  width: 35%;
+  height: 48%;
+  filter: blur(50px);
+  mix-blend-mode: screen;
+  transform: translate3d(calc(var(--hero-pointer-x) * -0.13), calc(var(--hero-pointer-y) * -0.08), 0);
+  will-change: opacity, transform;
+}
+
+.hero-background-beacon-cool {
+  background: radial-gradient(ellipse at 52% 38%, rgba(196, 215, 230, 0.24), rgba(132, 148, 164, 0.08) 34%, transparent 70%);
+  opacity: 0.28;
+  animation: heroBackgroundBeaconCool 4.2s ease-in-out infinite alternate;
+}
+
+.hero-background-beacon-clear {
+  background: radial-gradient(ellipse at 72% 42%, rgba(255, 255, 255, 0.20), rgba(210, 216, 222, 0.075) 34%, transparent 72%);
+  opacity: 0.22;
+  animation: heroBackgroundBeaconClear 3.6s ease-in-out infinite alternate-reverse;
+}
+
+.hero-background-vignette {
+  z-index: 8;
+  background:
+    radial-gradient(ellipse at 24% 48%, rgba(0, 0, 0, 0.78), transparent 30rem),
+    radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.62)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.78), transparent 54%, rgba(0, 0, 0, 0.28)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.78));
+}
+
+@keyframes heroBackgroundZoom {
+  from { transform: translate3d(calc(var(--hero-pointer-x) * -0.24), calc(var(--hero-pointer-y) * -0.16), 0) scale(1); opacity: 0.95; }
+  to { transform: translate3d(calc(var(--hero-pointer-x) * -0.24 - 0.5%), calc(var(--hero-pointer-y) * -0.16 - 0.3%), 0) scale(1.04); opacity: 1; }
+}
+
+@keyframes heroBackgroundCityDrift {
+  from { transform: translate3d(calc(var(--hero-pointer-x) * -0.06 - 3px), calc(var(--hero-pointer-y) * -0.04), 0); }
+  to { transform: translate3d(calc(var(--hero-pointer-x) * -0.06 + 3px), calc(var(--hero-pointer-y) * -0.04 - 2px), 0); }
+}
+
+@keyframes heroBackgroundPcprDrift {
+  from { transform: translate3d(calc(var(--hero-pointer-x) * 0.12 - 5px), calc(var(--hero-pointer-y) * 0.08), 0); }
+  to { transform: translate3d(calc(var(--hero-pointer-x) * 0.12 + 7px), calc(var(--hero-pointer-y) * 0.08 - 3px), 0); }
+}
+
+@keyframes heroBackgroundOfficerDrift {
+  from { transform: translate3d(calc(var(--hero-pointer-x) * 0.08 - 2px), calc(var(--hero-pointer-y) * 0.06), 0); }
+  to { transform: translate3d(calc(var(--hero-pointer-x) * 0.08 + 2px), calc(var(--hero-pointer-y) * 0.06 - 2px), 0); }
+}
+
+@keyframes heroBackgroundVehicleDrift {
+  from { transform: translate3d(calc(var(--hero-pointer-x) * -0.10 - 3px), calc(var(--hero-pointer-y) * -0.07), 0); }
+  to { transform: translate3d(calc(var(--hero-pointer-x) * -0.10 + 3px), calc(var(--hero-pointer-y) * -0.07 - 2px), 0); }
+}
+
+@keyframes heroBackgroundFogA {
+  from { translate: -4% 0; opacity: 0.12; }
+  to { translate: 5% -1%; opacity: 0.22; }
+}
+
+@keyframes heroBackgroundFogB {
+  from { translate: 5% 1%; opacity: 0.10; }
+  to { translate: -5% 0; opacity: 0.16; }
+}
+
+@keyframes heroBackgroundLightBeam {
+  0%, 48% { opacity: 0; translate: -42% 0; }
+  62% { opacity: 0.08; }
+  100% { opacity: 0; translate: 112% 0; }
+}
+
+@keyframes heroBackgroundBeaconCool {
+  from { opacity: 0.12; scale: 0.94; }
+  to { opacity: 0.28; scale: 1.06; }
+}
+
+@keyframes heroBackgroundBeaconClear {
+  from { opacity: 0.10; scale: 0.96; }
+  to { opacity: 0.24; scale: 1.08; }
+}
+
+@media (max-width: 1023px) {
+  .hero-background {
+    --hero-pointer-x: 0px !important;
+    --hero-pointer-y: 0px !important;
+  }
+
+  .hero-background-base {
+    background-position: 38% center;
+    animation-duration: 28s;
+  }
+
+  .hero-background-officer,
+  .hero-background-vehicle {
+    animation: none;
+  }
+
+  .hero-background-fog {
+    filter: blur(34px);
+    opacity: 0.12;
+  }
+
+  .hero-background-beacon {
+    left: 58%;
+    width: 44%;
+    opacity: 0.65;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-background-base {
+    inset: -1.5%;
+    background-position: 28% center;
+    animation-duration: 30s;
+  }
+
+  .hero-background-city {
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.52) 56%, rgba(0, 0, 0, 0.74)),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.80)),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 76px),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 68px);
+  }
+
+  .hero-background-pcpr {
+    top: 18%;
+    left: -10%;
+    opacity: 0.72;
+  }
+
+  .hero-background-fog,
+  .hero-background-light-beam {
+    opacity: 0.08;
+  }
+
+  .hero-background-light-beam {
+    animation: none;
+  }
+
+  .hero-background-beacon {
+    top: 25%;
+    left: 54%;
+    width: 50%;
+    height: 44%;
+    filter: blur(38px);
+  }
+
+  .hero-background-vignette {
+    background:
+      radial-gradient(ellipse at 28% 48%, rgba(0, 0, 0, 0.70), transparent 20rem),
+      radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.62)),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.34) 62%, rgba(0, 0, 0, 0.62)),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.80));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-base,
+  .hero-background-city,
+  .hero-background-pcpr,
+  .hero-background-officer,
+  .hero-background-vehicle,
+  .hero-background-fog,
+  .hero-background-light-beam,
+  .hero-background-beacon {
+    animation: none !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  .hero-background {
+    --hero-pointer-x: 0px !important;
+    --hero-pointer-y: 0px !important;
+  }
+
+  .hero-background-fog,
+  .hero-background-light-beam {
+    opacity: 0.08;
+  }
+
+  .hero-background-beacon {
+    opacity: 0.16;
   }
 }
