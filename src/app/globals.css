@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../styles/design-system.css";
+@import "../styles/exam-countdown.css";
 
 :root {
   --background: #030303;
@@ -104,18 +105,6 @@ select {
 
 .hero-layer {
   transform: translate3d(0, 0, 0);
-}
-
-.hero-main-image {
-  inset: -3.5%;
-  z-index: 0;
-  background-image: url("/images/hero-pcpr-motion.webp");
-  background-size: cover;
-  background-position: 58% center;
-  opacity: 0.98;
-  transform: translate3d(calc(var(--hero-x) * -0.38), calc(var(--hero-y) * -0.28), 0) scale(1.01);
-  animation: heroCinematicZoom 24s ease-in-out infinite alternate;
-  will-change: transform;
 }
 
 .hero-urban-depth {
@@ -1014,12 +1003,6 @@ select {
   }
 }
 @media (max-width: 767px) {
-  .hero-main-image {
-    inset: -2%;
-    background-position: 44% center;
-    animation-duration: 28s;
-  }
-
   .hero-pcpr-layer {
     left: -10%;
     top: 18%;
@@ -1051,10 +1034,6 @@ select {
 }
 
 @media (min-width: 1200px) {
-  .hero-main-image {
-    background-position: 58% center;
-  }
-
   .hero-contrast-field {
     background:
       radial-gradient(ellipse at 18% 50%, rgba(0, 0, 0, 0.76), transparent 28rem),
@@ -1063,17 +1042,12 @@ select {
 }
 
 @media (min-width: 1800px) {
-  .hero-main-image {
-    background-position: 55% center;
-  }
-
   .hero-content h1 {
     max-width: 760px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-main-image,
   .hero-pcpr-layer,
   .hero-fog,
   .hero-lightbar,
@@ -1350,10 +1324,6 @@ body {
   border-color: rgba(255, 255, 255, 0.18);
   border-radius: 7px;
   box-shadow: var(--shadow-premium);
-}
-
-.hero-main-image {
-  background-position: 55% center;
 }
 
 .hero-urban-depth {
@@ -1648,8 +1618,18 @@ body {
 
 @media (max-width: 767px) {
   .notice-bar-inner {
+    align-items: flex-start;
     justify-content: flex-start;
+    padding-block: 0.45rem;
     font-size: 0.56rem;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+  }
+
+  .notice-bar-inner p {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   .site-header-inner {
@@ -1725,7 +1705,7 @@ body {
   max-width: 680px;
   margin: 0;
   color: #ffffff;
-  font-size: clamp(3.15rem, 7.6vw, 6.45rem);
+  font-size: clamp(3.15rem, 7vw, 5rem);
   font-weight: 950;
   line-height: 0.84;
   letter-spacing: 0;
@@ -1757,7 +1737,7 @@ body {
 @media (min-width: 1800px) {
   .hero-content .hero-title {
     max-width: 760px;
-    font-size: 6.75rem;
+    font-size: 5.5rem;
   }
 }
 /* Cinematic animated hero background layers. */
@@ -1784,7 +1764,7 @@ body {
 .hero-background-base {
   inset: -2.25%;
   z-index: 0;
-  background-image: url("/images/hero-pcpr-motion.webp");
+  background-image: url("/images/hero-pcpr-motion.png");
   background-position: center center;
   background-size: cover;
   opacity: 0.98;
@@ -2250,5 +2230,597 @@ body {
 
   .mobile-menu-button.ds-button {
     width: 2.65rem;
+  }
+}
+/* Hero refinement: Paraná outline, generic vest label support, and soft beacon lights. */
+.hero-background-parana-map {
+  z-index: 6;
+  inset: auto;
+  top: 13%;
+  left: 4.5%;
+  width: clamp(10.5rem, 24vw, 22rem);
+  height: auto;
+  color: var(--accent-strong);
+  opacity: 0.14;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(255, 196, 0, 0.16));
+  transform: translate3d(calc(var(--hero-pointer-x) * 0.045), calc(var(--hero-pointer-y) * 0.035), 0) scale(1);
+  animation: heroParanaBreath 10s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.hero-background-beacon {
+  z-index: 7;
+  top: 30%;
+  left: 67%;
+  width: 24%;
+  height: 30%;
+  filter: blur(24px);
+  mix-blend-mode: screen;
+  transform: translate3d(calc(var(--hero-pointer-x) * -0.08), calc(var(--hero-pointer-y) * -0.05), 0);
+  will-change: opacity, transform;
+}
+
+.hero-background-beacon-blue {
+  background:
+    radial-gradient(ellipse at 62% 32%, rgba(0, 118, 255, 0.42), rgba(0, 118, 255, 0.12) 24%, transparent 58%),
+    radial-gradient(ellipse at 54% 66%, rgba(120, 178, 255, 0.18), transparent 62%);
+  opacity: 0.08;
+  animation: heroBeaconBluePulse 4.8s ease-in-out infinite;
+}
+
+.hero-background-beacon-red {
+  background:
+    radial-gradient(ellipse at 42% 34%, rgba(255, 64, 64, 0.38), rgba(255, 64, 64, 0.11) 25%, transparent 58%),
+    radial-gradient(ellipse at 48% 70%, rgba(255, 118, 96, 0.15), transparent 64%);
+  opacity: 0.07;
+  animation: heroBeaconRedPulse 4.8s ease-in-out infinite;
+}
+
+@keyframes heroParanaBreath {
+  from {
+    opacity: 0.10;
+    transform: translate3d(calc(var(--hero-pointer-x) * 0.045), calc(var(--hero-pointer-y) * 0.035), 0) scale(0.985);
+  }
+  to {
+    opacity: 0.18;
+    transform: translate3d(calc(var(--hero-pointer-x) * 0.045), calc(var(--hero-pointer-y) * 0.035), 0) scale(1.015);
+  }
+}
+
+@keyframes heroBeaconBluePulse {
+  0%, 100% {
+    opacity: 0.05;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08), calc(var(--hero-pointer-y) * -0.05), 0) scale(0.94);
+  }
+  48% {
+    opacity: 0.15;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08 + 2px), calc(var(--hero-pointer-y) * -0.05), 0) scale(1.06);
+  }
+}
+
+@keyframes heroBeaconRedPulse {
+  0%, 100% {
+    opacity: 0.14;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08 - 2px), calc(var(--hero-pointer-y) * -0.05), 0) scale(1.04);
+  }
+  48% {
+    opacity: 0.04;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08), calc(var(--hero-pointer-y) * -0.05), 0) scale(0.94);
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero-background-parana-map {
+    top: 11%;
+    left: 3%;
+    width: clamp(9rem, 34vw, 16rem);
+    opacity: 0.12;
+  }
+
+  .hero-background-beacon {
+    top: 30%;
+    left: 61%;
+    width: 34%;
+    height: 28%;
+    filter: blur(22px);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-background-parana-map {
+    top: 9%;
+    left: -4%;
+    width: clamp(9rem, 52vw, 15rem);
+    opacity: 0.10;
+  }
+
+  .hero-background-beacon {
+    top: 27%;
+    left: 58%;
+    width: 42%;
+    height: 27%;
+    filter: blur(18px);
+  }
+
+  .hero-background-beacon-blue,
+  .hero-background-beacon-red {
+    opacity: 0.08;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero-background-beacon {
+    top: 29%;
+    left: 68%;
+    width: 22%;
+    height: 29%;
+  }
+}
+
+@media (min-width: 1920px) {
+  .hero-background-parana-map {
+    left: 5.5%;
+    width: 24rem;
+  }
+
+  .hero-background-beacon {
+    top: 28%;
+    left: 69%;
+    width: 21%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-parana-map,
+  .hero-background-beacon-blue,
+  .hero-background-beacon-red {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .hero-background-parana-map {
+    opacity: 0.12;
+  }
+
+  .hero-background-beacon-blue,
+  .hero-background-beacon-red {
+    opacity: 0.08;
+  }
+}
+
+/* Cinematic weather, rotating lightbar, and geographic Parana outline. */
+.hero-background-layer,
+.hero-background-parana-map {
+  pointer-events: none;
+}
+
+.hero-background-pcpr {
+  z-index: 1;
+}
+
+.hero-background-officer,
+.hero-background-vehicle {
+  z-index: 2;
+}
+
+.hero-background-fog {
+  z-index: 3;
+}
+
+.hero-background-light-beam,
+.hero-background-beacon-ambient {
+  z-index: 4;
+}
+
+.hero-background-beacon-ambient {
+  top: 20%;
+  left: 54%;
+  width: 46%;
+  height: 64%;
+  border-radius: 50%;
+  filter: blur(34px);
+  mix-blend-mode: screen;
+  transform: translate3d(calc(var(--hero-pointer-x) * -0.08), calc(var(--hero-pointer-y) * -0.05), 0);
+  will-change: transform, opacity;
+}
+
+.hero-background-beacon-ambient-blue {
+  background:
+    radial-gradient(ellipse at 66% 27%, rgba(28, 118, 224, 0.34), rgba(28, 118, 224, 0.10) 20%, transparent 48%),
+    radial-gradient(ellipse at 58% 62%, rgba(77, 149, 218, 0.13), transparent 52%),
+    linear-gradient(164deg, transparent 36%, rgba(78, 150, 218, 0.08) 51%, transparent 68%);
+  animation: heroBeaconAmbientBlue 4.4s ease-in-out infinite;
+}
+
+.hero-background-beacon-ambient-red {
+  background:
+    radial-gradient(ellipse at 50% 28%, rgba(222, 58, 66, 0.30), rgba(222, 58, 66, 0.09) 20%, transparent 47%),
+    radial-gradient(ellipse at 48% 70%, rgba(201, 74, 68, 0.12), transparent 54%),
+    linear-gradient(22deg, transparent 38%, rgba(208, 66, 70, 0.075) 52%, transparent 69%);
+  animation: heroBeaconAmbientRed 4.4s ease-in-out infinite;
+}
+
+.hero-background-beacon-rotor {
+  --beacon-origin-x: 61%;
+  z-index: 11;
+  top: 9%;
+  left: 55%;
+  width: 45%;
+  height: 64%;
+  border-radius: 50%;
+  filter: blur(28px);
+  mix-blend-mode: screen;
+  transform-origin: var(--beacon-origin-x) 43%;
+  will-change: transform, opacity;
+}
+
+.hero-background-beacon-rotor-blue {
+  background:
+    conic-gradient(from 12deg at var(--beacon-origin-x) 43%, transparent 0 7%, rgba(35, 126, 232, 0.44) 13%, rgba(82, 164, 244, 0.16) 20%, transparent 31% 100%),
+    radial-gradient(ellipse 18% 10% at var(--beacon-origin-x) 43%, rgba(102, 180, 255, 0.52), rgba(35, 126, 232, 0.13) 50%, transparent 78%);
+  animation: heroBeaconRotateBlue 4.4s linear infinite;
+}
+
+.hero-background-beacon-rotor-red {
+  background:
+    conic-gradient(from 192deg at var(--beacon-origin-x) 43%, transparent 0 7%, rgba(224, 54, 64, 0.40) 13%, rgba(238, 95, 88, 0.14) 20%, transparent 31% 100%),
+    radial-gradient(ellipse 18% 10% at var(--beacon-origin-x) 43%, rgba(255, 114, 105, 0.46), rgba(224, 54, 64, 0.12) 50%, transparent 78%);
+  animation: heroBeaconRotateRed 4.4s linear infinite;
+}
+
+.hero-background-rain {
+  inset: -18%;
+  z-index: 6;
+  mix-blend-mode: screen;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.30) 38%, #000 61%, #000 100%);
+  will-change: transform, opacity;
+}
+
+.hero-background-rain-far {
+  background-image: linear-gradient(112deg, transparent 45%, rgba(214, 224, 232, 0.20) 47%, transparent 49%);
+  background-position: center;
+  background-size: 31px 106px;
+  opacity: 0.10;
+  animation: heroRainFar 18s linear infinite;
+}
+
+.hero-background-rain-near {
+  z-index: 7;
+  background-image: linear-gradient(112deg, transparent 44%, rgba(229, 236, 242, 0.24) 47%, transparent 50%);
+  background-position: center;
+  background-size: 47px 154px;
+  filter: blur(0.7px);
+  opacity: 0.14;
+  animation: heroRainNear 9s linear infinite;
+}
+
+.hero-background-parana-map {
+  z-index: 8;
+  inset: auto;
+  top: 10%;
+  left: 28%;
+  width: clamp(17rem, 29vw, 27rem);
+  height: auto;
+  overflow: visible;
+  opacity: 1;
+  fill: none;
+  filter: drop-shadow(0 0 7px rgba(255, 196, 0, 0.18)) drop-shadow(0 0 16px rgba(24, 154, 151, 0.08));
+  transform: translate3d(calc(var(--hero-pointer-x) * 0.045), calc(var(--hero-pointer-y) * 0.035), 0);
+  animation: none;
+  will-change: transform;
+}
+
+.hero-parana-fill {
+  fill: rgba(2, 12, 14, 0.09);
+  stroke: rgba(255, 196, 0, 0.15);
+  stroke-width: 1;
+}
+
+.hero-parana-outline,
+.hero-parana-accent {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.hero-parana-outline {
+  stroke: rgba(255, 205, 52, 0.48);
+  stroke-width: 1.55;
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+  animation:
+    heroParanaDraw 2.6s cubic-bezier(0.32, 0, 0.16, 1) forwards,
+    heroParanaGlow 10s ease-in-out 2.6s infinite alternate;
+}
+
+.hero-parana-accent {
+  stroke: rgba(62, 190, 178, 0.34);
+  stroke-width: 0.85;
+  stroke-dasharray: 12 42;
+  stroke-dashoffset: 1500;
+  animation:
+    heroParanaDraw 2.6s cubic-bezier(0.32, 0, 0.16, 1) forwards,
+    heroParanaAccentFlow 10s linear 2.6s infinite;
+}
+
+.hero-background-city {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.54) 35%, rgba(0, 0, 0, 0.16) 68%, rgba(0, 0, 0, 0.48) 100%),
+    linear-gradient(180deg, rgba(2, 4, 6, 0.10), rgba(2, 4, 6, 0.70)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.020) 0 1px, transparent 1px 78px);
+  opacity: 0.78;
+}
+
+.hero-background-vignette {
+  z-index: 10;
+  background:
+    radial-gradient(ellipse at 24% 48%, rgba(0, 0, 0, 0.58), transparent 30rem),
+    radial-gradient(ellipse at center, transparent 43%, rgba(0, 0, 0, 0.56)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.65), transparent 54%, rgba(0, 0, 0, 0.22)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.72));
+}
+
+@keyframes heroBeaconRotateBlue {
+  0% {
+    opacity: 0.12;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.10), calc(var(--hero-pointer-y) * -0.06), 0) rotate(0deg) scale(0.98);
+  }
+  50% {
+    opacity: 0.22;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.10), calc(var(--hero-pointer-y) * -0.06), 0) rotate(180deg) scale(1.02);
+  }
+  100% {
+    opacity: 0.12;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.10), calc(var(--hero-pointer-y) * -0.06), 0) rotate(360deg) scale(0.98);
+  }
+}
+
+@keyframes heroBeaconRotateRed {
+  0% {
+    opacity: 0.21;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.10), calc(var(--hero-pointer-y) * -0.06), 0) rotate(180deg) scale(1.02);
+  }
+  50% {
+    opacity: 0.12;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.10), calc(var(--hero-pointer-y) * -0.06), 0) rotate(360deg) scale(0.98);
+  }
+  100% {
+    opacity: 0.21;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.10), calc(var(--hero-pointer-y) * -0.06), 0) rotate(540deg) scale(1.02);
+  }
+}
+
+@keyframes heroBeaconAmbientBlue {
+  0%, 100% {
+    opacity: 0.08;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08 - 4px), calc(var(--hero-pointer-y) * -0.05), 0) scale(0.98);
+  }
+  52% {
+    opacity: 0.16;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08 + 4px), calc(var(--hero-pointer-y) * -0.05), 0) scale(1.03);
+  }
+}
+
+@keyframes heroBeaconAmbientRed {
+  0%, 100% {
+    opacity: 0.15;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08 + 4px), calc(var(--hero-pointer-y) * -0.05), 0) scale(1.02);
+  }
+  52% {
+    opacity: 0.07;
+    transform: translate3d(calc(var(--hero-pointer-x) * -0.08 - 4px), calc(var(--hero-pointer-y) * -0.05), 0) scale(0.98);
+  }
+}
+
+@keyframes heroRainFar {
+  from {
+    opacity: 0.07;
+    transform: translate3d(-2%, -7%, 0);
+  }
+  to {
+    opacity: 0.11;
+    transform: translate3d(2%, 7%, 0);
+  }
+}
+
+@keyframes heroRainNear {
+  from {
+    opacity: 0.10;
+    transform: translate3d(-2.5%, -9%, 0);
+  }
+  to {
+    opacity: 0.15;
+    transform: translate3d(2.5%, 9%, 0);
+  }
+}
+
+@keyframes heroParanaDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes heroParanaGlow {
+  from {
+    opacity: 0.72;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes heroParanaAccentFlow {
+  from {
+    stroke-dashoffset: 0;
+    opacity: 0.52;
+  }
+  to {
+    stroke-dashoffset: -216;
+    opacity: 0.88;
+  }
+}
+
+@media (max-width: 1279px) {
+  .hero-background-base {
+    background-position: 66% center;
+  }
+
+  .hero-background-parana-map {
+    top: 11%;
+    left: 30%;
+    width: clamp(16rem, 38vw, 23rem);
+  }
+
+  .hero-background-beacon-rotor {
+    --beacon-origin-x: 63%;
+    left: 52%;
+    width: 49%;
+  }
+
+  .hero-background-beacon-ambient {
+    left: 51%;
+    width: 49%;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-background-base {
+    background-position: 78% center;
+  }
+
+  .hero-background-rain-far {
+    background-size: 42px 134px;
+    opacity: 0.06;
+  }
+
+  .hero-background-rain-near {
+    background-size: 62px 190px;
+    opacity: 0.075;
+  }
+
+  .hero-background-rain {
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.18) 35%, #000 64%);
+  }
+
+  .hero-background-beacon-rotor {
+    top: 16%;
+    left: 43%;
+    width: 58%;
+    height: 52%;
+    filter: blur(22px);
+    transform-origin: 72% 42%;
+  }
+
+  .hero-background-beacon-ambient {
+    top: 23%;
+    left: 49%;
+    width: 52%;
+    height: 48%;
+    filter: blur(24px);
+  }
+
+  .hero-background-parana-map {
+    top: 8%;
+    left: 28%;
+    width: clamp(12.5rem, 62vw, 15rem);
+  }
+
+  .hero-parana-outline {
+    stroke: rgba(255, 205, 52, 0.42);
+  }
+
+  .hero-parana-accent {
+    stroke: rgba(62, 190, 178, 0.26);
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero-background-parana-map {
+    left: 27%;
+    width: clamp(20rem, 26vw, 28rem);
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .hero-background-beacon-rotor {
+    --beacon-origin-x: 78%;
+    left: 58%;
+    width: 42%;
+  }
+
+  .hero-background-beacon-ambient {
+    left: 58%;
+    width: 42%;
+  }
+}
+
+@media (min-width: 1920px) {
+  .hero-background-beacon-rotor {
+    --beacon-origin-x: 63%;
+    top: 8%;
+    left: 57%;
+    width: 43%;
+  }
+
+  .hero-background-beacon-ambient {
+    left: 56%;
+    width: 44%;
+  }
+
+  .hero-background-parana-map {
+    top: 11%;
+    left: 25%;
+    width: 29rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-beacon-ambient,
+  .hero-background-beacon-rotor,
+  .hero-background-rain,
+  .hero-background-parana-map,
+  .hero-parana-outline,
+  .hero-parana-accent {
+    animation: none !important;
+  }
+
+  .hero-background-beacon-ambient-blue,
+  .hero-background-beacon-ambient-red {
+    opacity: 0.10;
+    transform: none;
+  }
+
+  .hero-background-beacon-rotor-blue,
+  .hero-background-beacon-rotor-red {
+    opacity: 0.14;
+    transform: none;
+  }
+
+  .hero-background-rain-far {
+    opacity: 0.06;
+    transform: none;
+  }
+
+  .hero-background-rain-near {
+    opacity: 0.08;
+    transform: none;
+  }
+
+  .hero-background-parana-map {
+    transform: none;
+  }
+
+  .hero-parana-outline,
+  .hero-parana-accent {
+    stroke-dashoffset: 0;
+    opacity: 0.82;
   }
 }
