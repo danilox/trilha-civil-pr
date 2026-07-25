@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 export function AnimatedHeroBackground() {
@@ -13,11 +14,11 @@ export function AnimatedHeroBackground() {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const desktop = window.matchMedia("(min-width: 1024px)");
-    if (!finePointer.matches || !desktop.matches || reducedMotion.matches) return;
 
     let frame = 0;
     let targetX = 0;
     let targetY = 0;
+    let heroVisible = true;
 
     const applyPointer = () => {
       frame = 0;
@@ -30,6 +31,7 @@ export function AnimatedHeroBackground() {
     };
 
     const onMove = (event: PointerEvent) => {
+      if (background.dataset.active !== "true") return;
       const rect = hero.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
@@ -44,27 +46,58 @@ export function AnimatedHeroBackground() {
       queuePointerUpdate();
     };
 
-    hero.addEventListener("pointermove", onMove);
-    hero.addEventListener("pointerleave", onLeave);
+    const updateActivity = () => {
+      const active = heroVisible && document.visibilityState === "visible";
+      background.dataset.active = String(active);
+      if (!active) onLeave();
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        heroVisible = entry.isIntersecting;
+        updateActivity();
+      },
+      { rootMargin: "120px 0px", threshold: 0.01 },
+    );
+
+    observer.observe(hero);
+    document.addEventListener("visibilitychange", updateActivity);
+    updateActivity();
+
+    const pointerEnabled = finePointer.matches && desktop.matches && !reducedMotion.matches;
+    if (pointerEnabled) {
+      hero.addEventListener("pointermove", onMove);
+      hero.addEventListener("pointerleave", onLeave);
+    }
 
     return () => {
-      hero.removeEventListener("pointermove", onMove);
-      hero.removeEventListener("pointerleave", onLeave);
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", updateActivity);
+      if (pointerEnabled) {
+        hero.removeEventListener("pointermove", onMove);
+        hero.removeEventListener("pointerleave", onLeave);
+      }
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
 
   return (
-    <div ref={backgroundRef} className="hero-background" aria-hidden="true">
-      <div className="hero-background-layer hero-background-base" />
+    <div ref={backgroundRef} className="hero-background" data-active="true" aria-hidden="true">
+      <div className="hero-background-layer hero-background-base">
+        <Image
+          src="/images/hero-pcpr-motion-v2.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          quality={84}
+          preload
+          className="hero-background-image"
+        />
+      </div>
       <div className="hero-background-layer hero-background-pcpr">PCPR</div>
-      <div className="hero-background-layer hero-background-officer" />
-      <div className="hero-background-layer hero-background-vehicle" />
       <div className="hero-background-layer hero-background-fog hero-background-fog-a" />
-      <div className="hero-background-layer hero-background-fog hero-background-fog-b" />
       <div className="hero-background-layer hero-background-light-beam" />
-      <div className="hero-background-layer hero-background-beacon-ambient hero-background-beacon-ambient-blue" />
-      <div className="hero-background-layer hero-background-beacon-ambient hero-background-beacon-ambient-red" />
+      <div className="hero-background-layer hero-background-beacon-ambient" />
       <div className="hero-background-layer hero-background-beacon-rotor hero-background-beacon-rotor-blue" />
       <div className="hero-background-layer hero-background-beacon-rotor hero-background-beacon-rotor-red" />
       <div className="hero-background-layer hero-background-rain hero-background-rain-far" />
