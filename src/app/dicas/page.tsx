@@ -14,9 +14,14 @@ export const metadata: Metadata = {
 
 export default function DicasPage() {
   return (
-    <InternalPage title="Dicas" description="Orientações práticas para documentos, prazos, logística e preparação para convocação.">
-      <section className="internal-alert">{avisoLocais}</section>
-      <InfoGrid>
+    <InternalPage
+      title="Dicas"
+      description="Orientações práticas para documentos, prazos, logística e preparação para convocação."
+      audited
+      className="internal-page-lot4 internal-page-dicas"
+    >
+      <aside className="internal-alert" role="note">{avisoLocais}</aside>
+      <InfoGrid className="internal-grid-dicas">
         {dicas.map((dica) => (
           <InfoCard key={dica.id}>
             <div className="flex items-start justify-between gap-3"><h2>{dica.titulo}</h2><DataBadge tipo={dica.tipo} /></div>

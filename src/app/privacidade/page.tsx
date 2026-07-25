@@ -9,7 +9,12 @@ export const metadata: Metadata = {
 
 export default function PrivacidadePage() {
   return (
-    <InternalPage title="Política de privacidade" description="Como o MVP trata dados no navegador e quais limites existem nesta versão.">
+    <InternalPage
+      title="Política de privacidade"
+      description="Como o MVP trata dados no navegador e quais limites existem nesta versão."
+      audited
+      className="internal-page-lot4 internal-page-prose"
+    >
       <InfoCard>
         <h2>Sem cadastro e sem envio de documentos</h2>
         <p>O MVP não possui cadastro de usuário, login, upload de arquivos ou recebimento de documentos.</p>

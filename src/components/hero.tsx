@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, BarChart3, ClipboardList, Radar, Target } from "lucide-react";
 import { AnimatedHeroBackground } from "@/components/animated-hero-background";
+import { ExamCountdown } from "@/components/exam-countdown";
 
 const heroHighlights = [
   { icon: Radar, title: "Acompanhe", text: "status e etapas oficiais" },
@@ -21,6 +22,8 @@ export function Hero() {
         <p className="hero-description">
           Guia independente com dados oficiais, estimativas identificadas e ferramentas locais para acompanhar o concurso da <span className="no-break">PC-PR</span>.
         </p>
+
+        <ExamCountdown />
 
         <div className="hero-highlight-grid" aria-label="Principais recursos da página inicial">
           {heroHighlights.map((item) => {

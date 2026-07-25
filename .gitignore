@@ -47,3 +47,5 @@ dev-server.err.log
 dev-server.out.log
 
 docs/fontes-oficiais/*.pdf
+.vercel
+.env*

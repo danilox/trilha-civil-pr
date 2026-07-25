@@ -36,6 +36,8 @@ export function CandidatePanel() {
   useEffect(() => { const frame = window.requestAnimationFrame(() => { setPainel(lerEstadoInicial()); setHidratado(true); }); return () => window.cancelAnimationFrame(frame); }, []);
   useEffect(() => { if (hidratado) window.localStorage.setItem(storageKey, JSON.stringify(painel)); }, [hidratado, painel]);
   const valores = useMemo(() => ({ acertos: numeroValido(painel.acertos, limites.acertosMin, limites.acertosMax, true), titulos: numeroValido(painel.titulos, limites.titulosMin, limites.titulosMax) }), [painel.acertos, painel.titulos]);
+  const acertosInvalidos = Boolean(erro) && valores.acertos === null;
+  const titulosInvalidos = Boolean(erro) && valores.titulos === null;
   const resultado = useMemo(() => {
     const acertos = valores.acertos ?? 0;
     const titulos = valores.titulos ?? 0;
@@ -62,8 +64,8 @@ export function CandidatePanel() {
         <Select label="Região" value={painel.regiao} onChange={(event) => setPainel((atual) => ({ ...atual, regiao: event.target.value }))} required options={regioesOficiais.map((regiao) => ({ label: regiao.titulo, value: regiao.id }))} />
         <Select label="Modalidade" value={painel.modalidade} onChange={(event) => setPainel((atual) => ({ ...atual, modalidade: event.target.value as ModalidadeCota }))} required options={modalidades.map((modalidade) => ({ label: modalidade.label, value: modalidade.id }))} />
         <div className="grid grid-cols-2 gap-3">
-          <Input label="Acertos" hint="Inteiro entre 0 e 100." error={erro || undefined} inputMode="numeric" type="number" min={limites.acertosMin} max={limites.acertosMax} step="1" value={painel.acertos} onChange={(event) => setPainel((atual) => ({ ...atual, acertos: event.target.value }))} required />
-          <Input label="Títulos" hint={`Até ${formatarDecimal(limites.titulosMax)} pontos.`} inputMode="decimal" type="number" min={limites.titulosMin} max={limites.titulosMax} step="0.1" value={painel.titulos.replace(",", ".")} onChange={(event) => setPainel((atual) => ({ ...atual, titulos: event.target.value }))} required />
+          <Input id="painel-acertos" label="Acertos" hint="Inteiro entre 0 e 100." aria-invalid={acertosInvalidos || undefined} aria-describedby={`painel-acertos-hint${acertosInvalidos ? " erro-painel" : ""}`} inputMode="numeric" type="number" min={limites.acertosMin} max={limites.acertosMax} step="1" value={painel.acertos} onChange={(event) => setPainel((atual) => ({ ...atual, acertos: event.target.value }))} required />
+          <Input id="painel-titulos" label="Títulos" hint={`Até ${formatarDecimal(limites.titulosMax)} pontos.`} aria-invalid={titulosInvalidos || undefined} aria-describedby={`painel-titulos-hint${titulosInvalidos ? " erro-painel" : ""}`} inputMode="decimal" type="number" min={limites.titulosMin} max={limites.titulosMax} step="0.1" value={painel.titulos.replace(",", ".")} onChange={(event) => setPainel((atual) => ({ ...atual, titulos: event.target.value }))} required />
         </div>
         <p id="erro-painel" className="min-h-5 text-[11px] leading-5 text-zinc-300" aria-live="polite">{erro}</p>
         <Button type="submit" className="w-full">Ver projeção</Button>

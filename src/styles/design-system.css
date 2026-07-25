@@ -372,8 +372,8 @@
 
 .ds-tooltip-trigger {
   display: inline-flex;
-  min-width: 1.75rem;
-  min-height: 1.75rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--ds-border-subtle);

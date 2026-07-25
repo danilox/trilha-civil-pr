@@ -4,23 +4,26 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Card, Disclaimer } from "@/components/ui";
 import { avisoNaoOficial } from "@/data/portal";
+import { cn } from "@/lib/cn";
 
 export type InternalPageProps = {
   title: string;
   description: string;
   children: React.ReactNode;
+  audited?: boolean;
+  className?: string;
 };
 
-export function InternalPage({ title, description, children }: InternalPageProps) {
+export function InternalPage({ title, description, children, audited = false, className }: InternalPageProps) {
   return (
     <>
       <NoticeBar />
       <SiteHeader />
-      <main className="internal-shell">
+      <main className={cn("internal-shell", className)}>
         <nav aria-label="Breadcrumb" className="breadcrumb">
           <Link href="/">Início</Link>
           <span aria-hidden="true">/</span>
-          <span>{title}</span>
+          <span aria-current={audited ? "page" : undefined}>{title}</span>
         </nav>
         <Card as="header" className="internal-hero" padding="lg">
           <p>Trilha Civil PR</p>
@@ -37,8 +40,8 @@ export function InternalPage({ title, description, children }: InternalPageProps
   );
 }
 
-export function InfoGrid({ children }: { children: React.ReactNode }) {
-  return <section className="internal-grid">{children}</section>;
+export function InfoGrid({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <section className={cn("internal-grid", className)}>{children}</section>;
 }
 
 export function InfoCard({ children, id }: { children: React.ReactNode; id?: string }) {

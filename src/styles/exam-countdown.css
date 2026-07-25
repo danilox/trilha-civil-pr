@@ -1,0 +1,201 @@
+.hero-countdown {
+  width: min(100%, 640px);
+  margin-top: 1.05rem;
+  border: 1px solid rgba(255, 196, 0, 0.36);
+  border-left: 3px solid var(--ds-accent);
+  border-radius: var(--ds-radius-sm);
+  background: rgba(2, 4, 6, 0.74);
+  padding: 0.8rem 0.9rem 0.75rem;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.hero-countdown-header,
+.hero-countdown-heading,
+.hero-countdown-badge {
+  display: flex;
+  align-items: center;
+}
+
+.hero-countdown-header {
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+}
+
+.hero-countdown-heading {
+  min-width: 0;
+  gap: 0.7rem;
+}
+
+.hero-countdown-icon {
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 196, 0, 0.28);
+  border-radius: var(--ds-radius-sm);
+  background: rgba(255, 196, 0, 0.08);
+  color: var(--ds-accent-hover);
+}
+
+.hero-countdown-icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.hero-countdown-copy,
+.hero-countdown-unit {
+  display: grid;
+  min-width: 0;
+  gap: 0.15rem;
+}
+
+.hero-countdown-copy > span,
+.hero-countdown-unit > span {
+  color: var(--ds-text-secondary);
+  font-size: var(--ds-type-xs);
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.hero-countdown-copy > span {
+  color: var(--ds-accent-hover);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-countdown-copy > strong {
+  color: var(--ds-text-primary);
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.hero-countdown-badge {
+  flex: 0 0 auto;
+  gap: 0.35rem;
+  color: var(--ds-green);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.hero-countdown-badge svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.hero-countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.hero-countdown-unit {
+  place-items: center;
+  gap: 0.2rem;
+  min-height: 4.35rem;
+  border: 1px solid var(--ds-border-subtle);
+  border-radius: var(--ds-radius-sm);
+  background: rgba(14, 21, 29, 0.72);
+  padding: 0.45rem 0.25rem;
+  text-align: center;
+}
+
+.hero-countdown-unit > strong {
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-display);
+  font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+  font-weight: 900;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-countdown-unit > span {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+}
+
+.hero-countdown-finished {
+  display: grid;
+  min-height: 4.35rem;
+  place-items: center;
+  border: 1px solid rgba(255, 196, 0, 0.28);
+  border-radius: var(--ds-radius-sm);
+  background: rgba(255, 196, 0, 0.06);
+  color: var(--ds-accent-hover);
+  font-family: var(--ds-font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero-countdown-date {
+  margin: 0.65rem 0 0;
+  color: var(--ds-text-secondary);
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.hero-countdown-date > span {
+  margin-inline: 0.28rem;
+  color: var(--ds-accent);
+}
+
+@media (max-width: 767px) {
+  .hero-countdown {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .hero-countdown-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .hero-countdown-badge {
+    margin-left: 2.9rem;
+  }
+
+  .hero-countdown-grid {
+    gap: 0.35rem;
+  }
+
+  .hero-countdown-unit {
+    min-height: 4rem;
+  }
+
+  .hero-countdown-unit > strong {
+    font-size: clamp(1.45rem, 7vw, 1.9rem);
+  }
+
+  .hero-countdown-unit > span {
+    font-size: 0.56rem;
+    letter-spacing: 0.03em;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-countdown {
+    padding-inline: 0.6rem;
+  }
+
+  .hero-countdown-grid {
+    gap: 0.25rem;
+  }
+
+  .hero-countdown-unit {
+    min-height: 3.75rem;
+    padding-inline: 0.15rem;
+  }
+
+  .hero-countdown-date {
+    font-size: 0.7rem;
+  }
+}

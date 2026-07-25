@@ -9,7 +9,12 @@ export const metadata: Metadata = {
 
 export default function TermosPage() {
   return (
-    <InternalPage title="Termos e responsabilidade" description="Limites do uso das informações e prevalência do edital e canais oficiais.">
+    <InternalPage
+      title="Termos e responsabilidade"
+      description="Limites do uso das informações e prevalência do edital e canais oficiais."
+      audited
+      className="internal-page-lot4 internal-page-prose"
+    >
       <InfoCard>
         <h2>Caráter independente</h2>
         <p>O Trilha Civil PR é independente e não oficial. Não possui vínculo com a Polícia Civil do Paraná, banca organizadora ou órgão público.</p>

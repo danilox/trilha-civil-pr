@@ -1,16 +1,17 @@
 ﻿"use client";
 
 import { Search } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { Badge, Card, EmptyState, Input } from "@/components/ui";
 import { dicas, etapas, exames, locaisExame, regioes } from "@/data/portal";
 
 const documentos = [
-  ...etapas.map((item) => ({ titulo: item.titulo, detalhe: item.descricao, grupo: "Etapa" })),
-  ...regioes.map((item) => ({ titulo: item.nome, detalhe: `${item.concorrencia} candidatos por vaga estimados`, grupo: "Região" })),
-  ...exames.map((item) => ({ titulo: item.titulo, detalhe: item.resumo, grupo: "Exame" })),
-  ...dicas.map((item) => ({ titulo: item.titulo, detalhe: item.descricao, grupo: "Dica" })),
-  ...locaisExame.map((item) => ({ titulo: item.nome, detalhe: `${item.cidade} - ${item.observacao}`, grupo: "Local" })),
+  ...etapas.map((item) => ({ titulo: item.titulo, detalhe: item.descricao, grupo: "Etapa", href: "/etapas" })),
+  ...regioes.map((item) => ({ titulo: item.nome, detalhe: `${item.concorrencia} candidatos por vaga estimados`, grupo: "Região", href: "/regioes" })),
+  ...exames.map((item) => ({ titulo: item.titulo, detalhe: item.resumo, grupo: "Exame", href: "/exames" })),
+  ...dicas.map((item) => ({ titulo: item.titulo, detalhe: item.descricao, grupo: "Dica", href: "/dicas" })),
+  ...locaisExame.map((item) => ({ titulo: item.nome, detalhe: `${item.cidade} - ${item.observacao}`, grupo: "Local", href: "/dicas" })),
 ];
 
 export function SearchHub() {
@@ -35,11 +36,13 @@ export function SearchHub() {
         resultado.length ? (
           <div className="mt-4 grid gap-2 md:grid-cols-2">
             {resultado.slice(0, 4).map((item) => (
-              <Card as="article" key={`${item.grupo}-${item.titulo}`} padding="sm" interactive>
-                <Badge variant="neutral">{item.grupo}</Badge>
-                <h3 className="mt-2 text-sm font-semibold text-white">{item.titulo}</h3>
-                <p className="mt-1 text-xs leading-5 text-zinc-400">{item.detalhe}</p>
-              </Card>
+              <Link aria-label={`Abrir ${item.titulo}`} className="search-result-link ds-focusable" href={item.href} key={`${item.grupo}-${item.titulo}`}>
+                <Card as="article" padding="sm" interactive>
+                  <Badge variant="neutral">{item.grupo}</Badge>
+                  <h3 className="mt-2 text-sm font-semibold text-white">{item.titulo}</h3>
+                  <p className="mt-1 text-xs leading-5 text-zinc-400">{item.detalhe}</p>
+                </Card>
+              </Link>
             ))}
           </div>
         ) : (

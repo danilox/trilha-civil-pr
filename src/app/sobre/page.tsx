@@ -10,7 +10,12 @@ export const metadata: Metadata = {
 
 export default function SobrePage() {
   return (
-    <InternalPage title="Sobre" description="Contexto acadêmico, limites institucionais e escopo do MVP Trilha Civil PR.">
+    <InternalPage
+      title="Sobre"
+      description="Contexto acadêmico, limites institucionais e escopo do MVP Trilha Civil PR."
+      audited
+      className="internal-page-lot4 internal-page-prose"
+    >
       <InfoCard>
         <h2>Projeto independente e não oficial</h2>
         <p>O Trilha Civil PR organiza informações de acompanhamento do concurso da Polícia Civil do Paraná, sem vínculo institucional, sem brasão, sem logotipo oficial e sem coleta de dados pessoais.</p>

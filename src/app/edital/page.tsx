@@ -7,8 +7,8 @@ import { formatarData } from "@/lib/format";
 export const metadata: Metadata = { title: "Edital | Trilha Civil PR", description: "Identificação do edital, itens utilizados, dados oficiais conferidos e link para a página oficial da FGV.", alternates: { canonical: "/edital" } };
 export default function EditalPage() {
   return (
-    <InternalPage title="Edital" description="Dados oficiais extraídos do edital cadastrado localmente. O PDF local não é publicado pelo portal.">
-      <section className="internal-alert">O portal é independente e não oficial. Verifique retificações, anexos e convocações diretamente na FGV. <a href={URL_FONTE_FGV} target="_blank" rel="noopener noreferrer">Abrir página oficial da FGV</a>.</section>
+    <InternalPage title="Edital" description="Dados oficiais extraídos do edital cadastrado localmente. O PDF local não é publicado pelo portal." audited>
+      <aside className="internal-alert" role="note">O portal é independente e não oficial. Verifique retificações, anexos e convocações diretamente na FGV. <a className="internal-inline-link ds-focusable" href={URL_FONTE_FGV} target="_blank" rel="noopener noreferrer">Abrir página oficial da FGV</a>.</aside>
       <InfoGrid>
         <InfoCard><div className="flex items-start justify-between gap-3"><h2>{DOCUMENTO_EDITAL}</h2><DataBadge tipo="oficial" /></div><p>Fonte oficial usada para migrar dados gerais, inscrições, prova, regiões, barreiras, exames, TAF e títulos.</p><div className="internal-stat"><span>Data de conferência</span><strong>{formatarData(inscricoesEProva.referencia.dataConferencia)}</strong></div><small>{inscricoesEProva.referencia.fonte}. Item {inscricoesEProva.referencia.itemEdital}, página {inscricoesEProva.referencia.paginaPdf}.</small></InfoCard>
         <InfoCard><h2>Índice por assunto</h2><ul><li>Dados gerais e requisitos</li><li>Inscrições e prova objetiva</li><li>Distribuição regional e reservas</li><li>Cláusula de barreira</li><li>Inspeção de saúde e Anexo V</li><li>TAF e Anexo IV</li><li>Avaliação de títulos</li></ul></InfoCard>
