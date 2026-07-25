@@ -8,7 +8,7 @@ import { formatarDecimal, formatarNumero } from "@/lib/format";
 import type { ModalidadeCota } from "@/types/edital";
 
 const storageKey = "trilha-civil-pr-painel";
-const limites = { acertosMin: 0, acertosMax: 100, titulosMin: 0, titulosMax: limiteTotalTitulos };
+const limites = { acertosMin: 0, acertosMinimo: 50, acertosMax: 100, titulosMin: 0, titulosMax: limiteTotalTitulos };
 
 type PainelState = { regiao: string; modalidade: ModalidadeCota; acertos: string; titulos: string; projetado: boolean };
 const estadoInicial: PainelState = { regiao: "regiao-interior", modalidade: "ampla", acertos: "72", titulos: "3", projetado: false };
@@ -28,6 +28,46 @@ function numeroValido(valor: string, min: number, max: number, inteiro = false) 
   const ajustado = Math.min(max, Math.max(min, numero));
   return inteiro ? Math.trunc(ajustado) : Math.round(ajustado * 10) / 10;
 }
+function classificarResultado(acertos: number, titulos: number, notaFinal: number) {
+  if (acertos === limites.acertosMax && titulos === limites.titulosMax) {
+    return {
+      badge: "máximo",
+      faixa: "Pontuação máxima simulada",
+      status: "active" as const,
+      explicacao: `Você informou ${limites.acertosMax} acertos e ${formatarDecimal(limites.titulosMax)} pontos em títulos, atingindo o máximo aceito por este simulador. Total simulado: ${formatarDecimal(notaFinal)} pontos.`,
+    };
+  }
+  if (acertos === limites.acertosMax) {
+    return {
+      badge: "objetiva máxima",
+      faixa: "Pontuação máxima na prova objetiva",
+      status: "info" as const,
+      explicacao: `Você informou ${limites.acertosMax} acertos na prova objetiva. Os ${formatarDecimal(titulos)} pontos em títulos compõem apenas esta simulação e não representam nota final oficial.`,
+    };
+  }
+  if (acertos > limites.acertosMinimo) {
+    return {
+      badge: "acima do mínimo",
+      faixa: "Superou o mínimo objetivo",
+      status: "success" as const,
+      explicacao: "Superar o mínimo objetivo não garante classificação, convocação ou vaga. O resultado ainda depende da cláusula de barreira, dos empates e da aprovação nas demais fases.",
+    };
+  }
+  if (acertos === limites.acertosMinimo) {
+    return {
+      badge: "mínimo",
+      faixa: "Atingiu o mínimo objetivo",
+      status: "success" as const,
+      explicacao: `Atingiu o mínimo oficial de ${limites.acertosMinimo} pontos, mas isso não garante classificação, convocação ou vaga e ainda depende das demais fases.`,
+    };
+  }
+  return {
+    badge: "atenção",
+    faixa: "Não atingiu o mínimo objetivo",
+    status: "danger" as const,
+    explicacao: `A pontuação informada está abaixo do mínimo objetivo de ${limites.acertosMinimo} pontos. Consulte o edital e os canais oficiais para acompanhar as regras e as demais fases.`,
+  };
+}
 
 export function CandidatePanel() {
   const [painel, setPainel] = useState<PainelState>(estadoInicial);
@@ -44,8 +84,7 @@ export function CandidatePanel() {
     const barreira = obterBarreira(painel.regiao, painel.modalidade);
     const notaFinal = acertos + titulos;
     const posicaoEstimada = Math.max(1, Math.round((barreira * 0.18) + Math.max(0, 100 - acertos) * 14 + Math.max(0, limiteTotalTitulos - titulos) * 3));
-    const atingiuMinimo = acertos >= 50;
-    return { acertos, titulos, barreira, notaFinal, posicaoEstimada, atingiuMinimo, faixa: atingiuMinimo ? "Atingiu o mínimo objetivo" : "Não atingiu o mínimo" };
+    return { acertos, titulos, barreira, notaFinal, posicaoEstimada, ...classificarResultado(acertos, titulos, notaFinal) };
   }, [painel.modalidade, painel.regiao, valores.acertos, valores.titulos]);
   function projetar() {
     if (valores.acertos === null || valores.titulos === null) { setErro("Informe valores numéricos para acertos e títulos."); return; }
@@ -76,17 +115,17 @@ export function CandidatePanel() {
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-500">Leitura do painel</p>
             <strong className="mt-2 block text-xl font-semibold text-white">{resultado.faixa}</strong>
           </div>
-          <StatusBadge status={resultado.atingiuMinimo ? "success" : "danger"}>{resultado.atingiuMinimo ? "mínimo" : "atenção"}</StatusBadge>
+          <StatusBadge status={resultado.status}>{resultado.badge}</StatusBadge>
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <MetricCard label="Objetiva" value={formatarDecimal(resultado.acertos)} description="pontos" />
           <MetricCard label="Títulos" value={formatarDecimal(resultado.titulos)} description="pontos" />
           <MetricCard label="Final" value={formatarDecimal(resultado.notaFinal)} description="nota estimada" />
-          <MetricCard label="Mínimo" value={formatarDecimal(50)} description="objetiva" />
+          <MetricCard label="Mínimo" value={formatarDecimal(limites.acertosMinimo)} description="objetiva" />
           <MetricCard label="Barreira" value={`${formatarNumero(resultado.barreira)}ª`} description="limite oficial" />
           <MetricCard label="Estimativa" value={`${formatarNumero(resultado.posicaoEstimada)}ª`} description="não oficial" />
         </div>
-        <p className="mt-3 text-[11px] leading-5 text-zinc-500">{resultado.atingiuMinimo ? "Atingiu o mínimo oficial de 50 pontos, mas depende da cláusula de barreira, empates e aprovação em todas as demais fases." : "Abaixo de 50 pontos, não atinge o mínimo objetivo previsto para Agente."}</p>
+        <p className="mt-3 text-[11px] leading-5 text-zinc-500">{resultado.explicacao}</p>
         <Disclaimer className="mt-3" title="Projeção demonstrativa">A posição é estimada e não oficial. Este painel nunca declara aprovação.</Disclaimer>
       </div>
       <p className="mt-3 flex items-center gap-2 text-[11px] leading-5 text-zinc-500"><Save aria-hidden="true" className="h-3.5 w-3.5" />Dados salvos somente neste navegador.</p>
