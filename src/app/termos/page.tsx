@@ -1,15 +1,17 @@
 ﻿import type { Metadata } from "next";
 import { InfoCard, InternalPage } from "@/components/internal-page";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Termos e responsabilidade | Trilha Civil PR",
-  description: "Termos de uso, limites de responsabilidade e caráter independente do portal Trilha Civil PR.",
-  alternates: { canonical: "/termos" },
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Termos de Uso e Responsabilidade",
+  description: "Consulte os limites de responsabilidade, a natureza informativa e o caráter independente e não oficial do Trilha Civil PR.",
+  path: "/termos",
+});
 
 export default function TermosPage() {
   return (
     <InternalPage
+      path="/termos"
       title="Termos e responsabilidade"
       description="Limites do uso das informações e prevalência do edital e canais oficiais."
       audited

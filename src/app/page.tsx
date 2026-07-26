@@ -1,4 +1,5 @@
 ﻿import { CandidatePanel } from "@/components/candidate-panel";
+import type { Metadata } from "next";
 import { Hero } from "@/components/hero";
 import { LowerCards } from "@/components/lower-cards";
 import { MethodologySection } from "@/components/methodology-section";
@@ -9,6 +10,15 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SummaryCards } from "@/components/summary-cards";
 import { Timeline } from "@/components/timeline";
+import { createPageMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site-config";
+
+export const metadata: Metadata = createPageMetadata({
+  title: siteConfig.title,
+  description: siteConfig.description,
+  path: "/",
+  absoluteTitle: true,
+});
 
 export default function Home() {
   return (

@@ -1,16 +1,18 @@
 ﻿import type { Metadata } from "next";
 import { InfoCard, InternalPage } from "@/components/internal-page";
 import { VERSAO_PORTAL } from "@/data/edital";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Sobre | Trilha Civil PR",
-  description: "Contexto acadêmico, limites institucionais e escopo do MVP independente Trilha Civil PR.",
-  alternates: { canonical: "/sobre" },
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Sobre o Projeto",
+  description: "Conheça o objetivo, o escopo acadêmico e os limites institucionais do projeto independente e não oficial Trilha Civil PR.",
+  path: "/sobre",
+});
 
 export default function SobrePage() {
   return (
     <InternalPage
+      path="/sobre"
       title="Sobre"
       description="Contexto acadêmico, limites institucionais e escopo do MVP Trilha Civil PR."
       audited

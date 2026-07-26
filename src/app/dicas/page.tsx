@@ -2,19 +2,21 @@
 import { DataBadge } from "@/components/data-badge";
 import { InfoCard, InfoGrid, InternalPage } from "@/components/internal-page";
 import { dicas, locaisExame } from "@/data/portal";
+import { createPageMetadata } from "@/lib/seo";
 
 const avisoLocais =
   "O portal não garante preço, atendimento, disponibilidade ou aceitação do exame. Confirme diretamente com o estabelecimento e com o edital.";
 
-export const metadata: Metadata = {
-  title: "Dicas | Trilha Civil PR",
-  description: "Dicas práticas demonstrativas para documentos, prazos, logística, convocação e locais para exames.",
-  alternates: { canonical: "/dicas" },
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Dicas para o Concurso PC-PR 2026",
+  description: "Organize documentos, prazos, deslocamentos e preparação logística com orientações informativas do projeto independente.",
+  path: "/dicas",
+});
 
 export default function DicasPage() {
   return (
     <InternalPage
+      path="/dicas"
       title="Dicas"
       description="Orientações práticas para documentos, prazos, logística e preparação para convocação."
       audited

@@ -1,4 +1,5 @@
 ﻿import Link from "next/link";
+import type { Metadata } from "next";
 import { SearchHub } from "@/components/search-hub";
 import { NoticeBar } from "@/components/notice-bar";
 import { SiteFooter } from "@/components/site-footer";
@@ -11,6 +12,15 @@ const links = [
   ["Fontes", "/fontes"],
 ];
 
+export const metadata: Metadata = {
+  title: "Página não encontrada",
+  description: "O conteúdo acessado não existe ou pode ter sido movido no Trilha Civil PR.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default function NotFound() {
   return (
     <>
@@ -21,7 +31,7 @@ export default function NotFound() {
           <p>Trilha Civil PR</p>
           <h1>Página não encontrada</h1>
           <div className="internal-hero-grid">
-            <p>O endereço acessado não existe ou foi movido. Use a busca ou volte para uma das páginas principais do portal.</p>
+            <p>O conteúdo acessado não existe ou pode ter sido movido. Utilize a navegação para continuar consultando o Trilha Civil PR.</p>
             <aside>Nenhum símbolo institucional oficial é usado nesta página.</aside>
           </div>
         </section>

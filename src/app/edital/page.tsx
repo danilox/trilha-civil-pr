@@ -3,11 +3,16 @@ import { DataBadge } from "@/components/data-badge";
 import { InfoCard, InfoGrid, InternalPage } from "@/components/internal-page";
 import { dadosGeraisEdital, disciplinasAgente, DOCUMENTO_EDITAL, inscricoesEProva, regioesOficiais, URL_FONTE_FGV } from "@/data/edital";
 import { formatarData } from "@/lib/format";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Edital | Trilha Civil PR", description: "Identificação do edital, itens utilizados, dados oficiais conferidos e link para a página oficial da FGV.", alternates: { canonical: "/edital" } };
+export const metadata: Metadata = createPageMetadata({
+  title: "Edital PC-PR 2026 — Informações Organizadas",
+  description: "Consulte os principais pontos do edital do concurso da Polícia Civil do Paraná em uma estrutura simplificada e independente.",
+  path: "/edital",
+});
 export default function EditalPage() {
   return (
-    <InternalPage title="Edital" description="Dados oficiais extraídos do edital cadastrado localmente. O PDF local não é publicado pelo portal." audited>
+    <InternalPage path="/edital" title="Edital" description="Dados oficiais extraídos do edital cadastrado localmente. O PDF local não é publicado pelo portal." audited>
       <aside className="internal-alert" role="note">O portal é independente e não oficial. Verifique retificações, anexos e convocações diretamente na FGV. <a className="internal-inline-link ds-focusable" href={URL_FONTE_FGV} target="_blank" rel="noopener noreferrer">Abrir página oficial da FGV</a>.</aside>
       <InfoGrid>
         <InfoCard><div className="flex items-start justify-between gap-3"><h2>{DOCUMENTO_EDITAL}</h2><DataBadge tipo="oficial" /></div><p>Fonte oficial usada para migrar dados gerais, inscrições, prova, regiões, barreiras, exames, TAF e títulos.</p><div className="internal-stat"><span>Data de conferência</span><strong>{formatarData(inscricoesEProva.referencia.dataConferencia)}</strong></div><small>{inscricoesEProva.referencia.fonte}. Item {inscricoesEProva.referencia.itemEdital}, página {inscricoesEProva.referencia.paginaPdf}.</small></InfoCard>
