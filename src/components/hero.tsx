@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, BarChart3, ClipboardList, Radar, Target } from "lucide-react";
 import { AnimatedHeroBackground } from "@/components/animated-hero-background";
 import { ExamCountdown } from "@/components/exam-countdown";
+import { guidePath } from "@/config/site-config";
 
 const heroHighlights = [
   { icon: Radar, title: "Acompanhe", text: "status e etapas oficiais" },
@@ -39,12 +40,12 @@ export function Hero() {
         </div>
 
         <div className="hero-actions">
-          <Link href="/#painel-candidato" className="hero-primary-action focus-ring">
+          <Link href={`${guidePath()}/#painel-candidato`} className="hero-primary-action focus-ring">
             <ClipboardList aria-hidden="true" className="h-4 w-4" />
             Acessar painel do candidato
             <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </Link>
-          <Link href="/edital" className="hero-secondary-action focus-ring">
+          <Link href={guidePath("/edital")} className="hero-secondary-action focus-ring">
             Ver edital organizado
           </Link>
         </div>

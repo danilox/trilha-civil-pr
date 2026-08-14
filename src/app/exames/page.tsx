@@ -1,14 +1,5 @@
-import type { Metadata } from "next";
-import { DataBadge } from "@/components/data-badge";
-import { InfoCard, InfoGrid, InternalPage } from "@/components/internal-page";
-import { causasIncapacitantes, examesOficiais } from "@/data/edital";
-import { createPageMetadata } from "@/lib/seo";
+import { permanentRedirect } from "next/navigation";
 
-export const metadata: Metadata = createPageMetadata({
-  title: "Exames Médicos PC-PR — Inspeção de Saúde",
-  description: "Consulte exames, documentos, validades e informações cadastradas sobre a inspeção de saúde do concurso PC-PR.",
-  path: "/exames",
-});
-export default function ExamesPage() {
-  return <InternalPage path="/exames" audited className="internal-page-lot2 internal-page-exames" title="Exames" description="Inspeção de saúde organizada por categoria. O portal não oferece orientação médica."><aside className="internal-alert" role="note">O portal não oferece orientação médica. Prevalecem o edital, o Anexo V, a convocação oficial e a avaliação da banca.</aside><InfoGrid>{examesOficiais.map((exame) => <InfoCard key={exame.id}><div className="flex items-start justify-between gap-3"><h2>{exame.titulo}</h2><DataBadge tipo="oficial" /></div><p>{exame.finalidade}</p><h3>Preparação e itens</h3><ul>{exame.preparo.map((item) => <li key={item}>{item}</li>)}</ul><h3>Validade</h3><p>{exame.validade}</p><h3>Documentos</h3><ul>{exame.documentos.map((item) => <li key={item}>{item}</li>)}</ul><h3>Possíveis erros documentais</h3><ul>{exame.errosDocumentais.map((item) => <li key={item}>{item}</li>)}</ul><small>{exame.fonte}. Item {exame.itemEdital}, página {exame.paginaPdf}. {exame.observacao}</small></InfoCard>)}</InfoGrid><section className="internal-card internal-card-wide exames-causes"><h2>Causas incapacitantes - categorias do Anexo V</h2><p>Resumo categorizado sem alterar critérios médicos. A redação completa do Anexo V prevalece.</p><ul>{causasIncapacitantes.map((causa) => <li key={causa.id}><strong>{causa.grupo}:</strong> {causa.titulo}. Item {causa.itemEdital}, página {causa.paginaPdf}.</li>)}</ul></section></InternalPage>;
+export default function LegacyExamesPage() {
+  permanentRedirect("/concursos/pc-pr-2026/exames");
 }

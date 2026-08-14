@@ -12,7 +12,7 @@ const socialImage = {
   url: siteConfig.socialImage,
   width: 1200,
   height: 630,
-  alt: "Trilha Civil PR — guia independente do concurso, com identidade visual escura e referência abstrata ao Paraná.",
+  alt: "Edital no Controle — plataforma independente de guias visuais para concursos públicos.",
 };
 
 export function createPageMetadata({
@@ -80,22 +80,34 @@ export function createWebPageJsonLd(title: string, description: string, path: st
 }
 
 export function createBreadcrumbJsonLd(title: string, path: string) {
+  const labels: Record<string, string> = {
+    concursos: "Concursos",
+    "pc-pr-2026": "PC-PR 2026",
+    "pm-sp": "PM-SP",
+    "pc-rs": "PC-RS",
+  };
+  const segments = path.split("/").filter(Boolean);
+  const items = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Início",
+      item: absoluteUrl("/"),
+    },
+    ...segments.map((segment, index) => {
+      const segmentPath = `/${segments.slice(0, index + 1).join("/")}`;
+      return {
+        "@type": "ListItem",
+        position: index + 2,
+        name: index === segments.length - 1 ? title : labels[segment] || segment,
+        item: absoluteUrl(segmentPath),
+      };
+    }),
+  ];
+
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Início",
-        item: absoluteUrl("/"),
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: title,
-        item: absoluteUrl(path),
-      },
-    ],
+    itemListElement: items,
   };
 }

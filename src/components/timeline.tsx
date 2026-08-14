@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Clock3, Hourglass } from "lucide-react";
+import { Check, Clock3, Hourglass, RefreshCw } from "lucide-react";
 import { useMemo, useState } from "react";
 import { DataBadge } from "@/components/data-badge";
 import { Badge, Button, Card, SectionHeader, StatusBadge } from "@/components/ui";
@@ -8,9 +8,9 @@ import { obterStatusConcurso } from "@/data/edital";
 import { etapas } from "@/data/portal";
 import { formatarData } from "@/lib/format";
 
-const statusIcon = { concluida: Check, atencao: Clock3, prevista: Hourglass };
-const statusLabel = { concluida: "concluída", atencao: "atenção", prevista: "prevista" };
-const statusVariant = { concluida: "success", atencao: "warning", prevista: "neutral" } as const;
+const statusIcon = { concluida: Check, atencao: Clock3, prevista: Hourglass, prorrogado: RefreshCw };
+const statusLabel = { concluida: "concluída", atencao: "atenção", prevista: "prevista", prorrogado: "prorrogado" };
+const statusVariant = { concluida: "success", atencao: "warning", prevista: "neutral", prorrogado: "warning" } as const;
 
 export function Timeline() {
   const statusAtual = useMemo(() => obterStatusConcurso(), []);

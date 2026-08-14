@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Trilha Civil PR — Guia independente do concurso";
+export const alt = "Edital no Controle — guias visuais e independentes de concursos públicos";
 export const size = {
   width: 1200,
   height: 630,
@@ -49,7 +49,7 @@ export default function OpenGraphImage() {
             top: 100,
           }}
         >
-          PR
+          01
         </div>
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 720, position: "relative" }}>
           <div
@@ -67,10 +67,10 @@ export default function OpenGraphImage() {
             Projeto independente e não oficial
           </div>
           <div style={{ display: "flex", fontSize: 82, fontWeight: 900, letterSpacing: -1, lineHeight: 0.94 }}>
-            Trilha Civil PR
+            Edital no Controle
           </div>
           <div style={{ color: "#c8ced6", display: "flex", fontSize: 36, lineHeight: 1.2, marginTop: 24 }}>
-            Guia independente do concurso
+            Guias visuais de concursos públicos
           </div>
           <div style={{ background: "#ffc400", display: "flex", height: 6, marginTop: 42, width: 132 }} />
         </div>

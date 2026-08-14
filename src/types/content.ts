@@ -19,7 +19,7 @@ export type EtapaConcurso = InformacaoBase & {
   ordem: number;
   titulo: string;
   periodo: string;
-  status: "concluida" | "atencao" | "prevista";
+  status: "concluida" | "atencao" | "prevista" | "prorrogado";
   descricao: string;
   checklist: string[];
 };

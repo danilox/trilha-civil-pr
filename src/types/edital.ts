@@ -28,7 +28,7 @@ export type EtapaOficial = FonteOficial & {
   ordem: number;
   periodo: string;
   data?: string;
-  status: "concluida" | "atencao" | "prevista";
+  status: "concluida" | "atencao" | "prevista" | "prorrogado";
   checklist: string[];
 };
 

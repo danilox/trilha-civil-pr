@@ -1,9 +1,12 @@
-﻿import Link from "next/link";
 import { NoticeBar } from "@/components/notice-bar";
+import { ContestBreadcrumb } from "@/components/platform/contest-breadcrumb";
+import { PlatformFooter } from "@/components/platform/platform-footer";
+import { PlatformHeader } from "@/components/platform/platform-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Card, Disclaimer } from "@/components/ui";
+import { guidePath, platformConfig } from "@/config/site-config";
 import { avisoNaoOficial } from "@/data/portal";
 import { cn } from "@/lib/cn";
 import { createBreadcrumbJsonLd, createWebPageJsonLd } from "@/lib/seo";
@@ -18,29 +21,44 @@ export type InternalPageProps = {
 };
 
 export function InternalPage({ title, description, path, children, className }: InternalPageProps) {
+  const isGuidePage = path.startsWith(guidePath());
+  const disclaimer = isGuidePage
+    ? avisoNaoOficial
+    : platformConfig.institutional.disclaimer;
+
   return (
     <>
       <JsonLd data={createWebPageJsonLd(title, description, path)} />
       <JsonLd data={createBreadcrumbJsonLd(title, path)} />
-      <NoticeBar />
-      <SiteHeader />
+      {isGuidePage ? <NoticeBar /> : null}
+      {isGuidePage ? <SiteHeader /> : <PlatformHeader />}
       <main className={cn("internal-shell", className)}>
-        <nav aria-label="Breadcrumb" className="breadcrumb">
-          <Link href="/">Início</Link>
-          <span aria-hidden="true">/</span>
-          <span aria-current="page">{title}</span>
-        </nav>
+        <ContestBreadcrumb
+          items={
+            isGuidePage
+              ? [
+                  { label: "Edital no Controle", href: "/" },
+                  { label: "Concursos", href: "/concursos" },
+                  { label: "PC-PR 2026", href: guidePath() },
+                  { label: title },
+                ]
+              : [
+                  { label: "Início", href: "/" },
+                  { label: title },
+                ]
+          }
+        />
         <Card as="header" className="internal-hero" padding="lg">
-          <p>Trilha Civil PR</p>
+          <p>{isGuidePage ? "Guia PC-PR 2026" : platformConfig.name}</p>
           <h1>{title}</h1>
           <div className="internal-hero-grid">
             <p>{description}</p>
-            <Disclaimer title="Aviso institucional">{avisoNaoOficial}</Disclaimer>
+            <Disclaimer title="Aviso institucional">{disclaimer}</Disclaimer>
           </div>
         </Card>
         {children}
       </main>
-      <SiteFooter />
+      {isGuidePage ? <SiteFooter /> : <PlatformFooter />}
     </>
   );
 }

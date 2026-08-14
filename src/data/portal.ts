@@ -2,7 +2,10 @@ import { Activity, Brain, ClipboardCheck, FileText, HeartPulse, MapPinned, Shiel
 import {
   ARQUIVO_LOCAL_EDITAL,
   atualizacoesEdital,
+  DATA_ATUALIZACAO_ISENCOES_FGV,
+  DATA_COMUNICADO_PRORROGACAO_PAGAMENTO,
   DATA_CONFERENCIA_EDITAL,
+  DATA_ULTIMA_ATUALIZACAO_OFICIAL,
   disciplinasAgente,
   etapasOficiais,
   examesOficiais,
@@ -12,12 +15,13 @@ import {
   notaMinimaObjetivaAgente,
   regioesOficiais,
   titulosOficiais,
+  URL_COMUNICADO_PRORROGACAO_PAGAMENTO,
   URL_FONTE_FGV,
 } from "@/data/edital";
 import type { AtualizacaoPortal, Dica, EtapaConcurso, Exame, FonteRegistro, LocalExame, PainelItem, Projecao, Regiao, TafItem, TituloItem } from "@/types/content";
 
 export const avisoNaoOficial = "Projeto independente e não oficial. Consulte sempre o edital e os canais oficiais.";
-export const ultimaAtualizacao = DATA_CONFERENCIA_EDITAL;
+export const ultimaAtualizacao = DATA_ULTIMA_ATUALIZACAO_OFICIAL;
 export const fontePendente = FONTE_OFICIAL_PENDENTE;
 export const fonteOficialEdital = FONTE_EDITAL;
 export const caminhoEditalOficial = ARQUIVO_LOCAL_EDITAL;
@@ -60,11 +64,39 @@ export const painelItens: PainelItem[] = [
   { id: "certidoes", titulo: "Certidões emitidas", detalhe: "Arquivos separados por órgão." },
 ];
 export const atualizacoes: AtualizacaoPortal[] = [
+  {
+    id: "atualizacao-2026-08-14-isencoes",
+    data: DATA_ATUALIZACAO_ISENCOES_FGV,
+    titulo: "FGV atualiza resultados definitivos dos pedidos de isenção",
+    descricao: "A página oficial do concurso passou a apresentar o resultado definitivo dos pedidos de isenção indeferidos retificado em 14/08/2026 e o resultado definitivo dos pedidos deferidos atualizado em 14/08/2026. O portal não reproduz nomes ou dados pessoais dos candidatos.",
+    responsavelConferencia: "Equipe do projeto acadêmico",
+    versaoPortal: "0.2.1",
+    tipo: "oficial",
+    fonte: "Página oficial FGV - Concurso PCPR 2026",
+    urlFonte: URL_FONTE_FGV,
+    dataAtualizacao: DATA_ATUALIZACAO_ISENCOES_FGV,
+    observacao: "Consulte a página oficial da FGV para acessar os arquivos completos de isenção.",
+    ativo: true,
+  },
+  {
+    id: "atualizacao-2026-08-13-pagamento-prorrogado",
+    data: DATA_COMUNICADO_PRORROGACAO_PAGAMENTO,
+    titulo: "FGV prorroga prazo para pagamento da taxa de inscrição",
+    descricao: "A FGV prorrogou até 18/08/2026, às 23h59, o prazo para pagamento da taxa de inscrição do Concurso PCPR 2026. A alteração não reabriu o período de inscrições.",
+    responsavelConferencia: "Equipe do projeto acadêmico",
+    versaoPortal: "0.2.1",
+    tipo: "oficial",
+    fonte: "Comunicado FGV de 13/08/2026",
+    urlFonte: URL_COMUNICADO_PRORROGACAO_PAGAMENTO,
+    dataAtualizacao: DATA_COMUNICADO_PRORROGACAO_PAGAMENTO,
+    observacao: "Prorrogação exclusivamente para pagamento da taxa de inscrição; inscrições permanecem encerradas em 12/08/2026 às 16h.",
+    ativo: true,
+  },
   ...atualizacoesEdital.map((item) => ({ id: item.id, data: item.data, titulo: item.titulo, descricao: item.descricao, responsavelConferencia: item.responsavelConferencia, versaoPortal: item.versaoPortal, tipo: item.tipo, fonte: item.fonte, urlFonte: item.urlFonte, dataAtualizacao: item.dataConferencia, observacao: `Item ${item.itemEdital}, página ${item.paginaPdf}. ${item.observacao}`, ativo: item.ativo })),
   { id: "atualizacao-demo-2026-07-18", data: "2026-07-18", titulo: "Preparação da versão 0.1.0", descricao: "Registro demonstrativo da auditoria de produção, páginas legais, sitemap, robots e documentação de publicação.", responsavelConferencia: "Equipe do projeto acadêmico", versaoPortal: "0.1.0", ...baseDemonstracao },
 ];
 export const fontesRegistros: FonteRegistro[] = [
-  { id: "fontes-edital", informacao: "Edital nº 01/2026 - dados gerais, prova, regiões, barreiras, exames, TAF e títulos", classificacao: "oficial", fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataPublicacao: "06/07/2026", dataConferencia: ultimaAtualizacao, observacao: `Arquivo local conferido em ${ARQUIVO_LOCAL_EDITAL}. Não disponibilizar o PDF local publicamente; verificar retificações e a página oficial da FGV.`, tipo: "oficial", ativo: true },
+  { id: "fontes-edital", informacao: "Edital nº 01/2026 - dados gerais, prova, regiões, barreiras, exames, TAF e títulos", classificacao: "oficial", fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataPublicacao: "06/07/2026", dataConferencia: DATA_CONFERENCIA_EDITAL, observacao: `Arquivo local conferido em ${ARQUIVO_LOCAL_EDITAL}. Não disponibilizar o PDF local publicamente; verificar retificações e a página oficial da FGV.`, tipo: "oficial", ativo: true },
   { id: "fontes-projecoes", informacao: "Painel local e posição estimada", classificacao: "estimativa", fonte: "Metodologia provisória interna", urlFonte: "", dataPublicacao: "não aplicável", dataConferencia: ultimaAtualizacao, observacao: "Não representa classificação oficial, aprovação, convocação ou nota de corte oficial.", tipo: "estimativa", ativo: true },
   { id: "fontes-locais", informacao: "Locais para exames", classificacao: "demonstracao", fonte: "Exemplos fictícios para estrutura de dados", urlFonte: "", dataPublicacao: "não aplicável", dataConferencia: ultimaAtualizacao, observacao: "Não há empresas reais cadastradas nesta etapa.", tipo: "demonstracao", ativo: true },
 ];

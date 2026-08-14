@@ -5,21 +5,22 @@ import { usePathname } from "next/navigation";
 import { Menu, PanelRight, X } from "lucide-react";
 import { useState } from "react";
 import { Button, NavigationItem } from "@/components/ui";
+import { guidePath } from "@/config/site-config";
 
 const navItems = [
-  { href: "/", label: "Início" },
-  { href: "/etapas", label: "Etapas" },
-  { href: "/regioes", label: "Concorrência" },
-  { href: "/nota-de-corte", label: "Nota de Corte" },
-  { href: "/exames", label: "Exames" },
-  { href: "/taf", label: "TAF" },
-  { href: "/titulos", label: "Títulos" },
-  { href: "/dicas", label: "Dicas" },
-  { href: "/atualizacoes", label: "Atualizações" },
+  { href: guidePath(), label: "Início" },
+  { href: guidePath("/etapas"), label: "Etapas" },
+  { href: guidePath("/regioes"), label: "Concorrência" },
+  { href: guidePath("/nota-de-corte"), label: "Nota de Corte" },
+  { href: guidePath("/exames"), label: "Exames" },
+  { href: guidePath("/taf"), label: "TAF" },
+  { href: guidePath("/titulos"), label: "Títulos" },
+  { href: guidePath("/dicas"), label: "Dicas" },
+  { href: guidePath("/atualizacoes"), label: "Atualizações" },
 ];
 
 function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  return href === guidePath() ? pathname === href : pathname.startsWith(href);
 }
 
 export function SiteHeader() {
@@ -29,11 +30,11 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <Link href="/" className="brand-lockup ds-focusable" aria-label="Trilha Civil PR - página inicial">
+        <Link href={guidePath()} className="brand-lockup ds-focusable" aria-label="Guia PC-PR 2026 - página inicial">
           <span className="brand-mark" aria-hidden="true"><i /></span>
           <span className="brand-copy">
             <strong>Trilha Civil <b>PR</b></strong>
-            <small>Informação • Estratégia • Foco</small>
+            <small>Um guia da Edital no Controle</small>
           </span>
         </Link>
 
@@ -46,7 +47,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="header-actions">
-          <Link href="/#painel-candidato" className="panel-access ds-button ds-button-secondary ds-focusable">
+          <Link href={`${guidePath()}/#painel-candidato`} className="panel-access ds-button ds-button-secondary ds-focusable">
             <PanelRight aria-hidden="true" className="h-4 w-4" />
             Acessar painel
           </Link>
@@ -76,7 +77,7 @@ export function SiteHeader() {
               {item.label}
             </NavigationItem>
           ))}
-          <Link href="/#painel-candidato" onClick={() => setAberto(false)} className="mobile-panel-link ds-focusable">
+          <Link href={`${guidePath()}/#painel-candidato`} onClick={() => setAberto(false)} className="mobile-panel-link ds-focusable">
             Acessar painel
           </Link>
         </nav>

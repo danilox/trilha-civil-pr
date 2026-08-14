@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { avisoNaoOficial } from "@/data/portal";
 import { siteConfig } from "@/lib/site-config";
+import { guidePath } from "@/config/site-config";
 
 const footerLinks = [
-  { href: "/edital", label: "Edital" },
-  { href: "/atualizacoes", label: "Atualizações" },
-  { href: "/fontes", label: "Fontes" },
+  { href: guidePath("/edital"), label: "Edital" },
+  { href: guidePath("/atualizacoes"), label: "Atualizações" },
+  { href: guidePath("/fontes"), label: "Fontes" },
+  { href: "/concursos", label: "Concursos" },
   { href: "/privacidade", label: "Privacidade" },
   { href: "/termos", label: "Termos" },
   { href: "/sobre", label: "Sobre" },
@@ -18,7 +20,7 @@ export function SiteFooter() {
         <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
           <p className="max-w-2xl leading-6">{avisoNaoOficial}</p>
           <p className="font-semibold uppercase tracking-[0.22em] text-zinc-400">
-            {siteConfig.name} v{siteConfig.version}
+            Guia PC-PR 2026 · {siteConfig.name}
           </p>
         </div>
         <nav aria-label="Links do rodapé" className="site-footer-links">

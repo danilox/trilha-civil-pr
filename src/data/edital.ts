@@ -16,9 +16,14 @@ import type {
 
 export const VERSAO_PORTAL = "0.2.0";
 export const DATA_CONFERENCIA_EDITAL = "2026-07-19";
+export const DATA_COMUNICADO_PRORROGACAO_PAGAMENTO = "2026-08-13";
+export const DATA_ATUALIZACAO_ISENCOES_FGV = "2026-08-14";
+export const DATA_ULTIMA_ATUALIZACAO_OFICIAL = DATA_ATUALIZACAO_ISENCOES_FGV;
 export const DOCUMENTO_EDITAL = "Edital nº 01/2026 - PCPR";
 export const FONTE_EDITAL = "Edital nº 01/2026 - Concurso Público da Polícia Civil do Paraná";
 export const URL_FONTE_FGV = "https://conhecimento.fgv.br/concursos/pcpr26";
+export const URL_COMUNICADO_PRORROGACAO_PAGAMENTO = "https://conhecimento.fgv.br/sites/default/files/concursos/comunicado-pcpr.pdf";
+export const URL_REIMPRESSAO_BOLETO_FGV = URL_FONTE_FGV;
 export const ARQUIVO_LOCAL_EDITAL = "docs/fontes-oficiais/edital-pcpr-01-2026.pdf";
 export const FONTE_OFICIAL_PENDENTE = "Fonte oficial ainda não cadastrada.";
 
@@ -73,7 +78,9 @@ export const dadosGeraisEdital: DadoGeralEdital[] = [
 export const inscricoesEProva = {
   inscricoesInicio: "2026-07-14T16:00:00-03:00",
   inscricoesFim: "2026-08-12T16:00:00-03:00",
-  boletoFim: "2026-08-13T23:59:00-03:00",
+  boletoFim: "2026-08-18T23:59:00-03:00",
+  boletoProrrogadoEm: DATA_COMUNICADO_PRORROGACAO_PAGAMENTO,
+  boletoProrrogacaoFonte: URL_COMUNICADO_PRORROGACAO_PAGAMENTO,
   taxaAgente: 156.36,
   provaData: "2026-10-11T13:00:00-03:00",
   provaFim: "2026-10-11T18:00:00-03:00",
@@ -112,7 +119,7 @@ export const regioesOficiais: RegiaoOficial[] = [
 ];
 
 const etapasBase = [
-  ["inscricao-preliminar", 1, "Inscrição preliminar", "14/07/2026 às 16h até 12/08/2026 às 16h", "2026-07-14", "atencao", "Inscrição pela página da FGV, com pagamento da taxa para Agente quando não houver isenção deferida.", ["Conferir dados", "Salvar comprovante", "Pagar boleto até 13/08/2026"], "4.1 a 4.5", 11],
+  ["inscricao-preliminar", 1, "Inscrição preliminar", "Inscrições encerradas em 12/08/2026 às 16h. Pagamento prorrogado até 18/08/2026 às 23h59.", "2026-07-14", "prorrogado", "Inscrição pela página da FGV. O período de inscrições permanece encerrado; a prorrogação vale exclusivamente para pagamento da taxa de inscrição.", ["Conferir inscrição já realizada", "Salvar comprovante", "Pagar boleto até 18/08/2026 às 23h59"], "4.1 a 4.5", 11],
   ["prova-objetiva", 2, "Prova objetiva", "11/10/2026, das 13h às 18h", "2026-10-11", "prevista", "Prova objetiva com 100 questões, 100 pontos, cinco alternativas e uma resposta correta.", ["Locais a partir de 05/10/2026", "Documento oficial", "Curitiba, Londrina e Cascavel"], "9.1, 9.2, 9.6 e 9.8", 25],
   ["inspecao-saude", 3, "Inspeção de saúde", "Data ainda não divulgada oficialmente.", "", "prevista", "Etapa eliminatória para análise de exames médicos, laboratoriais, de imagem e toxicológico.", ["Exames por conta do candidato", "Validade máxima de 90 dias", "Laudos identificados"], "12.1 a 12.17", 38],
   ["aptidao-fisica", 4, "Aptidão física", "Data ainda não divulgada oficialmente.", "", "prevista", "TAF com aprovação obrigatória em todos os exercícios do Anexo IV.", ["Atestado médico", "Documento oficial", "Índices por sexo e idade"], "13 e Anexo IV", 40],
@@ -202,7 +209,7 @@ export function obterStatusConcurso(agora = new Date()): StatusConcurso {
   const provaFim = new Date(inscricoesEProva.provaFim).getTime();
   if (t < inicio) return { id: "antes-inscricao", titulo: "Inscrições ainda não abertas", descricao: "Aguarde a abertura oficial das inscrições pela FGV.", dataAlvo: inscricoesEProva.inscricoesInicio, etapaAtualId: "inscricao-preliminar" };
   if (t <= fimInscricao) return { id: "inscricoes-abertas", titulo: "Inscrições abertas", descricao: "Inscrições disponíveis na FGV até 12/08/2026 às 16h.", dataAlvo: inscricoesEProva.inscricoesFim, etapaAtualId: "inscricao-preliminar" };
-  if (t <= fimBoleto) return { id: "boleto", titulo: "Pagamento do boleto", descricao: "Prazo para pagamento/reimpressão do boleto até 13/08/2026.", dataAlvo: inscricoesEProva.boletoFim, etapaAtualId: "inscricao-preliminar" };
+  if (t <= fimBoleto) return { id: "boleto-prorrogado", titulo: "Pagamento prorrogado", descricao: "Inscrições encerradas. Pagamento da taxa prorrogado pela FGV até 18/08/2026 às 23h59, somente para candidatos já inscritos.", dataAlvo: inscricoesEProva.boletoFim, etapaAtualId: "inscricao-preliminar" };
   if (t < locais) return { id: "aguardando-locais", titulo: "Aguardando locais de prova", descricao: "Locais previstos para divulgação a partir de 05/10/2026.", dataAlvo: inscricoesEProva.locaisProvaDisponiveis, etapaAtualId: "prova-objetiva" };
   if (t < provaInicio) return { id: "locais-disponiveis", titulo: "Locais de prova disponíveis", descricao: "Confira endereço e horário exclusivamente na FGV.", dataAlvo: inscricoesEProva.provaData, etapaAtualId: "prova-objetiva" };
   if (t <= provaFim) return { id: "prova-em-andamento", titulo: "Prova objetiva em realização", descricao: "Prova objetiva prevista das 13h às 18h.", dataAlvo: inscricoesEProva.provaFim, etapaAtualId: "prova-objetiva" };
