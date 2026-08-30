@@ -54,6 +54,7 @@ export const siteConfig = {
     { path: guidePath("/edital"), changeFrequency: "weekly", priority: 0.8 },
     { path: guidePath("/etapas"), changeFrequency: "weekly", priority: 0.8 },
     { path: guidePath("/atualizacoes"), changeFrequency: "weekly", priority: 0.8 },
+    { path: guidePath("/concorrencia"), changeFrequency: "weekly", priority: 0.8 },
     { path: guidePath("/regioes"), changeFrequency: "monthly", priority: 0.7 },
     { path: guidePath("/nota-de-corte"), changeFrequency: "monthly", priority: 0.7 },
     { path: guidePath("/exames"), changeFrequency: "monthly", priority: 0.7 },

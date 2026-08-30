@@ -49,3 +49,13 @@ dev-server.out.log
 docs/fontes-oficiais/*.pdf
 .vercel
 .env*
+
+# private competition imports with candidate PII
+.competition-imports/
+data/private/
+imports/private/
+scripts/input/
+
+# private official candidate datasets
+private-data/
+private-data/**

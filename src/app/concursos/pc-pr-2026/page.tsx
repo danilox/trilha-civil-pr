@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CandidatePanel } from "@/components/candidate-panel";
+import { CompetitionPanelTeaser } from "@/components/competition/competition-panel-teaser";
 import { Hero } from "@/components/hero";
 import { LowerCards } from "@/components/lower-cards";
 import { MethodologySection } from "@/components/methodology-section";
@@ -43,7 +43,7 @@ export default function PcprGuideHomePage() {
             <SummaryCards />
           </div>
           <div className="side-column">
-            <CandidatePanel />
+            <CompetitionPanelTeaser />
             <SidebarCards />
           </div>
           <div className="main-rest">
