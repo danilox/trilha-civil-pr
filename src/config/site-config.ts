@@ -1,6 +1,10 @@
-const productionUrl = "https://trilha-civil-pr.vercel.app";
+const productionUrl = "https://editalnocontrole.com.br";
 
 const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "");
+const publicUrl =
+  configuredUrl === productionUrl || (process.env.NODE_ENV !== "production" && configuredUrl && !configuredUrl.endsWith(".vercel.app"))
+    ? configuredUrl
+    : productionUrl;
 
 export const platformConfig = {
   name: "Edital no Controle",
@@ -8,7 +12,7 @@ export const platformConfig = {
   slogan: "Do edital à nomeação, tudo sob controle.",
   description:
     "Editais, etapas, prazos, documentos, cronômetros e atualizações de concursos públicos organizados em guias visuais.",
-  url: configuredUrl || productionUrl,
+  url: publicUrl,
   version: "0.3.0",
   institutional: {
     positioning:
@@ -26,7 +30,6 @@ export const platformConfig = {
 
 export const pcprGuideConfig = {
   name: "Guia PC-PR 2026",
-  legacyName: "Trilha Civil PR",
   slogan: "Informação • Estratégia • Foco",
   basePath: "/concursos/pc-pr-2026",
   description:

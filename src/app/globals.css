@@ -4354,6 +4354,8 @@ body {
 .competition-hero {
   display: grid;
   gap: 1.35rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   padding: clamp(1.2rem, 3vw, 2rem);
 }
 
@@ -4377,6 +4379,7 @@ body {
   letter-spacing: 0;
   line-height: 0.9;
   text-transform: uppercase;
+  word-break: break-word;
 }
 
 .competition-hero p {

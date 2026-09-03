@@ -4,7 +4,7 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Termos de Uso e Responsabilidade",
-  description: "Consulte os limites de responsabilidade, a natureza informativa e o caráter independente e não oficial do Trilha Civil PR.",
+  description: "Consulte os limites de responsabilidade, a natureza informativa e o caráter independente e não oficial do Edital no Controle.",
   path: "/termos",
 });
 
@@ -19,7 +19,7 @@ export default function TermosPage() {
     >
       <InfoCard>
         <h2>Caráter independente</h2>
-        <p>O Trilha Civil PR é independente e não oficial. Não possui vínculo com a Polícia Civil do Paraná, banca organizadora ou órgão público.</p>
+        <p>O Edital no Controle é independente e não oficial. Não possui vínculo com a Polícia Civil do Paraná, banca organizadora ou órgão público.</p>
         <h3>Prevalência do edital</h3>
         <p>Edital, retificações, convocações e canais oficiais prevalecem sobre qualquer conteúdo exibido neste portal.</p>
         <h3>Projeções demonstrativas</h3>

@@ -33,7 +33,7 @@ export function SiteHeader() {
         <Link href={guidePath()} className="brand-lockup ds-focusable" aria-label="Guia PC-PR 2026 - página inicial">
           <span className="brand-mark" aria-hidden="true"><i /></span>
           <span className="brand-copy">
-            <strong>Trilha Civil <b>PR</b></strong>
+            <strong>PC-PR <b>2026</b></strong>
             <small>Um guia da Edital no Controle</small>
           </span>
         </Link>

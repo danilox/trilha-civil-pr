@@ -8,7 +8,7 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Fontes e Metodologia",
-  description: "Veja como o Trilha Civil PR classifica fontes oficiais, estimativas e demonstrações, além dos critérios de atualização do portal.",
+  description: "Veja como o Edital no Controle classifica fontes oficiais, estimativas e demonstrações, além dos critérios de atualização do portal.",
   path: "/concursos/pc-pr-2026/fontes",
 });
 export default function FontesPage() {

@@ -1,7 +1,7 @@
-# Trilha Civil PR - Projeto acadêmico
+# Edital no Controle - Projeto acadêmico
 
 ## Título
-Trilha Civil PR: portal independente de organização de informações sobre concurso público.
+Edital no Controle: portal independente de organização de informações sobre concurso público.
 
 ## Tema
 Transparência, organização informacional e apoio prático ao candidato em concurso público de segurança pública.
@@ -45,4 +45,4 @@ Não há banco de dados, autenticação, coleta de dados pessoais, painel admini
 A identidade visual definitiva do projeto está registrada em `public/images/trilha-civil-capa.png`. Essa imagem é usada como capa de apresentação, documentação e compartilhamento social, enquanto a homepage preserva título, descrição e aviso institucional como elementos HTML acessíveis.
 
 ## Trabalhos futuros
-Monitorar retificações, ampliar testes automatizados, revisar metodologia de estimativas, configurar domínio real e evoluir recursos sem adicionar coleta de dados pessoais sem nova política.
+Monitorar retificações, ampliar testes automatizados, revisar metodologia de estimativas e evoluir recursos sem adicionar coleta de dados pessoais sem nova política.

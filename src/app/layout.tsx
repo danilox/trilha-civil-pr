@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { JsonLd } from "@/components/seo/json-ld";
-import { createWebsiteJsonLd } from "@/lib/seo";
+import { absoluteUrl, createWebsiteJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "concurso PC-PR 2026",
   ],
   alternates: {
-    canonical: "/",
+    canonical: absoluteUrl("/"),
     languages: {
-      "pt-BR": "/",
+      "pt-BR": absoluteUrl("/"),
     },
   },
   robots: {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: siteConfig.name,
-    url: "/",
+    url: absoluteUrl("/"),
     images: [
       {
         url: siteConfig.socialImage,

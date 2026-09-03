@@ -10,7 +10,7 @@ export function MethodologySection() {
       <div className="methodology-grid">
         <Card as="article" padding="md">
           <p>
-            O Trilha Civil PR é um projeto independente e não oficial. Informações oficiais devem vir do edital,
+            O Edital no Controle é um projeto independente e não oficial. Informações oficiais devem vir do edital,
             da banca organizadora e dos órgãos competentes. As projeções exibidas no portal são estimativas ou
             demonstrações de interface e não representam classificação oficial.
           </p>

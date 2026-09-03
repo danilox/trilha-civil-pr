@@ -25,12 +25,12 @@ export function createPageMetadata({
     title: absoluteTitle ? { absolute: title } : title,
     description,
     alternates: {
-      canonical: path,
+      canonical: absoluteUrl(path),
     },
     openGraph: {
       title,
       description,
-      url: path,
+      url: absoluteUrl(path),
       siteName: siteConfig.name,
       locale: "pt_BR",
       type: "website",
@@ -46,8 +46,6 @@ export function createPageMetadata({
 }
 
 export function absoluteUrl(path: string) {
-  if (path === "/") return siteConfig.url;
-
   return new URL(path, siteConfig.url).toString();
 }
 

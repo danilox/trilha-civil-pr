@@ -8,7 +8,7 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Atualizações do Concurso PC-PR 2026",
-  description: "Acompanhe o histórico de conferências, revisões de conteúdo e versões publicadas pelo projeto independente Trilha Civil PR.",
+  description: "Acompanhe o histórico de conferências, revisões de conteúdo e versões publicadas pelo Edital no Controle.",
   path: "/concursos/pc-pr-2026/atualizacoes",
 });
 export default function AtualizacoesPage() {

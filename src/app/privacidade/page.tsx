@@ -4,7 +4,7 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Política de Privacidade",
-  description: "Entenda como o Trilha Civil PR trata dados locais, validação de inscrição e estatísticas agregadas da concorrência colaborativa.",
+  description: "Entenda como o Edital no Controle trata dados locais, validação de inscrição e estatísticas agregadas da concorrência colaborativa.",
   path: "/privacidade",
 });
 

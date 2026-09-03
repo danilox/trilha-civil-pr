@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return siteConfig.routes.map((route) => ({
-    url: route.path === "/" ? siteConfig.url : new URL(route.path, siteConfig.url).toString(),
+    url: new URL(route.path, siteConfig.url).toString(),
     lastModified: new Date("2026-07-19T12:00:00-03:00"),
     changeFrequency: route.changeFrequency,
     priority: route.priority,

@@ -1,4 +1,4 @@
-# Trilha Civil PR
+# Edital no Controle
 
 Status: versão 0.2.0 publicada/preparada para evolução com dados oficiais do edital.
 
@@ -6,11 +6,11 @@ Portal independente e não oficial para organizar informações sobre o concurso
 
 ## Visão geral
 
-O Trilha Civil PR reúne etapas, regiões, nota mínima e cláusulas de barreira, exames, TAF, títulos, dicas práticas, locais fictícios para exames e metodologia de fontes. O MVP não possui backend, autenticação, cadastro, upload, pagamentos nem coleta de dados pessoais.
+O Edital no Controle reúne etapas, regiões, nota mínima e cláusulas de barreira, exames, TAF, títulos, dicas práticas, locais fictícios para exames e metodologia de fontes. O MVP não possui backend, autenticação, cadastro, upload, pagamentos nem coleta de dados pessoais.
 
 ## Captura principal
 
-![Capa visual do Trilha Civil PR](public/images/trilha-civil-capa.png)
+![Capa visual do Edital no Controle](public/images/trilha-civil-capa.png)
 
 A homepage mantém título, descrição e aviso como elementos HTML reais; a arte completa não é usada como fundo da página.
 
@@ -83,7 +83,7 @@ A política está em `/privacidade` e explica que o MVP não coleta dados pessoa
 
 ## Deploy resumido
 
-Execute `npm run lint`, `npm run build` e `npm audit`; configure `NEXT_PUBLIC_SITE_URL` apenas com domínio real; publique em provedor compatível com Next.js, como Vercel; teste homepage, rotas internas, 404, sitemap, robots, menu móvel, busca e painel local.
+Execute `npm run lint`, `npm run build` e `npm audit`; configure `NEXT_PUBLIC_SITE_URL` como `https://editalnocontrole.com.br`; publique em provedor compatível com Next.js, como Vercel; teste homepage, rotas internas, 404, sitemap, robots, menu móvel, busca e painel local.
 
 ## Documentação acadêmica
 
@@ -91,4 +91,4 @@ Consulte `docs/projeto-academico.md`, `docs/requisitos.md`, `docs/arquitetura.md
 
 ## Roadmap
 
-Monitorar retificações oficiais, ampliar testes automatizados, revisar metodologia de estimativas, configurar domínio definitivo e evoluir recursos sem coleta de dados pessoais sem nova política.
+Monitorar retificações oficiais, ampliar testes automatizados, revisar metodologia de estimativas e evoluir recursos sem coleta de dados pessoais sem nova política.
