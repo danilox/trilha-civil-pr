@@ -9,7 +9,7 @@ import { etapas } from "@/data/portal";
 import { formatarData } from "@/lib/format";
 
 const statusIcon = { concluida: Check, atencao: Clock3, prevista: Hourglass, prorrogado: RefreshCw };
-const statusLabel = { concluida: "concluída", atencao: "atenção", prevista: "prevista", prorrogado: "prorrogado" };
+const statusLabel = { concluida: "concluída", atencao: "fase atual", prevista: "prevista", prorrogado: "prorrogado" };
 const statusVariant = { concluida: "success", atencao: "warning", prevista: "neutral", prorrogado: "warning" } as const;
 
 export function Timeline() {

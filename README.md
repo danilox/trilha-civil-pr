@@ -6,7 +6,7 @@ Portal independente e não oficial para organizar informações sobre o concurso
 
 ## Visão geral
 
-O Edital no Controle reúne etapas, regiões, nota mínima e cláusulas de barreira, exames, TAF, títulos, dicas práticas, locais fictícios para exames e metodologia de fontes. O MVP não possui backend, autenticação, cadastro, upload, pagamentos nem coleta de dados pessoais.
+O Edital no Controle reúne etapas, regiões, nota mínima e cláusulas de barreira, exames, TAF, títulos, dicas práticas e metodologia de fontes. A página PC-PR 2026 atua como painel independente de reta final e acompanhamento do concurso.
 
 ## Captura principal
 
@@ -23,7 +23,7 @@ A homepage mantém título, descrição e aviso como elementos HTML reais; a art
 - Página `/edital` com identificação, itens usados, data de conferência e link para a FGV.
 - TAF com seletor por sexo biológico e faixa etária.
 - Calculadora local de títulos com limites oficiais e total máximo de 15,5 pontos.
-- Badges para dado oficial, estimativa e demonstração.
+- Badges para dado oficial, estimativa e conteúdo colaborativo.
 - Política de privacidade, termos, 404, sitemap e robots.
 
 ## Tecnologias
@@ -39,7 +39,7 @@ Next.js App Router, TypeScript, Tailwind CSS, Lucide React, Recharts, ESLint, np
 ```text
 src/app        rotas, layout, sitemap, robots e 404
 src/components componentes reutilizáveis
-src/data       dados oficiais, estimativas, demonstrações e fontes
+src/data       dados oficiais, estimativas, dados colaborativos e fontes
 src/types      tipos TypeScript
 src/lib        configuração e formatadores
 public         imagens, referência visual e favicon
@@ -61,7 +61,7 @@ npm audit
 
 - `oficial`: informação vinculada ao edital oficial cadastrado localmente e à página oficial da FGV.
 - `estimativa`: projeção local sem valor oficial.
-- `demonstracao`: conteúdo fictício usado para validar interface, fluxo e documentação.
+- `demonstracao`: conteúdo não factual usado apenas fora da experiência pública principal.
 
 O edital local está em `docs/fontes-oficiais/edital-pcpr-01-2026.pdf`, mas o PDF não é disponibilizado publicamente pelo portal. Não são usadas URLs oficiais inventadas.
 
@@ -69,7 +69,7 @@ O edital local está em `docs/fontes-oficiais/edital-pcpr-01-2026.pdf`, mas o PD
 
 - A posição estimada do painel não é oficial.
 - O portal não declara aprovação, convocação ou classificação.
-- Locais para exames são exemplos fictícios.
+- Locais para exames não são exibidos sem registros reais conferidos.
 - Retificações futuras precisam de conferência manual.
 - Não há banco de dados, autenticação, analytics ou coleta de dados pessoais.
 

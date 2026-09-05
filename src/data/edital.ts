@@ -18,9 +18,12 @@ export const VERSAO_PORTAL = "0.2.0";
 export const DATA_CONFERENCIA_EDITAL = "2026-07-19";
 export const DATA_COMUNICADO_PRORROGACAO_PAGAMENTO = "2026-08-13";
 export const DATA_ATUALIZACAO_ISENCOES_FGV = "2026-08-14";
-export const DATA_ULTIMA_ATUALIZACAO_OFICIAL = DATA_ATUALIZACAO_ISENCOES_FGV;
-export const DOCUMENTO_EDITAL = "Edital nº 01/2026 - PCPR";
-export const FONTE_EDITAL = "Edital nº 01/2026 - Concurso Público da Polícia Civil do Paraná";
+export const DATA_HOMOLOGACAO_PRELIMINAR_FGV = "2026-08-27";
+export const DATA_RECURSOS_HOMOLOGACAO_FGV = "2026-08-28";
+export const DATA_RETIFICACAO_EDITAL = "2026-07-31";
+export const DATA_ULTIMA_ATUALIZACAO_OFICIAL = DATA_RECURSOS_HOMOLOGACAO_FGV;
+export const DOCUMENTO_EDITAL = "Edital nº 01/2026 - PCPR, retificado em 31/07/2026";
+export const FONTE_EDITAL = "Edital nº 01/2026 e 1ª Retificação - Concurso Público da Polícia Civil do Paraná";
 export const URL_FONTE_FGV = "https://conhecimento.fgv.br/concursos/pcpr26";
 export const URL_COMUNICADO_PRORROGACAO_PAGAMENTO = "https://conhecimento.fgv.br/sites/default/files/concursos/comunicado-pcpr.pdf";
 export const URL_REIMPRESSAO_BOLETO_FGV = URL_FONTE_FGV;
@@ -93,6 +96,25 @@ export const inscricoesEProva = {
   referencia: oficial({ id: "inscricoes-prova", titulo: "Inscrições e prova objetiva", descricao: "Período de inscrição, taxa, cidades, data, horário e estrutura da prova objetiva", itemEdital: "4.1, 4.1.1.2, 4.2, 4.5, 9.1, 9.2, 9.6 e 9.8", paginaPdf: 11, observacao: "Horários conforme Brasília/DF. Locais de prova devem ser conferidos na página oficial da FGV." }),
 };
 
+export const situacaoAtualPcpr2026 = {
+  status: "Em andamento",
+  statusCurto: "Inscrições encerradas",
+  fase: "Homologação preliminar das inscrições",
+  substatus: "Resultado preliminar de homologação das inscrições publicado pela FGV.",
+  ultimaMovimentacao: DATA_RECURSOS_HOMOLOGACAO_FGV,
+  ultimaMovimentacaoTitulo: "Recursos da homologação preliminar e condições especiais",
+  ultimaMovimentacaoDescricao:
+    "A FGV disponibilizou links para recursos contra indeferimento preliminar de inscrição, condição PcD, condição de candidato afrodescendente e atendimento especial.",
+  proximoMarco: {
+    titulo: "Prova objetiva",
+    data: inscricoesEProva.provaData,
+    fim: inscricoesEProva.provaFim,
+    resumo: "11 de outubro de 2026, das 13h às 18h",
+  },
+  fonte: "Página oficial FGV - Concurso PCPR 2026",
+  urlFonte: URL_FONTE_FGV,
+} as const;
+
 export const disciplinasAgente: DisciplinaProva[] = [
   ["portugues", "Língua Portuguesa", "Conhecimentos", 25],
   ["raciocinio", "Raciocínio Lógico-Matemático", "Conhecimentos", 5],
@@ -119,15 +141,16 @@ export const regioesOficiais: RegiaoOficial[] = [
 ];
 
 const etapasBase = [
-  ["inscricao-preliminar", 1, "Inscrição preliminar", "Inscrições encerradas em 12/08/2026 às 16h. Pagamento prorrogado até 18/08/2026 às 23h59.", "2026-07-14", "prorrogado", "Inscrição pela página da FGV. O período de inscrições permanece encerrado; a prorrogação vale exclusivamente para pagamento da taxa de inscrição.", ["Conferir inscrição já realizada", "Salvar comprovante", "Pagar boleto até 18/08/2026 às 23h59"], "4.1 a 4.5", 11],
-  ["prova-objetiva", 2, "Prova objetiva", "11/10/2026, das 13h às 18h", "2026-10-11", "prevista", "Prova objetiva com 100 questões, 100 pontos, cinco alternativas e uma resposta correta.", ["Locais a partir de 05/10/2026", "Documento oficial", "Curitiba, Londrina e Cascavel"], "9.1, 9.2, 9.6 e 9.8", 25],
-  ["inspecao-saude", 3, "Inspeção de saúde", "Data ainda não divulgada oficialmente.", "", "prevista", "Etapa eliminatória para análise de exames médicos, laboratoriais, de imagem e toxicológico.", ["Exames por conta do candidato", "Validade máxima de 90 dias", "Laudos identificados"], "12.1 a 12.17", 38],
-  ["aptidao-fisica", 4, "Aptidão física", "Data ainda não divulgada oficialmente.", "", "prevista", "TAF com aprovação obrigatória em todos os exercícios do Anexo IV.", ["Atestado médico", "Documento oficial", "Índices por sexo e idade"], "13 e Anexo IV", 40],
-  ["avaliacao-psicologica", 5, "Avaliação psicológica", "Data ainda não divulgada oficialmente.", "", "prevista", "Avaliação psicológica conforme critérios e convocações oficiais.", ["Ler convocação", "Levar documento", "Acompanhar FGV"], "14", 42],
-  ["investigacao-social", 6, "Investigação social", "Data ainda não divulgada oficialmente.", "", "prevista", "Investigação social com conferência documental e análise de requisitos de conduta.", ["Organizar certidões", "Conferir prazos", "Guardar protocolos"], "15", 45],
-  ["avaliacao-titulos", 7, "Avaliação de títulos", "Data ainda não divulgada oficialmente.", "", "prevista", "Pontuação complementar limitada a 15,5 pontos para Agente.", ["Digitalizar diplomas", "Comprovar tempo completo", "Respeitar limites"], "17", 51],
-  ["classificacao-final", 8, "Classificação final", "Data ainda não divulgada oficialmente.", "", "prevista", "Resultado final após fases eliminatórias, classificatórias, recursos e homologação.", ["Acompanhar FGV", "Conferir Diário Oficial", "Guardar publicações"], "18", 54],
-  ["curso-formacao-nomeacao", 9, "Curso de formação e eventual nomeação", "Data ainda não divulgada oficialmente.", "", "prevista", "Nomeação eventual condicionada à conveniência, oportunidade e necessidade da administração.", ["Cadastro de reserva", "Sem direito automático", "Atender requisitos"], "1.1.2 e 2.4", 1],
+  ["inscricao-preliminar", 1, "Inscrição preliminar", "14/07 a 12/08/2026", "2026-07-14", "concluida", "Etapa encerrada. O prazo excepcional de pagamento também terminou em 18/08/2026.", ["Etapa encerrada", "Histórico preservado", "Acompanhar publicações"], "4.1 a 4.5", 11],
+  ["homologacao-inscricoes", 2, "Homologação das inscrições", "Resultado preliminar publicado em 27/08/2026", "2026-08-27", "atencao", "Fase atual: resultado preliminar de homologação das inscrições e condições especiais publicado pela FGV, com links de recursos disponibilizados em 28/08/2026.", ["Consultar situação individual", "Acompanhar recursos", "Aguardar publicação oficial"], "Publicações FGV de 27/08 e 28/08/2026", 1],
+  ["prova-objetiva", 3, "Prova objetiva", "11/10/2026, das 13h às 18h", "2026-10-11", "prevista", "Próximo grande marco do concurso. Prova objetiva com 100 questões, 100 pontos, cinco alternativas e uma resposta correta.", ["Acompanhar local na FGV", "Documento oficial", "Curitiba, Londrina e Cascavel"], "9.1, 9.2, 9.6 e 9.8", 25],
+  ["inspecao-saude", 4, "Inspeção de saúde", "Aguardando divulgação oficial.", "", "prevista", "Etapa posterior à prova objetiva, com convocação oficial antes da realização de exames.", ["Aguardar convocação", "Conferir edital", "Evitar exames sem orientação"], "12.1 a 12.17", 38],
+  ["aptidao-fisica", 5, "Aptidão física", "Aguardando divulgação oficial.", "", "prevista", "TAF futuro com aprovação obrigatória em todos os exercícios do Anexo IV.", ["Treinar com antecedência", "Acompanhar convocação", "Conferir índices oficiais"], "13 e Anexo IV", 40],
+  ["avaliacao-psicologica", 6, "Avaliação psicológica", "Aguardando divulgação oficial.", "", "prevista", "Avaliação psicológica conforme critérios e convocações oficiais.", ["Ler convocação", "Levar documento", "Acompanhar FGV"], "14", 42],
+  ["investigacao-social", 7, "Investigação social", "Aguardando divulgação oficial.", "", "prevista", "Investigação social com conferência documental e análise de requisitos de conduta.", ["Organizar certidões", "Conferir prazos", "Guardar protocolos"], "15", 45],
+  ["avaliacao-titulos", 8, "Avaliação de títulos", "Aguardando divulgação oficial.", "", "prevista", "Pontuação complementar limitada a 15,5 pontos para Agente, conforme edital vigente e retificações.", ["Digitalizar diplomas", "Comprovar tempo completo", "Respeitar limites"], "17", 51],
+  ["classificacao-final", 9, "Classificação final", "Aguardando divulgação oficial.", "", "prevista", "Resultado final após fases eliminatórias, classificatórias, recursos e homologação.", ["Acompanhar FGV", "Conferir Diário Oficial", "Guardar publicações"], "18", 54],
+  ["curso-formacao-nomeacao", 10, "Curso de formação e eventual nomeação", "Aguardando divulgação oficial.", "", "prevista", "Nomeação eventual condicionada à conveniência, oportunidade e necessidade da administração.", ["Cadastro de reserva", "Sem direito automático", "Atender requisitos"], "1.1.2 e 2.4", 1],
 ] as const;
 export const etapasOficiais: EtapaOficial[] = etapasBase.map(([id, ordem, titulo, periodo, data, status, descricao, checklist, itemEdital, paginaPdf]) => ({
   ...oficial({ id, titulo, descricao, itemEdital, paginaPdf }), ordem, periodo, data: data || undefined, status, checklist: [...checklist],
@@ -208,9 +231,9 @@ export function obterStatusConcurso(agora = new Date()): StatusConcurso {
   const provaInicio = new Date(inscricoesEProva.provaData).getTime();
   const provaFim = new Date(inscricoesEProva.provaFim).getTime();
   if (t < inicio) return { id: "antes-inscricao", titulo: "Inscrições ainda não abertas", descricao: "Aguarde a abertura oficial das inscrições pela FGV.", dataAlvo: inscricoesEProva.inscricoesInicio, etapaAtualId: "inscricao-preliminar" };
-  if (t <= fimInscricao) return { id: "inscricoes-abertas", titulo: "Inscrições abertas", descricao: "Inscrições disponíveis na FGV até 12/08/2026 às 16h.", dataAlvo: inscricoesEProva.inscricoesFim, etapaAtualId: "inscricao-preliminar" };
-  if (t <= fimBoleto) return { id: "boleto-prorrogado", titulo: "Pagamento prorrogado", descricao: "Inscrições encerradas. Pagamento da taxa prorrogado pela FGV até 18/08/2026 às 23h59, somente para candidatos já inscritos.", dataAlvo: inscricoesEProva.boletoFim, etapaAtualId: "inscricao-preliminar" };
-  if (t < locais) return { id: "aguardando-locais", titulo: "Aguardando locais de prova", descricao: "Locais previstos para divulgação a partir de 05/10/2026.", dataAlvo: inscricoesEProva.locaisProvaDisponiveis, etapaAtualId: "prova-objetiva" };
+  if (t <= fimInscricao) return { id: "periodo-inscricao", titulo: "Período de inscrição", descricao: "Prazo oficial de inscrição na FGV até 12/08/2026 às 16h.", dataAlvo: inscricoesEProva.inscricoesFim, etapaAtualId: "inscricao-preliminar" };
+  if (t <= fimBoleto) return { id: "prazo-taxa-historico", titulo: "Prazo histórico de taxa", descricao: "Inscrições encerradas. Prazo excepcional de pagamento da taxa até 18/08/2026 às 23h59, somente para candidatos já inscritos.", dataAlvo: inscricoesEProva.boletoFim, etapaAtualId: "inscricao-preliminar" };
+  if (t < locais) return { id: "homologacao-preliminar", titulo: situacaoAtualPcpr2026.statusCurto, descricao: situacaoAtualPcpr2026.substatus, dataAlvo: inscricoesEProva.provaData, etapaAtualId: "homologacao-inscricoes" };
   if (t < provaInicio) return { id: "locais-disponiveis", titulo: "Locais de prova disponíveis", descricao: "Confira endereço e horário exclusivamente na FGV.", dataAlvo: inscricoesEProva.provaData, etapaAtualId: "prova-objetiva" };
   if (t <= provaFim) return { id: "prova-em-andamento", titulo: "Prova objetiva em realização", descricao: "Prova objetiva prevista das 13h às 18h.", dataAlvo: inscricoesEProva.provaFim, etapaAtualId: "prova-objetiva" };
   return { id: "apos-prova", titulo: "Aguardando resultado e convocações", descricao: "Somente após a prova objetiva avançam saúde, TAF e demais fases, conforme convocações oficiais.", etapaAtualId: "inspecao-saude" };

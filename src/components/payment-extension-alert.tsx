@@ -1,65 +1,75 @@
 import Link from "next/link";
-import { AlertCircle, ExternalLink } from "lucide-react";
-import { Badge } from "@/components/ui";
+import { ArrowRight, CalendarClock, ExternalLink, FileCheck2, ShieldAlert } from "lucide-react";
+import { Badge, Card } from "@/components/ui";
 import {
-  DATA_COMUNICADO_PRORROGACAO_PAGAMENTO,
-  inscricoesEProva,
-  URL_COMUNICADO_PRORROGACAO_PAGAMENTO,
-  URL_REIMPRESSAO_BOLETO_FGV,
+  situacaoAtualPcpr2026,
+  URL_FONTE_FGV,
 } from "@/data/edital";
+import { atualizacoes } from "@/data/portal";
 import { formatarData } from "@/lib/format";
+import { guidePath } from "@/config/site-config";
 
-function formatarPrazo(valor: string) {
-  const data = new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: "America/Sao_Paulo",
-  }).format(new Date(valor));
-  const hora = new Intl.DateTimeFormat("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "America/Sao_Paulo",
-  }).format(new Date(valor)).replace(":", "h");
-
-  return `${data} às ${hora}`;
-}
+const feed = atualizacoes.slice(0, 5);
 
 export function PaymentExtensionAlert() {
   return (
-    <section className="payment-extension-alert" aria-labelledby="payment-extension-title">
-      <div className="payment-extension-icon" aria-hidden="true">
-        <AlertCircle />
-      </div>
-      <div className="payment-extension-copy">
-        <div className="payment-extension-heading">
-          <Badge variant="orange">Prazo prorrogado</Badge>
-          <span>Comunicado oficial em {formatarData(DATA_COMUNICADO_PRORROGACAO_PAGAMENTO)}</span>
+    <Card as="section" className="final-stretch-panel" aria-labelledby="official-status-title">
+      <div className="final-stretch-status">
+        <div className="final-stretch-heading">
+          <Badge variant="accent">Situação oficial</Badge>
+          <span>{situacaoAtualPcpr2026.status}</span>
         </div>
-        <h2 id="payment-extension-title">Pagamento prorrogado</h2>
-        <p>
-          Prazo para pagamento da taxa de inscrição prorrogado até{" "}
-          <strong>{formatarPrazo(inscricoesEProva.boletoFim)}</strong>. As inscrições
-          permanecem encerradas; a prorrogação é exclusivamente para candidatos que já
-          realizaram a inscrição.
-        </p>
+        <div className="final-stretch-copy">
+          <div className="final-stretch-icon" aria-hidden="true">
+            <FileCheck2 />
+          </div>
+          <div>
+            <h2 id="official-status-title">{situacaoAtualPcpr2026.statusCurto}</h2>
+            <p>{situacaoAtualPcpr2026.substatus}</p>
+          </div>
+        </div>
+        <div className="final-stretch-meta">
+          <span>Última movimentação oficial</span>
+          <strong>{formatarData(situacaoAtualPcpr2026.ultimaMovimentacao)}</strong>
+          <p>{situacaoAtualPcpr2026.ultimaMovimentacaoDescricao}</p>
+        </div>
       </div>
-      <div className="payment-extension-actions">
-        <a className="ds-button ds-button-primary ds-focusable" href={URL_REIMPRESSAO_BOLETO_FGV} target="_blank" rel="noopener noreferrer">
-          Reimprimir boleto — FGV
+
+      <div className="next-milestone-card">
+        <div>
+          <Badge variant="neutral">Próximo grande marco</Badge>
+          <h3>{situacaoAtualPcpr2026.proximoMarco.titulo}</h3>
+        </div>
+        <div className="next-milestone-date">
+          <CalendarClock aria-hidden="true" />
+          <strong>11 OUT 2026</strong>
+          <span>13h → 18h</span>
+        </div>
+        <a className="inline-link ds-focusable" href={URL_FONTE_FGV} target="_blank" rel="noopener noreferrer">
+          Acompanhar na FGV
           <ExternalLink aria-hidden="true" />
           <span className="sr-only">(abre em nova aba)</span>
         </a>
-        <Link className="ds-button ds-button-secondary ds-focusable" href="/concursos/pc-pr-2026/atualizacoes">
-          Ver atualizações
+      </div>
+
+      <div className="official-feed" aria-labelledby="official-feed-title">
+        <div className="official-feed-heading">
+          <ShieldAlert aria-hidden="true" />
+          <h3 id="official-feed-title">Últimas atualizações</h3>
+        </div>
+        <ol>
+          {feed.map((item) => (
+            <li key={item.id}>
+              <time dateTime={item.data}>{formatarData(item.data).slice(0, 5)}</time>
+              <span>{item.titulo}</span>
+            </li>
+          ))}
+        </ol>
+        <Link className="official-feed-link ds-focusable" href={guidePath("/atualizacoes")}>
+          Ver todas as atualizações
+          <ArrowRight aria-hidden="true" />
         </Link>
-        <a className="payment-extension-source ds-focusable" href={URL_COMUNICADO_PRORROGACAO_PAGAMENTO} target="_blank" rel="noopener noreferrer">
-          Comunicado FGV
-          <ExternalLink aria-hidden="true" />
-          <span className="sr-only">(abre em nova aba)</span>
-        </a>
       </div>
-    </section>
+    </Card>
   );
 }

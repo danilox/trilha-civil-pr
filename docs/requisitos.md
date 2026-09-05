@@ -4,7 +4,7 @@
 
 RF01 - Exibir homepage responsiva com hero, busca, resumo, linha do tempo, painel do candidato e cards informativos.
 
-RF02 - Permitir busca local por etapa, exame, região, documento, dica ou local demonstrativo.
+RF02 - Permitir busca local por etapa, exame, região, documento ou dica.
 
 RF03 - Exibir painel do candidato com estado local do navegador, sem envio de dados.
 
@@ -16,7 +16,7 @@ RF06 - Exibir seção de fontes e metodologia.
 
 RF07 - Exibir aviso de projeto independente e não oficial no topo e rodapé.
 
-RF08 - Registrar locais para exames somente como exemplos demonstrativos nesta etapa.
+RF08 - Exibir locais para exames somente quando houver registros reais conferidos.
 
 ## Requisitos não funcionais
 

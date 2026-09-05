@@ -110,7 +110,7 @@ export async function upsertCompetitionEntry(
   return { status: existing ? "updated" as const : "created" as const };
 }
 
-export async function getCompetitionStats(): Promise<CompetitionStatsApiResponse> {
+export async function getCompetitionStats(cargoFilter?: string): Promise<CompetitionStatsApiResponse> {
   const client = getClientOrThrow();
   const { count: registryImportedTotal, error: registryCountError } = await client
     .from("candidate_registry")
@@ -132,7 +132,9 @@ export async function getCompetitionStats(): Promise<CompetitionStatsApiResponse
   const cargoCounts = new Map<string, number>();
   let latestUpdate = "";
 
-  for (const entry of entries ?? []) {
+  const scopedEntries = (entries ?? []).filter((entry) => !cargoFilter || entry.candidate_registry?.cargo === cargoFilter);
+
+  for (const entry of scopedEntries) {
     regionCounts[entry.competition_region] += 1;
     if (entry.updated_at && entry.updated_at > latestUpdate) latestUpdate = entry.updated_at;
 
@@ -140,7 +142,7 @@ export async function getCompetitionStats(): Promise<CompetitionStatsApiResponse
     if (cargo) cargoCounts.set(cargo, (cargoCounts.get(cargo) ?? 0) + 1);
   }
 
-  const participants = (entries ?? []).length;
+  const participants = scopedEntries.length;
 
   return {
     available: true,

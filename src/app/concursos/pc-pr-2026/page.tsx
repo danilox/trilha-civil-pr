@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { CompetitionPanelTeaser } from "@/components/competition/competition-panel-teaser";
+import Link from "next/link";
+import { CompetitionRadarCard } from "@/components/competition/competition-radar-card";
+import { CompetitionHowItWorks } from "@/components/competition/competition-how-it-works";
+import { CompetitionTrustBadges } from "@/components/competition/competition-trust-badges";
+import { CompetitionDocumentChecklist } from "@/components/competition/competition-document-checklist";
+import { CandidatePanel } from "@/components/candidate-panel";
+import { ExamCountdown } from "@/components/exam-countdown";
+import { Badge } from "@/components/ui";
+import "@/styles/competition-home.css";
 import { Hero } from "@/components/hero";
 import { LowerCards } from "@/components/lower-cards";
 import { MethodologySection } from "@/components/methodology-section";
 import { NoticeBar } from "@/components/notice-bar";
-import { PaymentExtensionAlert } from "@/components/payment-extension-alert";
 import { ContestBreadcrumb } from "@/components/platform/contest-breadcrumb";
 import { SearchHub } from "@/components/search-hub";
-import { SidebarCards } from "@/components/sidebar-cards";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SummaryCards } from "@/components/summary-cards";
@@ -24,10 +30,10 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function PcprGuideHomePage() {
   return (
-    <>
+    <div className="radar-guide-surface">
       <NoticeBar />
       <SiteHeader />
-      <main className="page-shell">
+      <main className="page-shell pcpr-radar-page">
         <ContestBreadcrumb
           items={[
             { label: "Edital no Controle", href: "/" },
@@ -35,18 +41,24 @@ export default function PcprGuideHomePage() {
             { label: "PC-PR 2026" },
           ]}
         />
-        <div className="dashboard-layout">
-          <div className="main-top">
+        <div className="radar-layout">
             <Hero />
-            <PaymentExtensionAlert />
+            <CompetitionRadarCard />
+            <CompetitionHowItWorks />
+            <CompetitionTrustBadges />
+          <div className="radar-tools">
+            <Link href="/concursos/pc-pr-2026/nota-de-corte" className="radar-tool ds-focusable">
+              <h2>Possível faixa de classificação →</h2>
+              <Badge variant="accent">Estimativa</Badge>
+              <p>Simule sua classificação com base nos acertos e na concorrência estimada.</p>
+            </Link>
+            <CompetitionDocumentChecklist />
+          </div>
+          <div className="radar-rest">
+            <ExamCountdown />
+            <CandidatePanel />
             <SearchHub />
             <SummaryCards />
-          </div>
-          <div className="side-column">
-            <CompetitionPanelTeaser />
-            <SidebarCards />
-          </div>
-          <div className="main-rest">
             <Timeline />
             <LowerCards />
             <MethodologySection />
@@ -54,6 +66,6 @@ export default function PcprGuideHomePage() {
         </div>
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }

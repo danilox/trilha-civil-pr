@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Check, Search } from "lucide-react";
 import type { FormEvent } from "react";
 import { Button, Card, Input } from "@/components/ui";
 import { CandidateValidationSuccess } from "@/components/competition/candidate-validation-success";
@@ -15,12 +15,14 @@ type CandidateValidationFormProps = {
   onSubmit: (registrationNumber: string, fullName: string) => Promise<CandidateValidationResult>;
   onSuccess: (candidate: OfficialCandidate) => void;
   onContinue: () => void;
+  onKeep: () => void;
 };
 
 export function CandidateValidationForm({
   candidate,
   error,
   onContinue,
+  onKeep,
   onSubmit,
   onSuccess,
   state,
@@ -32,6 +34,28 @@ export function CandidateValidationForm({
     const fullName = String(formData.get("fullName") || "");
     const result = await onSubmit(registrationNumber, fullName);
     if (result.status === "success") onSuccess(result.candidate);
+  }
+
+  if (state === "success" && candidate?.hasExistingEntry) {
+    const region = candidate.competitionRegion === "interior"
+      ? "Interior do Paraná"
+      : candidate.competitionRegion === "curitiba_rm" ? "Curitiba e RMC" : null;
+
+    return (
+      <Card as="section" className="competition-flow-card" aria-labelledby="participacao-existente" padding="lg">
+        <div className="competition-card-heading">
+          <Check aria-hidden="true" />
+          <div>
+            <h2 id="participacao-existente">Você já participou do Radar</h2>
+            <p>Região atual: {region ?? "Não foi possível identificar a região registrada."}</p>
+          </div>
+        </div>
+        <div className="competition-confirmation-actions">
+          <Button type="button" onClick={onKeep} disabled={!region}>Manter minha escolha</Button>
+          <Button type="button" variant="secondary" onClick={onContinue}>Alterar região</Button>
+        </div>
+      </Card>
+    );
   }
 
   return (

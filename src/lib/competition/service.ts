@@ -139,7 +139,7 @@ export async function participateInCompetition(
   return { response: { ok: true, status: result.status }, status: 200 };
 }
 
-export async function getCompetitionStatsResponse(): Promise<CompetitionStatsApiResponse> {
+export async function getCompetitionStatsResponse(cargoFilter?: string): Promise<CompetitionStatsApiResponse> {
   if (!isCompetitionBackendConfigured()) {
     console.error("[competition:stats] backend-not-configured");
     return {
@@ -155,5 +155,5 @@ export async function getCompetitionStatsResponse(): Promise<CompetitionStatsApi
     };
   }
 
-  return getCompetitionStats();
+  return getCompetitionStats(cargoFilter);
 }

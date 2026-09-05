@@ -4,15 +4,14 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Badge, Card, EmptyState, Input } from "@/components/ui";
-import { dicas, etapas, exames, locaisExame, regioes } from "@/data/portal";
+import { dicas, etapas, exames, regioes } from "@/data/portal";
 import { guidePath } from "@/config/site-config";
 
 const documentos = [
   ...etapas.map((item) => ({ titulo: item.titulo, detalhe: item.descricao, grupo: "Etapa", href: guidePath("/etapas") })),
-  ...regioes.map((item) => ({ titulo: item.nome, detalhe: `${item.concorrencia} candidatos por vaga estimados`, grupo: "Região", href: guidePath("/regioes") })),
+  ...regioes.map((item) => ({ titulo: item.nome, detalhe: `${item.concorrencia}% da distribuição regional oficial`, grupo: "Região", href: guidePath("/regioes") })),
   ...exames.map((item) => ({ titulo: item.titulo, detalhe: item.resumo, grupo: "Exame", href: guidePath("/exames") })),
   ...dicas.map((item) => ({ titulo: item.titulo, detalhe: item.descricao, grupo: "Dica", href: guidePath("/dicas") })),
-  ...locaisExame.map((item) => ({ titulo: item.nome, detalhe: `${item.cidade} - ${item.observacao}`, grupo: "Local", href: guidePath("/dicas") })),
 ];
 
 export function SearchHub() {

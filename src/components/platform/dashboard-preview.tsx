@@ -16,27 +16,10 @@ import {
   DATA_ULTIMA_ATUALIZACAO_OFICIAL,
   DOCUMENTO_EDITAL,
   etapasOficiais,
-  inscricoesEProva,
+  situacaoAtualPcpr2026,
 } from "@/data/edital";
 import { contests } from "@/data/contests";
 import { formatarData } from "@/lib/format";
-
-function formatarPrazo(valor: string) {
-  const data = new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: "America/Sao_Paulo",
-  }).format(new Date(valor));
-  const hora = new Intl.DateTimeFormat("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "America/Sao_Paulo",
-  }).format(new Date(valor)).replace(":", "h");
-
-  return `${data} às ${hora}`;
-}
 
 const calendarioOutubro = [
   "D",
@@ -119,7 +102,7 @@ export function DashboardPreview() {
           <h3 id="dashboard-steps-title">Etapas do concurso</h3>
           <ol>
             {etapasOficiais.slice(0, 7).map((etapa, index) => (
-              <li key={etapa.id} className={index === 0 ? "is-current" : undefined}>
+              <li key={etapa.id} className={etapa.status === "atencao" ? "is-current" : undefined}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <strong>{etapa.titulo}</strong>
                 <small>{etapa.data ? formatarData(etapa.data) : "Em breve"}</small>
@@ -145,12 +128,12 @@ export function DashboardPreview() {
 
           <section className="dashboard-panel dashboard-deadline" aria-labelledby="dashboard-deadline-title">
             <div className="dashboard-panel-heading">
-              <h3 id="dashboard-deadline-title">Próximo prazo</h3>
+              <h3 id="dashboard-deadline-title">Próximo marco</h3>
               <Clock3 aria-hidden="true" />
             </div>
-            <small>Pagamento da taxa</small>
-            <strong>{formatarPrazo(inscricoesEProva.boletoFim)}</strong>
-            <p>Inscrições encerradas; prazo prorrogado somente para pagamento.</p>
+            <small>{situacaoAtualPcpr2026.proximoMarco.titulo}</small>
+            <strong>{situacaoAtualPcpr2026.proximoMarco.resumo}</strong>
+            <p>Homologação preliminar publicada; acompanhe recursos, consultas individuais e local de prova na FGV.</p>
             <Link href={guidePath("/edital")} className="dashboard-mini-action ds-focusable">
               Ver edital
               <ArrowRight aria-hidden="true" />

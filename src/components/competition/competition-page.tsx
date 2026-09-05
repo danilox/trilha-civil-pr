@@ -20,7 +20,6 @@ import { formatarDecimal, formatarNumero } from "@/lib/format";
 import type {
   CandidateValidationResult,
   CompetitionRegionId,
-  CompetitionSubmission,
   OfficialCandidate,
 } from "@/types/competition";
 import { competitionRegionApiValueById, competitionRegionIdByApiValue } from "@/data/competition";
@@ -39,7 +38,7 @@ export function CompetitionPage() {
   const [validationError, setValidationError] = useState("");
   const [submissionError, setSubmissionError] = useState("");
   const [backendUnavailable, setBackendUnavailable] = useState(false);
-  const [submission, setSubmission] = useState<CompetitionSubmission | null>(null);
+  const [outcome, setOutcome] = useState<"created" | "updated" | "kept" | null>(null);
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [isPending, startTransition] = useTransition();
   const resultsRef = useRef<HTMLElement | null>(null);
@@ -61,6 +60,10 @@ export function CompetitionPage() {
   async function handleValidation(registrationNumber: string, fullName: string): Promise<CandidateValidationResult> {
     setValidationState("loading");
     setValidationError("");
+    setCandidate(null);
+    setSelectedRegion(null);
+    setSubmissionError("");
+    setOutcome(null);
     const result = await validateOfficialCandidate(registrationNumber, fullName);
     if (result.status === "error") {
       setValidationState("error");
@@ -69,7 +72,7 @@ export function CompetitionPage() {
     }
 
     if (result.candidate.hasExistingEntry) {
-      setSubmissionState("already-submitted");
+      setSubmissionState("idle");
       if (result.candidate.competitionRegion) {
         setSelectedRegion(competitionRegionIdByApiValue[result.candidate.competitionRegion]);
       }
@@ -84,8 +87,18 @@ export function CompetitionPage() {
     setCandidate(foundCandidate);
   }
 
+  function keepChoice() {
+    if (!candidate?.hasExistingEntry || !candidate.competitionRegion) return;
+    setSelectedRegion(competitionRegionIdByApiValue[candidate.competitionRegion]);
+    setOutcome("kept");
+  }
+
   async function handleConfirm() {
-    if (!candidate || !selectedRegion) return;
+    if (!candidate || !selectedRegion || submissionState === "submitting") return;
+    if (candidate.hasExistingEntry && candidate.competitionRegion === competitionRegionApiValueById[selectedRegion]) {
+      keepChoice();
+      return;
+    }
 
     setSubmissionState("submitting");
     setSubmissionError("");
@@ -96,16 +109,12 @@ export function CompetitionPage() {
     );
 
     if (!result.ok) {
-      setSubmissionState(result.status === "unavailable" ? "idle" : "idle");
+      setSubmissionState("idle");
       setSubmissionError(result.message || backendUnavailableMessage);
       return;
     }
 
-    setSubmission({
-      validationToken: candidate.validationToken,
-      regionId: selectedRegion,
-      submittedAt: new Date().toISOString(),
-    });
+    setOutcome(result.status === "updated" ? "updated" : "created");
     setSubmissionState(result.status === "updated" ? "already-submitted" : "success");
 
     const refreshed = await fetchCompetitionStatistics();
@@ -114,9 +123,9 @@ export function CompetitionPage() {
   }
 
   useEffect(() => {
-    if (submissionState !== "success") return;
+    if (!outcome) return;
     resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [submissionState]);
+  }, [outcome]);
 
   function continueToConfirmation() {
     if (!selectedRegion) return;
@@ -152,8 +161,8 @@ export function CompetitionPage() {
         <MetricCard label="Região 2" value={`${formatarDecimal(regionTwo.percentage)}%`} description={`${formatarNumero(regionTwo.count)} em Curitiba/RMC`} />
       </section>
 
-      <section className="competition-flow" aria-label="Participar da pesquisa">
-        <CompetitionStepper currentStep={step} />
+      {!outcome ? <section className="competition-flow" aria-label={candidate?.hasExistingEntry ? "Gerenciar minha escolha" : "Participar da pesquisa"}>
+        {!candidate?.hasExistingEntry ? <CompetitionStepper currentStep={step} /> : null}
 
         {step === "validation" ? (
           <CandidateValidationForm
@@ -161,6 +170,7 @@ export function CompetitionPage() {
             error={validationError}
             state={validationState}
             onContinue={() => setStep("choice")}
+            onKeep={keepChoice}
             onSubmit={handleValidation}
             onSuccess={handleValidationSuccess}
           />
@@ -171,7 +181,7 @@ export function CompetitionPage() {
             <div className="competition-card-heading">
               <ShieldCheck aria-hidden="true" />
               <div>
-                <h2 id="escolha-regiao-modalidade">Onde você está concorrendo?</h2>
+                <h2 id="escolha-regiao-modalidade">{candidate?.hasExistingEntry ? "Alterar região" : "Onde você está concorrendo?"}</h2>
                 <p>A região é declarada por você no Radar e não é inferida pelo local de prova.</p>
               </div>
             </div>
@@ -198,16 +208,16 @@ export function CompetitionPage() {
           />
         ) : null}
         {submissionError ? <p className="competition-form-status" aria-live="polite">{submissionError}</p> : null}
-      </section>
+      </section> : null}
 
-      {submission ? (
+      {outcome ? (
         <div className="competition-success-banner" role="status">
           <Check aria-hidden="true" />
-          <span>{submissionState === "already-submitted" ? "Participação já registrada." : "Participação registrada."}</span>
+          <span>{outcome === "kept" ? "Sua escolha foi mantida." : outcome === "updated" ? "Região atualizada. Sua participação continua única." : "Participação registrada."}</span>
         </div>
       ) : null}
 
-      {submission ? (
+      {outcome ? (
         <section ref={resultsRef}>
           <CompetitionResults
             statistics={liveStatistics}

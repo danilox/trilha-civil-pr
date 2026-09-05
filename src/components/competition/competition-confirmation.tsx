@@ -28,8 +28,8 @@ export function CompetitionConfirmation({
       <div className="competition-card-heading">
         <UserCheck aria-hidden="true" />
         <div>
-          <h2 id="confirmar-participacao">Confirmar participação</h2>
-          <p>Revise os dados seguros antes de registrar sua escolha na amostra.</p>
+          <h2 id="confirmar-participacao">{alreadyParticipated ? "Confirmar alteração de região" : "Confirmar participação"}</h2>
+          <p>{alreadyParticipated ? "Sua participação será mantida. Apenas a região escolhida será atualizada." : "Revise os dados seguros antes de registrar sua escolha na amostra."}</p>
         </div>
       </div>
 
@@ -49,17 +49,17 @@ export function CompetitionConfirmation({
       </dl>
 
       <p className="competition-form-status" aria-live="polite">
-        {status === "submitting" ? "Registrando participação..." : null}
+        {status === "submitting" ? alreadyParticipated ? "Atualizando região..." : "Registrando participação..." : null}
         {status === "success" ? "Participação registrada." : null}
         {status === "already-submitted" ? "Região atualizada ou participação já registrada." : null}
       </p>
 
       <div className="competition-confirmation-actions">
         <Button type="button" variant="secondary" onClick={onBack}>
-          Alterar região
+          {alreadyParticipated ? "Voltar à escolha de região" : "Alterar região"}
         </Button>
         <Button type="button" onClick={onConfirm} disabled={status === "submitting"}>
-          {alreadyParticipated ? "Alterar região" : "Confirmar minha região"}
+          {alreadyParticipated ? "Salvar alteração" : "Confirmar minha região"}
           <Check aria-hidden="true" />
         </Button>
       </div>

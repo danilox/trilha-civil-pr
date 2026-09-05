@@ -4,9 +4,10 @@ import { getCompetitionStatsResponse } from "@/lib/competition/service";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const payload = await getCompetitionStatsResponse();
+    const cargo = new URL(request.url).searchParams.get("cargo");
+    const payload = await getCompetitionStatsResponse(cargo === "agente" ? "Agente de Polícia Judiciária" : undefined);
     return NextResponse.json(payload, { status: payload.available ? 200 : 503 });
   } catch (error) {
     const code =

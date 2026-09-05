@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { DataBadge } from "@/components/data-badge";
 import { Badge, Card, Disclaimer, StatusBadge } from "@/components/ui";
-import { disciplinasAgente, limiteTotalTitulos, notaMinimaObjetivaAgente, regioesOficiais } from "@/data/edital";
+import { limiteTotalTitulos, notaMinimaObjetivaAgente, regioesOficiais } from "@/data/edital";
 import { dicas, exames } from "@/data/portal";
 import { formatarNumero } from "@/lib/format";
 import { guidePath } from "@/config/site-config";
@@ -25,16 +25,18 @@ export function LowerCards() {
       </Card>
       <Card as="article" id="exames" className="lower-card" interactive>
         <div className="flex items-center justify-between gap-4"><h2>Exames médicos</h2><Stethoscope aria-hidden="true" className="h-5 w-5 text-zinc-500" /></div>
+        <Badge variant="neutral">Aguardando convocação</Badge>
+        <p className="mt-4 text-sm leading-6 text-zinc-400">Etapa posterior à prova objetiva. Acompanhe a convocação oficial antes de realizar exames.</p>
         <ul className="mt-5 grid gap-2 text-sm text-zinc-300">{exames.slice(0, 5).map((exame) => <li key={exame.id}><Badge variant="neutral">{exame.titulo}</Badge></li>)}</ul>
         <Link href={guidePath("/exames")} className="inline-link ds-focusable">Ver detalhes <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" /></Link>
       </Card>
       <Card as="article" id="dicas" className="lower-card" interactive>
-        <div className="flex items-center justify-between gap-4"><h2>Dicas úteis</h2><FileQuestion aria-hidden="true" className="h-5 w-5 text-zinc-500" /></div>
+        <div className="flex items-center justify-between gap-4"><h2>Reta final</h2><FileQuestion aria-hidden="true" className="h-5 w-5 text-zinc-500" /></div>
         <div className="mt-5 grid gap-3">{dicas.slice(0, 4).map((dica) => <div key={dica.id} className="border-t border-white/10 pt-3"><StatusBadge status="info">{dica.categoria}</StatusBadge><h3 className="mt-2 text-sm font-semibold text-white">{dica.titulo}</h3><p className="mt-1 text-xs leading-5 text-zinc-500">{dica.descricao}</p></div>)}</div>
         <Link href={guidePath("/dicas")} className="inline-link ds-focusable">Abrir dicas <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" /></Link>
       </Card>
-      <Card as="article" id="taf" className="lower-card taf-card" interactive><div className="flex items-center justify-between gap-4"><h2>TAF</h2><Activity aria-hidden="true" className="h-5 w-5 text-zinc-500" /></div><p className="mt-4 text-sm leading-6 text-zinc-400">Índices oficiais por sexo biológico e faixa etária. Aprovação exige cumprir todos os exercícios.</p><Link href={guidePath("/taf")} className="inline-link ds-focusable">Ver TAF <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" /></Link></Card>
-      <Card as="article" id="titulos" className="lower-card taf-card" interactive><h2>Títulos</h2><p className="mt-4 text-sm leading-6 text-zinc-400">Tabela oficial com limite total de {limiteTotalTitulos.toLocaleString("pt-BR")} pontos. A prova objetiva possui {disciplinasAgente.length} disciplinas.</p><Link href={guidePath("/titulos")} className="inline-link ds-focusable">Ver títulos <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" /></Link></Card>
+      <Card as="article" id="taf" className="lower-card taf-card" interactive><div className="flex items-center justify-between gap-4"><h2>TAF</h2><Activity aria-hidden="true" className="h-5 w-5 text-zinc-500" /></div><Badge variant="accent">Prepare-se com antecedência</Badge><p className="mt-4 text-sm leading-6 text-zinc-400">Etapa futura. Índices oficiais por sexo biológico e faixa etária; aprovação exige cumprir todos os exercícios.</p><Link href={guidePath("/taf")} className="inline-link ds-focusable">Ver índices oficiais <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" /></Link></Card>
+      <Card as="article" id="titulos" className="lower-card taf-card" interactive><h2>Títulos</h2><Badge variant="neutral">Edital retificado</Badge><p className="mt-4 text-sm leading-6 text-zinc-400">Tabela oficial com limite total de {limiteTotalTitulos.toLocaleString("pt-BR")} pontos. Confira regras sensíveis contra o edital vigente e retificações.</p><Link href={guidePath("/titulos")} className="inline-link ds-focusable">Ver títulos <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" /></Link></Card>
     </section>
   );
 }

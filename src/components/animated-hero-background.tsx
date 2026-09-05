@@ -88,8 +88,8 @@ export function AnimatedHeroBackground() {
           src="/images/hero-pcpr-motion-v2.webp"
           alt=""
           fill
-          sizes="100vw"
-          quality={84}
+          sizes="(min-width: 1200px) 65vw, 100vw"
+          quality={75}
           preload
           className="hero-background-image"
         />
