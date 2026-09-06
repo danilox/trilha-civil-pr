@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterContact } from "@/components/footer-contact";
 import { avisoNaoOficial } from "@/data/portal";
 import { siteConfig } from "@/lib/site-config";
 import { guidePath } from "@/config/site-config";
@@ -23,6 +24,7 @@ export function SiteFooter() {
             Guia PC-PR 2026 · {siteConfig.name}
           </p>
         </div>
+        <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
         <nav aria-label="Links do rodapé" className="site-footer-links">
           {footerLinks.map((link) => (
             <Link key={link.href} href={link.href} className="site-footer-link ds-focusable">
@@ -30,6 +32,8 @@ export function SiteFooter() {
             </Link>
           ))}
         </nav>
+        <FooterContact />
+        </div>
       </div>
     </footer>
   );

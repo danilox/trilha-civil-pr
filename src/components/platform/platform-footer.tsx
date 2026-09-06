@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterContact } from "@/components/footer-contact";
 import { Info, Layers3 } from "lucide-react";
 import { guidePath, platformConfig } from "@/config/site-config";
 
@@ -40,8 +41,8 @@ export function PlatformFooter() {
           <div className="platform-social-links" aria-label="Canais sociais em preparação">
             <span aria-hidden="true">IG</span>
             <span aria-hidden="true">YT</span>
-            <span aria-hidden="true">E-mail</span>
           </div>
+          <FooterContact />
         </div>
 
         <nav className="platform-footer-nav" aria-label="Navegação">

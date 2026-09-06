@@ -14,6 +14,11 @@ export const platformConfig = {
     "Editais, etapas, prazos, documentos, cronômetros e atualizações de concursos públicos organizados em guias visuais.",
   url: publicUrl,
   version: "0.3.0",
+  contact: {
+    email: "editalnocontrole@outlook.com",
+    phone: "(41) 98742-8025",
+    whatsapp: "5541987428025",
+  },
   institutional: {
     positioning:
       "Plataforma independente, informativa e educacional voltada ao acompanhamento de concursos públicos.",
