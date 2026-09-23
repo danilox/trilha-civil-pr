@@ -38,12 +38,14 @@ export function CompetitionPage() {
   const [validationError, setValidationError] = useState("");
   const [submissionError, setSubmissionError] = useState("");
   const [backendUnavailable, setBackendUnavailable] = useState(false);
+  const [statisticsLoaded, setStatisticsLoaded] = useState(false);
   const [outcome, setOutcome] = useState<"created" | "updated" | "kept" | null>(null);
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [isPending, startTransition] = useTransition();
   const resultsRef = useRef<HTMLElement | null>(null);
 
   const [regionOne, regionTwo] = liveStatistics.regions;
+  const showMetrics = statisticsLoaded && !backendUnavailable;
 
   useEffect(() => {
     let active = true;
@@ -51,6 +53,7 @@ export function CompetitionPage() {
       if (!active) return;
       setLiveStatistics(result.statistics);
       setBackendUnavailable(result.unavailable);
+      setStatisticsLoaded(true);
     });
     return () => {
       active = false;
@@ -155,10 +158,10 @@ export function CompetitionPage() {
         </div>
       ) : null}
 
-      <section className="competition-metrics" aria-label="Métricas gerais da amostra">
-        <MetricCard label="Participantes" value={formatarNumero(liveStatistics.totalParticipants)} description="dados agregados" />
-        <MetricCard label="Região 1" value={`${formatarDecimal(regionOne.percentage)}%`} description={`${formatarNumero(regionOne.count)} no Interior`} />
-        <MetricCard label="Região 2" value={`${formatarDecimal(regionTwo.percentage)}%`} description={`${formatarNumero(regionTwo.count)} em Curitiba/RMC`} />
+      <section className="competition-metrics" aria-label="Métricas gerais da amostra" aria-busy={!statisticsLoaded}>
+        <MetricCard label="Participantes" value={showMetrics ? formatarNumero(liveStatistics.totalParticipants) : "—"} description={showMetrics ? "dados agregados" : statisticsLoaded ? "Dados indisponíveis" : "Carregando dados"} />
+        <MetricCard label="Região 1" value={showMetrics ? `${formatarDecimal(regionOne.percentage)}%` : "—"} description={showMetrics ? `${formatarNumero(regionOne.count)} no Interior` : "Interior"} />
+        <MetricCard label="Região 2" value={showMetrics ? `${formatarDecimal(regionTwo.percentage)}%` : "—"} description={showMetrics ? `${formatarNumero(regionTwo.count)} em Curitiba/RMC` : "Curitiba/RMC"} />
       </section>
 
       {!outcome ? <section className="competition-flow" aria-label={candidate?.hasExistingEntry ? "Gerenciar minha escolha" : "Participar da pesquisa"}>

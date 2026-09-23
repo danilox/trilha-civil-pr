@@ -97,3 +97,6 @@
 }
 
 .platform-contest-copy h2 { color:var(--platform-text); font-size:1.6rem; font-weight:850; line-height:1.15; }
+@media(max-width:600px) {
+  .competition-hero h1 { font-size:clamp(1.25rem,6.6vw,1.65rem); overflow-wrap:normal; word-break:normal; }
+}

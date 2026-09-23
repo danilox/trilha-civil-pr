@@ -67,8 +67,13 @@ Notícias institucionais das próprias bancas foram usadas onde o portal de arqu
 - Dados editoriais requerem atualização após novas publicações; datas previstas não comprovam realização ou liberação de consulta individual.
 - Resultado do deploy e verificações de produção será informado na entrega, após publicação pelo Git.
 
+## Revisão em produção
+
+O primeiro deployment passou em 70 verificações, com estatísticas reais corretas e nenhum erro/fatal nos logs consultados. A revisão das capturas encontrou dois detalhes herdados no Radar: quebra do título no meio de uma palavra em celular e zeros provisórios antes do carregamento. A correção apresenta estado de carregamento/indisponibilidade e reduz o título no mobile, sem modificar APIs ou gravações.
+
 ## Arquivos alterados
 
+- src/components/competition/competition-page.tsx
 - docs/auditoria-portal-2026-09-22.md
 - package-lock.json
 - package.json
