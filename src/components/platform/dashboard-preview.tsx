@@ -133,7 +133,7 @@ export function DashboardPreview() {
             </div>
             <small>{situacaoAtualPcpr2026.proximoMarco.titulo}</small>
             <strong>{situacaoAtualPcpr2026.proximoMarco.resumo}</strong>
-            <p>Homologação preliminar publicada; acompanhe recursos, consultas individuais e local de prova na FGV.</p>
+            <p>Homologação definitiva publicada; acompanhe os comunicados e o local de prova na FGV.</p>
             <Link href={guidePath("/edital")} className="dashboard-mini-action ds-focusable">
               Ver edital
               <ArrowRight aria-hidden="true" />

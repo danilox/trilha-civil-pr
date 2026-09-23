@@ -1,3 +1,4 @@
+import { platformConfig } from "@/config/site-config";
 import type {
   CausaIncapacitante,
   DadoGeralEdital,
@@ -14,14 +15,14 @@ import type {
   TituloOficial,
 } from "@/types/edital";
 
-export const VERSAO_PORTAL = "0.2.0";
+export const VERSAO_PORTAL = platformConfig.version;
 export const DATA_CONFERENCIA_EDITAL = "2026-07-19";
 export const DATA_COMUNICADO_PRORROGACAO_PAGAMENTO = "2026-08-13";
 export const DATA_ATUALIZACAO_ISENCOES_FGV = "2026-08-14";
 export const DATA_HOMOLOGACAO_PRELIMINAR_FGV = "2026-08-27";
 export const DATA_RECURSOS_HOMOLOGACAO_FGV = "2026-08-28";
 export const DATA_RETIFICACAO_EDITAL = "2026-07-31";
-export const DATA_ULTIMA_ATUALIZACAO_OFICIAL = DATA_RECURSOS_HOMOLOGACAO_FGV;
+export const DATA_ULTIMA_ATUALIZACAO_OFICIAL = "2026-09-22";
 export const DOCUMENTO_EDITAL = "Edital nº 01/2026 - PCPR, retificado em 31/07/2026";
 export const FONTE_EDITAL = "Edital nº 01/2026 e 1ª Retificação - Concurso Público da Polícia Civil do Paraná";
 export const URL_FONTE_FGV = "https://conhecimento.fgv.br/concursos/pcpr26";
@@ -98,13 +99,13 @@ export const inscricoesEProva = {
 
 export const situacaoAtualPcpr2026 = {
   status: "Em andamento",
-  statusCurto: "Inscrições encerradas",
-  fase: "Homologação preliminar das inscrições",
-  substatus: "Resultado preliminar de homologação das inscrições publicado pela FGV.",
-  ultimaMovimentacao: DATA_RECURSOS_HOMOLOGACAO_FGV,
-  ultimaMovimentacaoTitulo: "Recursos da homologação preliminar e condições especiais",
+  statusCurto: "Prova próxima",
+  fase: "Preparação para a prova objetiva",
+  substatus: "Homologação definitiva publicada em 14/09. Locais de prova previstos a partir de 05/10; prova em 11/10/2026.",
+  ultimaMovimentacao: DATA_ULTIMA_ATUALIZACAO_OFICIAL,
+  ultimaMovimentacaoTitulo: "Comunicado sobre revogação de convocação sub judice",
   ultimaMovimentacaoDescricao:
-    "A FGV disponibilizou links para recursos contra indeferimento preliminar de inscrição, condição PcD, condição de candidato afrodescendente e atendimento especial.",
+    "Comunicado de 22/09 sobre revogação de convocação sub judice para Delegado. Consulte a fonte original; o portal não reproduz dados pessoais.",
   proximoMarco: {
     titulo: "Prova objetiva",
     data: inscricoesEProva.provaData,
@@ -142,7 +143,8 @@ export const regioesOficiais: RegiaoOficial[] = [
 
 const etapasBase = [
   ["inscricao-preliminar", 1, "Inscrição preliminar", "14/07 a 12/08/2026", "2026-07-14", "concluida", "Etapa encerrada. O prazo excepcional de pagamento também terminou em 18/08/2026.", ["Etapa encerrada", "Histórico preservado", "Acompanhar publicações"], "4.1 a 4.5", 11],
-  ["homologacao-inscricoes", 2, "Homologação das inscrições", "Resultado preliminar publicado em 27/08/2026", "2026-08-27", "atencao", "Fase atual: resultado preliminar de homologação das inscrições e condições especiais publicado pela FGV, com links de recursos disponibilizados em 28/08/2026.", ["Consultar situação individual", "Acompanhar recursos", "Aguardar publicação oficial"], "Publicações FGV de 27/08 e 28/08/2026", 1],
+  ["homologacao-inscricoes", 2, "Homologação das inscrições", "Resultado definitivo publicado em 14/09/2026", "2026-09-14", "concluida", "Homologação definitiva das inscrições publicada pela FGV em 14/09/2026. Histórico preliminar e recursos preservados nas atualizações.", ["Consultar resultado definitivo", "Consultar comunicados", "Conferir situação individual"], "Publicações FGV de 14/09/2026", 1],
+  ["preparacao-prova", 2.5, "Preparação e local de prova", "Local previsto a partir de 05/10/2026", "2026-10-05", "atencao", "Acompanhe a divulgação do local na FGV. A data prevista não confirma a liberação da consulta individual.", ["Conferir local na FGV", "Organizar documento", "Planejar deslocamento"], "9.2", 25],
   ["prova-objetiva", 3, "Prova objetiva", "11/10/2026, das 13h às 18h", "2026-10-11", "prevista", "Próximo grande marco do concurso. Prova objetiva com 100 questões, 100 pontos, cinco alternativas e uma resposta correta.", ["Acompanhar local na FGV", "Documento oficial", "Curitiba, Londrina e Cascavel"], "9.1, 9.2, 9.6 e 9.8", 25],
   ["inspecao-saude", 4, "Inspeção de saúde", "Aguardando divulgação oficial.", "", "prevista", "Etapa posterior à prova objetiva, com convocação oficial antes da realização de exames.", ["Aguardar convocação", "Conferir edital", "Evitar exames sem orientação"], "12.1 a 12.17", 38],
   ["aptidao-fisica", 5, "Aptidão física", "Aguardando divulgação oficial.", "", "prevista", "TAF futuro com aprovação obrigatória em todos os exercícios do Anexo IV.", ["Treinar com antecedência", "Acompanhar convocação", "Conferir índices oficiais"], "13 e Anexo IV", 40],
@@ -233,9 +235,9 @@ export function obterStatusConcurso(agora = new Date()): StatusConcurso {
   if (t < inicio) return { id: "antes-inscricao", titulo: "Inscrições ainda não abertas", descricao: "Aguarde a abertura oficial das inscrições pela FGV.", dataAlvo: inscricoesEProva.inscricoesInicio, etapaAtualId: "inscricao-preliminar" };
   if (t <= fimInscricao) return { id: "periodo-inscricao", titulo: "Período de inscrição", descricao: "Prazo oficial de inscrição na FGV até 12/08/2026 às 16h.", dataAlvo: inscricoesEProva.inscricoesFim, etapaAtualId: "inscricao-preliminar" };
   if (t <= fimBoleto) return { id: "prazo-taxa-historico", titulo: "Prazo histórico de taxa", descricao: "Inscrições encerradas. Prazo excepcional de pagamento da taxa até 18/08/2026 às 23h59, somente para candidatos já inscritos.", dataAlvo: inscricoesEProva.boletoFim, etapaAtualId: "inscricao-preliminar" };
-  if (t < locais) return { id: "homologacao-preliminar", titulo: situacaoAtualPcpr2026.statusCurto, descricao: situacaoAtualPcpr2026.substatus, dataAlvo: inscricoesEProva.provaData, etapaAtualId: "homologacao-inscricoes" };
-  if (t < provaInicio) return { id: "locais-disponiveis", titulo: "Locais de prova disponíveis", descricao: "Confira endereço e horário exclusivamente na FGV.", dataAlvo: inscricoesEProva.provaData, etapaAtualId: "prova-objetiva" };
+  if (t < locais) return { id: "preparacao-prova", titulo: situacaoAtualPcpr2026.statusCurto, descricao: situacaoAtualPcpr2026.substatus, dataAlvo: inscricoesEProva.provaData, etapaAtualId: "preparacao-prova" };
+  if (t < provaInicio) return { id: "locais-disponiveis", titulo: "Consultar local de prova na FGV", descricao: "Divulgação prevista a partir de 05/10. Confirme a disponibilidade, endereço e horário na FGV.", dataAlvo: inscricoesEProva.provaData, etapaAtualId: "prova-objetiva" };
   if (t <= provaFim) return { id: "prova-em-andamento", titulo: "Prova objetiva em realização", descricao: "Prova objetiva prevista das 13h às 18h.", dataAlvo: inscricoesEProva.provaFim, etapaAtualId: "prova-objetiva" };
   return { id: "apos-prova", titulo: "Aguardando resultado e convocações", descricao: "Somente após a prova objetiva avançam saúde, TAF e demais fases, conforme convocações oficiais.", etapaAtualId: "inspecao-saude" };
 }
-export const atualizacoesEdital = [{ ...oficial({ id: "atualizacao-2026-07-19-edital", titulo: "Migração dos dados oficiais do edital", descricao: "Dados gerais, inscrição, prova, regiões, barreiras, TAF, exames e títulos passam a consumir estrutura oficial separada.", itemEdital: "Edital completo", paginaPdf: 1 }), data: DATA_CONFERENCIA_EDITAL, responsavelConferencia: "Equipe do projeto acadêmico", versaoPortal: VERSAO_PORTAL }];
+export const atualizacoesEdital = [{ ...oficial({ id: "atualizacao-2026-07-19-edital", titulo: "Migração dos dados oficiais do edital", descricao: "Dados gerais, inscrição, prova, regiões, barreiras, TAF, exames e títulos passam a consumir estrutura oficial separada.", itemEdital: "Edital completo", paginaPdf: 1 }), data: DATA_CONFERENCIA_EDITAL, responsavelConferencia: "Equipe do projeto acadêmico", versaoPortal: "0.2.0" }];

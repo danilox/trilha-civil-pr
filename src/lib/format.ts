@@ -14,5 +14,6 @@ export function formatarData(data: string) {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
-  }).format(new Date(`${data}T12:00:00`));
+    timeZone: "America/Sao_Paulo",
+  }).format(new Date(data.includes("T") ? data : `${data}T12:00:00-03:00`));
 }

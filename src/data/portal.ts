@@ -1,3 +1,4 @@
+import { pcprRecentUpdates } from "@/data/pcpr-updates";
 import { Activity, Brain, ClipboardCheck, FileText, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
 import {
   ARQUIVO_LOCAL_EDITAL,
@@ -33,7 +34,7 @@ export const observacaoProvisoria = "Registro provisório usado para estruturaç
 const baseEstimativa = { tipo: "estimativa" as const, fonte: "Metodologia provisória interna", urlFonte: "", dataAtualizacao: ultimaAtualizacao, observacao: "Estimativa local demonstrativa. Não representa classificação, nota de corte, resultado ou convocação oficial.", ativo: true };
 
 export const resumoConcurso = [
-  { id: "situacao-concurso", titulo: "Situação oficial", destaque: situacaoAtualPcpr2026.statusCurto, detalhe: situacaoAtualPcpr2026.substatus, tipo: "oficial" as const, fonte: situacaoAtualPcpr2026.fonte, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "Status baseado nas publicações oficiais da FGV de 27/08 e 28/08/2026.", ativo: true },
+  { id: "situacao-concurso", titulo: "Situação oficial", destaque: situacaoAtualPcpr2026.statusCurto, detalhe: situacaoAtualPcpr2026.substatus, tipo: "oficial" as const, fonte: situacaoAtualPcpr2026.fonte, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "Status conferido nas publicações oficiais da FGV até 22/09/2026.", ativo: true },
   { id: "proxima-etapa", titulo: "Próximo grande marco", destaque: situacaoAtualPcpr2026.proximoMarco.resumo, detalhe: "Prova objetiva em destaque. Demais fases aguardam convocação oficial.", tipo: "oficial" as const, fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "O edital e as convocações oficiais prevalecem.", ativo: true },
   { id: "estrutura-prova", titulo: "Prova objetiva", destaque: `${disciplinasAgente.reduce((total, disciplina) => total + disciplina.questoes, 0)} questões`, detalhe: "100 pontos, cinco alternativas e uma resposta correta", tipo: "oficial" as const, fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataAtualizacao: ultimaAtualizacao, observacao: "Distribuição oficial de disciplinas validada com soma igual a 100.", ativo: true },
 ];
@@ -62,6 +63,7 @@ export const painelItens: PainelItem[] = [
   { id: "certidoes", titulo: "Certidões emitidas", detalhe: "Arquivos separados por órgão." },
 ];
 export const atualizacoes: AtualizacaoPortal[] = [
+  ...pcprRecentUpdates,
   {
     id: "atualizacao-2026-08-28-recursos-homologacao",
     data: DATA_RECURSOS_HOMOLOGACAO_FGV,
@@ -136,7 +138,7 @@ export const atualizacoes: AtualizacaoPortal[] = [
 ];
 export const fontesRegistros: FonteRegistro[] = [
   { id: "fontes-edital", informacao: "Edital nº 01/2026 + 1ª Retificação - dados gerais, prova, regiões, barreiras, exames, TAF e títulos", classificacao: "oficial", fonte: FONTE_EDITAL, urlFonte: URL_FONTE_FGV, dataPublicacao: "06/07/2026 e 31/07/2026", dataConferencia: ultimaAtualizacao, observacao: `Arquivo local base conferido em ${ARQUIVO_LOCAL_EDITAL}. Não disponibilizar o PDF local publicamente; prevalecem retificações e a página oficial da FGV.`, tipo: "oficial", ativo: true },
-  { id: "fontes-fgv-atualizacoes", informacao: "Homologação preliminar, recursos e publicações posteriores", classificacao: "oficial", fonte: "Página oficial FGV - Concurso PCPR 2026", urlFonte: URL_FONTE_FGV, dataPublicacao: "27/08/2026 e 28/08/2026", dataConferencia: ultimaAtualizacao, observacao: "Fonte prioritária para a fase atual do concurso e consultas individuais.", tipo: "oficial", ativo: true },
+  { id: "fontes-fgv-atualizacoes", informacao: "Homologação definitiva, comunicados e publicações posteriores", classificacao: "oficial", fonte: "Página oficial FGV - Concurso PCPR 2026", urlFonte: URL_FONTE_FGV, dataPublicacao: "14/09, 15/09 e 22/09/2026", dataConferencia: ultimaAtualizacao, observacao: "Fonte prioritária para a fase atual do concurso e consultas individuais.", tipo: "oficial", ativo: true },
   { id: "fontes-projecoes", informacao: "Painel local e posição estimada", classificacao: "estimativa", fonte: "Metodologia provisória interna", urlFonte: "", dataPublicacao: "não aplicável", dataConferencia: ultimaAtualizacao, observacao: "Não representa classificação oficial, aprovação, convocação ou nota de corte oficial.", tipo: "estimativa", ativo: true },
 ];
 export const atalhosBusca = [

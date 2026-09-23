@@ -18,7 +18,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SummaryCards } from "@/components/summary-cards";
 import { Timeline } from "@/components/timeline";
-import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { DATA_ULTIMA_ATUALIZACAO_OFICIAL, URL_FONTE_FGV } from "@/data/edital";
+import { createWebPageJsonLd, createBreadcrumbJsonLd, createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Guia PC-PR 2026 | Edital no Controle",
@@ -31,6 +33,8 @@ export const metadata: Metadata = createPageMetadata({
 export default function PcprGuideHomePage() {
   return (
     <div className="radar-guide-surface">
+      <JsonLd data={{ ...createWebPageJsonLd("Guia PC-PR 2026", "Edital, etapas e Radar de Concorrência", "/concursos/pc-pr-2026"), dateModified: DATA_ULTIMA_ATUALIZACAO_OFICIAL, citation: URL_FONTE_FGV }} />
+      <JsonLd data={createBreadcrumbJsonLd("PC-PR 2026", "/concursos/pc-pr-2026")} />
       <NoticeBar />
       <SiteHeader />
       <main className="page-shell pcpr-radar-page">
