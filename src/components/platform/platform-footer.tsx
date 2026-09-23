@@ -1,3 +1,4 @@
+import { SocialLinks } from "@/components/social-links";
 import Link from "next/link";
 import { FooterContact } from "@/components/footer-contact";
 import { Info, Layers3 } from "lucide-react";
@@ -6,8 +7,8 @@ import { guidePath, platformConfig } from "@/config/site-config";
 const navigationLinks = [
   { href: "/", label: "Início" },
   { href: "/concursos", label: "Concursos" },
-  { href: "/#como-funciona", label: "Como funciona" },
-  { href: guidePath("/atualizacoes"), label: "Atualizações" },
+  { href: "/radar", label: "Radar" },
+  { href: "/atualizacoes", label: "Atualizações" },
   { href: "/sobre", label: "Sobre" },
 ];
 
@@ -37,11 +38,8 @@ export function PlatformFooter() {
               <strong>no Controle</strong>
             </span>
           </Link>
-          <p>Guias visuais de concursos públicos com informações conferidas e organizadas para você estudar com foco e segurança.</p>
-          <div className="platform-social-links" aria-label="Canais sociais em preparação">
-            <span aria-hidden="true">IG</span>
-            <span aria-hidden="true">YT</span>
-          </div>
+          <p>Concursos de Segurança Pública com fontes oficiais, prazos e ferramentas para acompanhar cada etapa.</p>
+          <SocialLinks />
           <FooterContact />
         </div>
 

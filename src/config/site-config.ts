@@ -1,3 +1,4 @@
+import { version } from "../../package.json";
 const productionUrl = "https://editalnocontrole.com.br";
 
 const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "");
@@ -9,13 +10,15 @@ const publicUrl =
 export const platformConfig = {
   name: "Edital no Controle",
   shortName: "Edital no Controle",
-  slogan: "Do edital à nomeação, tudo sob controle.",
+  slogan: "Concursos de Segurança Pública",
   description:
-    "Editais, etapas, prazos, documentos, cronômetros e atualizações de concursos públicos organizados em guias visuais.",
+    "Editais, inscrições, provas, TAF, resultados e convocações de Segurança Pública organizados em um único lugar.",
   url: publicUrl,
-  version: "0.3.0",
+  version,
   contact: {
     email: "editalnocontrole@outlook.com",
+    institutionalEmail: "contato@editalnocontrole.com.br",
+    institutionalEmailEnabled: false,
     phone: "(41) 98742-8025",
     whatsapp: "5541987428025",
   },
@@ -26,7 +29,7 @@ export const platformConfig = {
       "Plataforma independente e não oficial. As informações são organizadas com base em editais, retificações e comunicados oficiais. Em caso de divergência, prevalece a documentação publicada pelo órgão responsável.",
   },
   social: {
-    instagram: "",
+    instagram: "https://www.instagram.com/editalnocontrole/",
     youtube: "",
     linkedin: "",
   },
@@ -50,7 +53,7 @@ export const siteConfig = {
   name: platformConfig.name,
   version: platformConfig.version,
   url: platformConfig.url,
-  title: "Edital no Controle | Guias de concursos públicos",
+  title: "Edital no Controle | Concursos de Segurança Pública",
   titleTemplate: `%s | ${platformConfig.name}`,
   description: platformConfig.description,
   coverImage: "/images/trilha-civil-capa.png",

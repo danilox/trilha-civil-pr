@@ -1,3 +1,4 @@
+import { SocialLinks } from "@/components/social-links";
 import Link from "next/link";
 import { FooterContact } from "@/components/footer-contact";
 import { avisoNaoOficial } from "@/data/portal";
@@ -32,7 +33,7 @@ export function SiteFooter() {
             </Link>
           ))}
         </nav>
-        <FooterContact />
+        <div><FooterContact /><SocialLinks /></div>
         </div>
       </div>
     </footer>
