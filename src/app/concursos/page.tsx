@@ -10,7 +10,7 @@ import { createBreadcrumbJsonLd, createPageMetadata, createWebPageJsonLd } from 
 
 const title = "Concursos";
 const description =
-  "Consulte os guias disponíveis e acompanhe quais concursos estão sendo preparados pela plataforma.";
+  "Concursos de Segurança Pública por instituição, situação e estado, com datas e fontes oficiais.";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Concursos policiais",
@@ -18,7 +18,8 @@ export const metadata: Metadata = createPageMetadata({
   path: "/concursos",
 });
 
-export default function ContestsPage() {
+export default async function ContestsPage({ searchParams }: { searchParams: Promise<{ categoria?: string; situacao?: string; estado?: string }> }) {
+  const filters = await searchParams;
   return (
     <>
       <JsonLd data={createWebPageJsonLd(title, description, "/concursos")} />
@@ -31,7 +32,7 @@ export default function ContestsPage() {
           <h1>Concursos</h1>
           <p>{description}</p>
         </header>
-        <ContestCatalog contests={contests} />
+        <ContestCatalog contests={contests} filters={filters} />
         <aside className="platform-disclaimer" role="note">
           {platformConfig.institutional.disclaimer}
         </aside>

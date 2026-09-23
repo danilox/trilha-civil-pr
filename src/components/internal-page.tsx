@@ -18,9 +18,11 @@ export type InternalPageProps = {
   children: React.ReactNode;
   audited?: boolean;
   className?: string;
+  updatedAt?: string;
+  sources?: string[];
 };
 
-export function InternalPage({ title, description, path, children, className }: InternalPageProps) {
+export function InternalPage({ title, description, path, children, className, updatedAt, sources }: InternalPageProps) {
   const isGuidePage = path.startsWith(guidePath());
   const disclaimer = isGuidePage
     ? avisoNaoOficial
@@ -28,7 +30,7 @@ export function InternalPage({ title, description, path, children, className }: 
 
   return (
     <>
-      <JsonLd data={createWebPageJsonLd(title, description, path)} />
+      <JsonLd data={{ ...createWebPageJsonLd(title, description, path), ...(updatedAt ? { dateModified: updatedAt } : {}), ...(sources ? { citation: sources } : {}) }} />
       <JsonLd data={createBreadcrumbJsonLd(title, path)} />
       {isGuidePage ? <NoticeBar /> : null}
       {isGuidePage ? <SiteHeader /> : <PlatformHeader />}
@@ -44,6 +46,7 @@ export function InternalPage({ title, description, path, children, className }: 
                 ]
               : [
                   { label: "Início", href: "/" },
+                  ...(path.startsWith("/concursos/") ? [{ label: "Concursos", href: "/concursos" }] : []),
                   { label: title },
                 ]
           }

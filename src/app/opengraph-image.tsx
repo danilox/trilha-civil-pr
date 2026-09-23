@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Edital no Controle — guias visuais e independentes de concursos públicos";
+export const alt = "Edital no Controle — concursos de Segurança Pública";
 export const size = {
   width: 1200,
   height: 630,
@@ -70,7 +70,7 @@ export default function OpenGraphImage() {
             Edital no Controle
           </div>
           <div style={{ color: "#c8ced6", display: "flex", fontSize: 36, lineHeight: 1.2, marginTop: 24 }}>
-            Guias visuais de concursos públicos
+            Concursos de Segurança Pública
           </div>
           <div style={{ background: "#ffc400", display: "flex", height: 6, marginTop: 42, width: 132 }} />
         </div>

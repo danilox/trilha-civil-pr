@@ -1,0 +1,99 @@
+/* National portal: reuse the existing components with the PCPR palette. */
+:root { --platform-bg:#050607; --platform-bg-soft:#0b0d10; --platform-surface:#101216; --platform-surface-elevated:#16191d; --platform-blue:#ffc400; --platform-blue-vivid:#ffce28; --platform-cyan:#f5cf50; --platform-border:rgba(255,255,255,.14); --platform-border-strong:rgba(255,196,0,.5); }
+.platform-header,.platform-footer,.platform-shell { background-color:#07090b; }
+.platform-shell::before { background:radial-gradient(ellipse at 10% 0,rgba(255,196,0,.045),transparent 45%); }
+.platform-hero-grid { background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 64px); }
+.platform-hero-lines { background:radial-gradient(ellipse at 50% 50%,rgba(255,196,0,.07),transparent 60%); }
+.platform-hero h1 span { text-shadow:none; }
+.platform-brand-mark,.platform-contest-icon { background:#ffc400; color:#090909; box-shadow:none; }
+.platform-brand-mark svg,.platform-contest-icon svg { color:#090909; }
+.platform-hero-signals svg { color:#f5cf50; background:#151617; border-color:#39362b; }
+.platform-contest-card { background:linear-gradient(155deg,#15181c,#0b0d10); box-shadow:none; }
+.platform-contest-card.is-featured { border-color:#b99124; box-shadow:none; }
+.platform-contest-card:hover { box-shadow:none; }
+.platform-contest-card-top { flex-wrap:wrap; }
+.platform-contest-icon { flex-shrink:0; width:2.75rem; height:2.75rem; }
+.national-card { grid-template-rows:auto auto 1fr auto auto; }
+.national-card .contest-category { color:#e9c762; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.6rem; }
+.contest-facts { display:grid; gap:.6rem; min-width:0; }
+.contest-facts div { display:grid; grid-template-columns:5.7rem minmax(0,1fr); gap:.5rem; font-size:.85rem; line-height:1.6; }
+.contest-facts dt,.contest-detail-facts dt { color:#a9afb9; }
+.contest-facts dd,.contest-detail-facts dd { color:#f1f1f1; overflow-wrap:anywhere; }
+.contest-updated,.catalog-result-count { color:#a9afb9; font-size:.82rem; margin:1rem 0; }
+.portal-independent { max-width:1320px; margin:1rem auto 0; color:#b6b9c1; font-size:.85rem; border-bottom:1px solid #24272d; padding:1rem 0 1.5rem; }
+.portal-overview { padding:clamp(1.25rem,3vw,2.5rem); border:1px solid #454031; border-radius:12px; background:radial-gradient(ellipse at top right,#262319 0,transparent 65%),#0e1115; min-width:0; box-shadow:0 20px 70px #0005; }
+.portal-overview-label { display:flex; align-items:center; flex-wrap:wrap; gap:.6rem; color:#ffcf33; font-size:.72rem; letter-spacing:.1em; font-weight:700; }
+.portal-overview-label svg { width:18px; height:18px; }
+.portal-overview-label span { margin-left:auto; color:#a4a8b0; font-size:.6rem; }
+.portal-overview h2 { font-size:clamp(1.8rem,2.7vw,2.7rem); line-height:1.15; font-weight:800; margin:2rem 0 .8rem; color:#fff; }
+.portal-overview h2 span { color:#c8cbd0; }
+.portal-overview > p { color:#a9afb9; line-height:1.6; }
+.portal-overview ol { margin:1.5rem 0; }
+.portal-overview li { display:flex; gap:1rem; align-items:center; padding:1rem 0; border-bottom:1px solid #ffffff12; }
+.portal-overview li > svg { width:20px; height:20px; color:#d8b75c; flex-shrink:0; }
+.portal-overview li div { min-width:0; flex:1; }
+.portal-overview li strong { display:block; color:#fff; }
+.portal-overview li span { display:block; color:#a9afb9; font-size:.8rem; margin-top:.35rem; }
+.portal-overview li a { display:grid; place-items:center; min-width:44px; min-height:44px; color:#f9cd45; border-radius:6px; }
+.portal-overview-footer { display:flex; align-items:center; justify-content:space-between; min-height:44px; font-size:.8rem; color:#f5cf50; gap:1rem; }
+.catalog-filters { display:flex; flex-wrap:wrap; gap:1rem; align-items:end; padding:1.3rem; border:1px solid #30343b; border-radius:8px; background:#0d1014; margin:1.5rem 0; }
+.catalog-filters label { display:grid; gap:.5rem; color:#c5c8cf; font-size:.85rem; flex:1 1 170px; min-width:0; }
+.catalog-filters select { min-height:44px; width:100%; border:1px solid #454950; border-radius:5px; background:#171a20; color:#fff; padding:.6rem; }
+.national-updates { display:grid; gap:0; margin:1rem 0 1.5rem; }
+.national-updates > li { display:flex; gap:1.2rem; padding:1.6rem 0; border-bottom:1px solid #ffffff1a; }
+.national-updates > li > svg { color:#f2c745; width:21px; height:21px; flex-shrink:0; margin-top:.3rem; }
+.national-updates article { min-width:0; }
+.national-updates h3 { color:#f5f5f5; font-size:1.05rem; font-weight:700; margin:.55rem 0; }
+.national-updates p { color:#aeb4bd; line-height:1.7; font-size:.94rem; }
+.national-updates .source-external-link { margin-top:.6rem; }
+.source-external-link svg { width:16px; height:16px; }
+.update-meta { display:flex; flex-wrap:wrap; gap:1rem; font-size:.75rem; color:#aeb4bd; }
+.update-meta a { color:#e8c261; font-weight:700; }
+.upcoming-exams { display:grid; gap:.75rem; }
+.upcoming-exams li { display:flex; flex-wrap:wrap; align-items:center; gap:1.5rem; padding:1.5rem; background:#101317; border:1px solid #2c3036; border-radius:8px; }
+.upcoming-exams time { color:#f5cf50; font-weight:800; font-size:1.1rem; }
+.upcoming-exams li > div { flex:1; min-width:170px; }
+.upcoming-exams h3 { color:#fff; font-size:1.1rem; font-weight:700; }
+.upcoming-exams p { color:#a9afb9; font-size:.88rem; margin-top:.3rem; }
+.radar-national-grid,.contest-module-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.radar-national-item { display:grid; gap:1rem; min-width:0; padding:1.5rem; background:#101317; border:1px solid #30343b; border-radius:8px; }
+.radar-national-item h2 { color:#fff; font-size:1.3rem; font-weight:750; }
+.radar-national-item p { color:#b1b5bd; font-size:.85rem; }
+.radar-national-item > .ds-status-badge { justify-self:start; }
+.contest-detail-facts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem; margin:1.5rem 0; }
+.contest-detail-facts div { display:grid; gap:.35rem; font-size:.9rem; }
+.contest-module-nav { display:flex; flex-wrap:wrap; gap:.5rem; margin:1.4rem 0; }
+.contest-module-nav a { display:flex; align-items:center; padding:.6rem 1rem; border:1px solid #3b3e45; border-radius:5px; color:#e0e1e4; font-size:.85rem; min-height:44px; }
+.national-detail .internal-card p { line-height:1.8; }
+.national-section-title { color:#fff; font-size:1.5rem; font-weight:750; margin:2rem 0 1rem; }
+.contest-source-list li { padding:.8rem 0; border-bottom:1px solid #30343b; }
+.platform-social-links a { display:inline-flex; align-items:center; gap:.5rem; color:#ddd; min-height:44px; }
+.platform-social-links a span { border:0; padding:0; }
+.national-home .platform-section { margin-top:3.5rem; }
+.national-home .platform-section-heading > span { color:#d4b253; text-transform:uppercase; letter-spacing:.14em; font-size:.72rem; font-weight:750; }
+@media (max-width:767px) {
+  .radar-national-grid,.contest-module-grid,.contest-detail-facts { grid-template-columns:minmax(0,1fr); }
+  .catalog-filters label { flex-basis:100%; }
+  .catalog-filters .ds-button { flex:1; }
+  .upcoming-exams li { gap:1rem; }
+  .upcoming-exams li > a { width:100%; }
+  .national-updates > li { gap:.8rem; }
+  .portal-overview-label span { margin-left:0; }
+}
+
+.platform-shell { background:linear-gradient(180deg,#090a0b,#060708); }
+.platform-footer { background:#080a0c; border-color:#303238; }
+.platform-shell .ds-button-secondary,.platform-header .ds-button-secondary { border-color:#62646a; background:#111316; color:#eee; }
+.platform-shell .ds-button-secondary:hover:not(:disabled),.platform-header .ds-button-secondary:hover:not(:disabled) { border-color:#f5cf50; background:#222017; color:#fff; }
+.how-card { background:#121519; }
+.how-card > span,.how-card > svg { color:#f5cf50; }
+.national-updates h2 { color:#f5f5f5; font-size:1.05rem; font-weight:700; margin:.55rem 0; }
+@media(max-width:600px) {
+ .how-card { grid-template-columns:auto minmax(0,1fr); }
+ .how-card > span { grid-column:1; grid-row:1; }
+ .how-card > svg { grid-column:1; grid-row:2; width:1.8rem; height:1.8rem; }
+ .how-card > div { grid-column:2; grid-row:1 / span 2; }
+ .portal-independent { padding-inline:1rem; }
+}
+
+.platform-contest-copy h2 { color:var(--platform-text); font-size:1.6rem; font-weight:850; line-height:1.15; }

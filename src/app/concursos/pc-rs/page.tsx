@@ -1,17 +1,7 @@
-import type { Metadata } from "next";
-import { ContestUnderConstruction } from "@/components/platform/contest-under-construction";
+import { ContestDetail } from "@/components/platform/contest-detail";
 import { getContest } from "@/data/contests";
 import { createPageMetadata } from "@/lib/seo";
-
-const contest = getContest("pc-rs");
-
-export const metadata: Metadata = createPageMetadata({
-  title: "PC-RS — Guia em construção",
-  description: "Página informativa sobre a preparação futura do guia PC-RS, sem dados oficiais cadastrados nesta etapa.",
-  path: "/concursos/pc-rs",
-});
-
-export default function PcRsPage() {
-  if (!contest) return null;
-  return <ContestUnderConstruction contest={contest} />;
-}
+const contest = getContest("pc-rs")!;
+export const revalidate = 3600;
+export const metadata = createPageMetadata({ title: contest.titulo, description: contest.descricao, path: contest.href });
+export default function Page() { return <ContestDetail contest={contest} />; }

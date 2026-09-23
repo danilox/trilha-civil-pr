@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/styles/national-portal.css";
 import { JsonLd } from "@/components/seo/json-ld";
 import { absoluteUrl, createWebsiteJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";

@@ -10,8 +10,8 @@ import { guidePath, platformConfig } from "@/config/site-config";
 const platformNav = [
   { href: "/", label: "Início" },
   { href: "/concursos", label: "Concursos" },
-  { href: "/#como-funciona", label: "Como funciona" },
-  { href: guidePath("/atualizacoes"), label: "Atualizações" },
+  { href: "/radar", label: "Radar" },
+  { href: "/atualizacoes", label: "Atualizações" },
   { href: "/sobre", label: "Sobre" },
 ];
 

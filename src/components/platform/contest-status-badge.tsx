@@ -1,18 +1,8 @@
+import { CheckCircle2, Clock3, CalendarDays } from "lucide-react";
 import { StatusBadge } from "@/components/ui";
-import type { ContestStatus } from "@/data/contests";
-
-const statusConfig: Record<
-  ContestStatus,
-  { label: string; status: "active" | "info" | "warning" | "neutral" }
-> = {
-  disponivel: { label: "Guia disponível", status: "active" },
-  "em-construcao": { label: "Em construção", status: "warning" },
-  previsto: { label: "Previsto", status: "info" },
-  encerrado: { label: "Encerrado", status: "neutral" },
-};
-
+import { contestStatusLabels } from "@/lib/contest-catalog";
+import type { ContestStatus } from "@/types/contest";
 export function ContestStatusBadge({ status }: { status: ContestStatus }) {
-  const config = statusConfig[status];
-
-  return <StatusBadge status={config.status}>{config.label}</StatusBadge>;
+  const Icon = status === "inscricoes-abertas" ? CheckCircle2 : status === "prova-proxima" ? CalendarDays : Clock3;
+  return <StatusBadge status={status === "inscricoes-abertas" ? "active" : status === "prova-proxima" ? "warning" : "neutral"}><Icon aria-hidden="true" className="h-3.5 w-3.5" />{contestStatusLabels[status]}</StatusBadge>;
 }

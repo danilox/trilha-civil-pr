@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/site-config";
+import { platformConfig, siteConfig } from "@/lib/site-config";
 
 type PageMetadataOptions = {
   title: string;
@@ -58,6 +58,8 @@ export function createWebsiteJsonLd() {
     description: siteConfig.description,
     inLanguage: "pt-BR",
     isAccessibleForFree: true,
+    sameAs: Object.values(platformConfig.social).filter(Boolean),
+    publisher: { "@type": "Organization", name: platformConfig.name, url: platformConfig.url, sameAs: Object.values(platformConfig.social).filter(Boolean) },
   };
 }
 
