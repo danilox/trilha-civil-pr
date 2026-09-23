@@ -57,6 +57,7 @@ export function createValidationToken(candidateKey: string, now = Math.floor(Dat
 }
 
 export function readValidationToken(token: string, now = Math.floor(Date.now() / 1000)) {
+  if (token.split(".").length !== 3) return null;
   const [version, encryptedPayload, signature] = token.split(".");
   if (version !== tokenVersion || !encryptedPayload || !signature) return null;
 
@@ -80,7 +81,7 @@ export function readValidationToken(token: string, now = Math.floor(Date.now() /
       payload.purpose !== "competition-validation" ||
       typeof payload.candidateKey !== "string" ||
       typeof payload.exp !== "number" ||
-      payload.exp < now
+      payload.exp <= now
     ) {
       return null;
     }

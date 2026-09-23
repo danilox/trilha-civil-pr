@@ -39,7 +39,7 @@ test("stats retorna somente dados agregados e separa total oficial de importado"
   const service = read("src/lib/competition/service.ts");
   const repository = read("src/lib/competition/repository.ts");
 
-  assert.match(service, /officialSourceTotal: 62657/);
+  assert.match(service, /officialSourceTotal: getOfficialSourceTotal\(cargoFilter\)/);
   assert.match(service, /registryImportedTotal: 0/);
   assert.match(repository, /officialSourceTotal/);
   assert.match(repository, /registryImportedTotal/);

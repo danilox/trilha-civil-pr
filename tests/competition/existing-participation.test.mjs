@@ -1,3 +1,4 @@
+import { countQuery, totals } from "./helpers.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -32,6 +33,7 @@ test("participação existente preserva uma entrada por candidato", async (t) =>
       assert.ok(["candidate_registry", "competition_entries"].includes(table));
       return {
         select(_columns, options) {
+          if (table === "competition_entries" && (options?.head || _columns.startsWith("updated_at"))) return countQuery([...entries.values()].map(entry => ({ ...entry, candidate_registry: { cargo: candidate.cargo } })), options);
           if (options?.head) return Promise.resolve({ count: 1, error: null });
           return {
             eq(column, key) {
@@ -62,6 +64,7 @@ test("participação existente preserva uma entrada por candidato", async (t) =>
   };
   const repository = loadIsolated("src/lib/competition/repository.ts", {
     "server-only": {},
+    "@/data/competition-totals": totals,
     "@/lib/supabase/server": {
       getSupabaseServerClient: () => client,
       isSupabaseServerConfigured: () => true,
@@ -69,6 +72,7 @@ test("participação existente preserva uma entrada por candidato", async (t) =>
   });
   const service = loadIsolated("src/lib/competition/service.ts", {
     "server-only": {},
+    "@/data/competition-totals": totals,
     "@/lib/competition/repository": repository,
     "@/lib/competition/crypto": {
       createValidationToken: () => "isolated-token",
@@ -82,6 +86,13 @@ test("participação existente preserva uma entrada por candidato", async (t) =>
     },
   });
   const validate = () => service.validateCompetitionCandidate("Candidato Teste", "12345678");
+
+  await t.test("token inválido impede escrita e preserva o total", async () => {
+    const result = await service.participateInCompetition("invalid-token", "interior");
+    assert.equal(result.status, 401);
+    assert.equal(writes, 0);
+    assert.equal(entries.size, 0);
+  });
 
   await t.test("primeira participação cria exatamente um registro", async () => {
     assert.equal((await validate()).response.hasExistingEntry, false);

@@ -1,4 +1,5 @@
 import "server-only";
+import { getOfficialSourceTotal } from "@/data/competition-totals";
 
 import { createValidationToken, readValidationToken } from "@/lib/competition/crypto";
 import { createCandidateKey, createNameKey, normalizeFullName, normalizeRegistration } from "@/lib/competition/identity";
@@ -145,7 +146,7 @@ export async function getCompetitionStatsResponse(cargoFilter?: string): Promise
     return {
       available: false,
       mock: false,
-      officialSourceTotal: 62657,
+      officialSourceTotal: getOfficialSourceTotal(cargoFilter),
       registryImportedTotal: 0,
       participants: 0,
       coveragePercent: 0,

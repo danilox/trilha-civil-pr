@@ -1,40 +1,30 @@
+import { unstable_cache } from "next/cache";
 import { NextResponse } from "next/server";
+import { getOfficialSourceTotal } from "@/data/competition-totals";
 import { getCompetitionStatsResponse } from "@/lib/competition/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// Cache only public aggregates. Validation and participation remain uncached.
+const getCachedStats = unstable_cache(async (cargo?: string) => {
+  const payload = await getCompetitionStatsResponse(cargo);
+  if (!payload.available) throw new Error("StatsUnavailable");
+  return payload;
+}, ["competition-stats-v2"], { revalidate: 30 });
+
 export async function GET(request: Request) {
+  const cargo = new URL(request.url).searchParams.get("cargo") === "agente" ? "Agente de Polícia Judiciária" : undefined;
   try {
-    const cargo = new URL(request.url).searchParams.get("cargo");
-    const payload = await getCompetitionStatsResponse(cargo === "agente" ? "Agente de Polícia Judiciária" : undefined);
-    return NextResponse.json(payload, { status: payload.available ? 200 : 503 });
-  } catch (error) {
-    const code =
-      typeof error === "object" && error !== null && "code" in error && error.code
-        ? String(error.code)
-        : error instanceof Error
-          ? error.name
-          : "UnknownError";
-    const keys = typeof error === "object" && error !== null ? Object.keys(error).join(",") : "";
-    const message =
-      typeof error === "object" && error !== null && "message" in error && error.message
-        ? String(error.message)
-        : "";
-    console.error("[competition:stats]", code, keys, message);
-    return NextResponse.json(
-      {
-        available: false,
-        mock: false,
-        officialSourceTotal: 62657,
-        registryImportedTotal: 0,
-        participants: 0,
-        coveragePercent: 0,
-        byRegion: [],
-        byCargo: [],
-        message: "Resultados temporariamente indisponíveis.",
-      },
-      { status: 503 },
-    );
+    const payload = await getCachedStats(cargo);
+    return NextResponse.json(payload, { headers: { "Cache-Control": "no-store" } });
+  } catch {
+    // Do not log backend messages, identifiers or request bodies.
+    console.error("[competition:stats] unavailable");
+    return NextResponse.json({
+      available: false, mock: false, officialSourceTotal: getOfficialSourceTotal(cargo),
+      registryImportedTotal: 0, participants: 0, coveragePercent: 0, byRegion: [], byCargo: [],
+      message: "Resultados temporariamente indisponíveis.",
+    }, { status: 503, headers: { "Cache-Control": "no-store" } });
   }
 }
