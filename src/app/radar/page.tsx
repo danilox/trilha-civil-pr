@@ -3,14 +3,14 @@ import { InternalPage } from "@/components/internal-page";
 import { CatalogFiltersForm } from "@/components/platform/catalog-filters";
 import { ContestStatusBadge } from "@/components/platform/contest-status-badge";
 import { contests, pendingConfirmation } from "@/data/contests";
-import { filterContests, getContestStatus, type CatalogFilters } from "@/lib/contest-catalog";
+import { filterContests, getContestStatus, sortContestsByPriority, type CatalogFilters } from "@/lib/contest-catalog";
 import { formatarData } from "@/lib/format";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({ title: "Radar de concursos de Segurança Pública", description: "Compare concursos por estado, instituição, banca, inscrições, prova e próximo evento oficial.", path: "/radar" });
 export default async function RadarPage({ searchParams }: { searchParams: Promise<CatalogFilters> }) {
   const filters = await searchParams;
-  const filtered = filterContests(contests, filters);
+  const filtered = sortContestsByPriority(filterContests(contests, filters));
   return <InternalPage title="Radar de concursos" description="Uma visão nacional dos prazos e movimentos de Segurança Pública. Use os filtros e compartilhe o endereço da sua seleção." path="/radar">
     <CatalogFiltersForm filters={filters} states={[...new Set(contests.map(contest => contest.estado))].sort()} action="/radar" />
     <p className="catalog-result-count">{filtered.length} concurso(s) encontrado(s)</p>
