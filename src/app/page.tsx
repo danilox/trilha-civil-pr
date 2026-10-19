@@ -8,13 +8,13 @@ import { UpdatesFeed } from "@/components/platform/updates-feed";
 import { JsonLd } from "@/components/seo/json-ld";
 import { platformConfig } from "@/config/site-config";
 import { contests } from "@/data/contests";
-import { getContestStatus, getUpcomingExams } from "@/lib/contest-catalog";
+import { getContestStatus, getUpcomingExams, sortContestsByPriority } from "@/lib/contest-catalog";
 import { formatarData } from "@/lib/format";
 import { createPageMetadata, createWebPageJsonLd } from "@/lib/seo";
 export const revalidate = 3600;
 export const metadata = createPageMetadata({ title: "Edital no Controle | Concursos de Segurança Pública", description: platformConfig.description, path: "/", absoluteTitle: true });
 export default function PlatformHomePage() {
-  const open = contests.filter(contest => getContestStatus(contest) === "inscricoes-abertas");
+  const open = sortContestsByPriority(contests.filter(contest => getContestStatus(contest) === "inscricoes-abertas"));
   return <><JsonLd data={createWebPageJsonLd(platformConfig.name, platformConfig.description, "/")} /><PlatformHeader /><main className="platform-shell platform-home national-home"><PlatformHero />
     <p className="portal-independent">Projeto independente e não oficial. Consulte sempre o edital e os canais oficiais.</p>
     <section className="platform-section" aria-labelledby="open-title"><div className="platform-section-heading"><span>Oportunidades</span><h2 id="open-title">Inscrições abertas</h2><p>Prazos conferidos em fontes oficiais. Inscreva-se exclusivamente pelo canal da banca.</p></div>{open.length ? <div className="platform-contest-grid">{open.map(contest => <ContestCard key={contest.slug} contest={contest} />)}</div> : <p className="platform-empty">Nenhuma inscrição aberta confirmada no catálogo neste momento.</p>}</section>
