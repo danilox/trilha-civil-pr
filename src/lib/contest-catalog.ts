@@ -33,3 +33,39 @@ export function getUpcomingExams(contests: Contest[], date = new Date()) {
   return contests.filter(contest => contest.dataProva && new Date(contest.dataProva.length === 10 ? contest.dataProva + "T23:59:59-03:00" : contest.dataProva) >= date)
     .sort((a, b) => a.dataProva!.localeCompare(b.dataProva!));
 }
+
+
+const statusPriority: Record<ContestStatus, number> = {
+  "inscricoes-abertas": 0,
+  "prova-proxima": 1,
+  "pos-prova": 2,
+  resultado: 3,
+  taf: 4,
+  "em-andamento": 5,
+  "inscricoes-encerradas": 6,
+  previsto: 7,
+  encerrado: 8,
+};
+
+export function sortContestsByPriority(contests: Contest[], date = new Date()) {
+  return [...contests].sort((a, b) => {
+    const aStatus = getContestStatus(a, date);
+    const bStatus = getContestStatus(b, date);
+    const statusDiff = statusPriority[aStatus] - statusPriority[bStatus];
+    if (statusDiff !== 0) return statusDiff;
+
+    if (aStatus === "inscricoes-abertas" && bStatus === "inscricoes-abertas") {
+      const aEnd = a.inscricoesFim?.slice(0, 10) ?? "9999-12-31";
+      const bEnd = b.inscricoesFim?.slice(0, 10) ?? "9999-12-31";
+      const endDiff = aEnd.localeCompare(bEnd);
+      if (endDiff !== 0) return endDiff;
+    }
+
+    if (a.dataProva && b.dataProva) {
+      const examDiff = a.dataProva.localeCompare(b.dataProva);
+      if (examDiff !== 0) return examDiff;
+    }
+
+    return a.sigla.localeCompare(b.sigla, "pt-BR");
+  });
+}

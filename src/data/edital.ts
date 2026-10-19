@@ -22,7 +22,7 @@ export const DATA_ATUALIZACAO_ISENCOES_FGV = "2026-08-14";
 export const DATA_HOMOLOGACAO_PRELIMINAR_FGV = "2026-08-27";
 export const DATA_RECURSOS_HOMOLOGACAO_FGV = "2026-08-28";
 export const DATA_RETIFICACAO_EDITAL = "2026-07-31";
-export const DATA_ULTIMA_ATUALIZACAO_OFICIAL = "2026-09-22";
+export const DATA_ULTIMA_ATUALIZACAO_OFICIAL = "2026-10-14";
 export const DOCUMENTO_EDITAL = "Edital nº 01/2026 - PCPR, retificado em 31/07/2026";
 export const FONTE_EDITAL = "Edital nº 01/2026 e 1ª Retificação - Concurso Público da Polícia Civil do Paraná";
 export const URL_FONTE_FGV = "https://conhecimento.fgv.br/concursos/pcpr26";
@@ -99,18 +99,18 @@ export const inscricoesEProva = {
 
 export const situacaoAtualPcpr2026 = {
   status: "Em andamento",
-  statusCurto: "Prova próxima",
-  fase: "Preparação para a prova objetiva",
-  substatus: "Homologação definitiva publicada em 14/09. Locais de prova previstos a partir de 05/10; prova em 11/10/2026.",
+  statusCurto: "Pós-prova",
+  fase: "Recursos contra o gabarito preliminar",
+  substatus: "Prova objetiva realizada em 11/10/2026. Gabarito oficial preliminar e cadernos publicados em 13/10; recursos disponibilizados em 14/10.",
   ultimaMovimentacao: DATA_ULTIMA_ATUALIZACAO_OFICIAL,
-  ultimaMovimentacaoTitulo: "Comunicado sobre revogação de convocação sub judice",
+  ultimaMovimentacaoTitulo: "Recursos contra o gabarito oficial preliminar",
   ultimaMovimentacaoDescricao:
-    "Comunicado de 22/09 sobre revogação de convocação sub judice para Delegado. Consulte a fonte original; o portal não reproduz dados pessoais.",
+    "A FGV disponibilizou em 14/10/2026 a interposição de recursos contra o gabarito oficial preliminar da prova objetiva.",
   proximoMarco: {
-    titulo: "Prova objetiva",
-    data: inscricoesEProva.provaData,
-    fim: inscricoesEProva.provaFim,
-    resumo: "11 de outubro de 2026, das 13h às 18h",
+    titulo: "Gabarito definitivo e resultados",
+    data: "",
+    fim: "",
+    resumo: "Aguardar publicação oficial da FGV após a análise dos recursos",
   },
   fonte: "Página oficial FGV - Concurso PCPR 2026",
   urlFonte: URL_FONTE_FGV,
@@ -144,8 +144,8 @@ export const regioesOficiais: RegiaoOficial[] = [
 const etapasBase = [
   ["inscricao-preliminar", 1, "Inscrição preliminar", "14/07 a 12/08/2026", "2026-07-14", "concluida", "Etapa encerrada. O prazo excepcional de pagamento também terminou em 18/08/2026.", ["Etapa encerrada", "Histórico preservado", "Acompanhar publicações"], "4.1 a 4.5", 11],
   ["homologacao-inscricoes", 2, "Homologação das inscrições", "Resultado definitivo publicado em 14/09/2026", "2026-09-14", "concluida", "Homologação definitiva das inscrições publicada pela FGV em 14/09/2026. Histórico preliminar e recursos preservados nas atualizações.", ["Consultar resultado definitivo", "Consultar comunicados", "Conferir situação individual"], "Publicações FGV de 14/09/2026", 1],
-  ["preparacao-prova", 2.5, "Preparação e local de prova", "Local previsto a partir de 05/10/2026", "2026-10-05", "atencao", "Acompanhe a divulgação do local na FGV. A data prevista não confirma a liberação da consulta individual.", ["Conferir local na FGV", "Organizar documento", "Planejar deslocamento"], "9.2", 25],
-  ["prova-objetiva", 3, "Prova objetiva", "11/10/2026, das 13h às 18h", "2026-10-11", "prevista", "Próximo grande marco do concurso. Prova objetiva com 100 questões, 100 pontos, cinco alternativas e uma resposta correta.", ["Acompanhar local na FGV", "Documento oficial", "Curitiba, Londrina e Cascavel"], "9.1, 9.2, 9.6 e 9.8", 25],
+  ["preparacao-prova", 2.5, "Preparação e local de prova", "Etapa concluída", "2026-10-05", "concluida", "Fase de preparação encerrada com a realização da prova objetiva em 11/10/2026.", ["Etapa concluída", "Histórico preservado", "Acompanhar publicações pós-prova"], "9.2", 25],
+  ["prova-objetiva", 3, "Prova objetiva", "Realizada em 11/10/2026", "2026-10-11", "concluida", "Prova objetiva realizada. A FGV publicou cadernos e gabarito preliminar em 13/10 e abriu recursos em 14/10/2026.", ["Prova realizada", "Gabarito preliminar publicado", "Acompanhar recursos e gabarito definitivo"], "9.1, 9.2, 9.6 e 9.8", 25],
   ["inspecao-saude", 4, "Inspeção de saúde", "Aguardando divulgação oficial.", "", "prevista", "Etapa posterior à prova objetiva, com convocação oficial antes da realização de exames.", ["Aguardar convocação", "Conferir edital", "Evitar exames sem orientação"], "12.1 a 12.17", 38],
   ["aptidao-fisica", 5, "Aptidão física", "Aguardando divulgação oficial.", "", "prevista", "TAF futuro com aprovação obrigatória em todos os exercícios do Anexo IV.", ["Treinar com antecedência", "Acompanhar convocação", "Conferir índices oficiais"], "13 e Anexo IV", 40],
   ["avaliacao-psicologica", 6, "Avaliação psicológica", "Aguardando divulgação oficial.", "", "prevista", "Avaliação psicológica conforme critérios e convocações oficiais.", ["Ler convocação", "Levar documento", "Acompanhar FGV"], "14", 42],

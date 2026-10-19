@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { contests } from "@/data/contests";
 import { contestUpdates } from "@/data/contest-updates";
-const portalUpdatedAt = "2026-09-22"; // Content revision, not time of request.
+const portalUpdatedAt = "2026-10-19"; // Content revision, not time of request.
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = new Map<string, MetadataRoute.Sitemap[number]>();
   for (const route of siteConfig.routes) {
